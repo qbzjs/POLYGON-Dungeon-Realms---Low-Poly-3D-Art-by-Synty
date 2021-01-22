@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &874244191350045874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874244191350045877}
+  - component: {fileID: 874244191350045876}
+  - component: {fileID: 874244191350045879}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874244191350045877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874244191350045874}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.4181037, y: 154.79727, z: 409.75958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874244191350045876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874244191350045874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17fbd74baf83af4b978ef4a9d114733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avancer: {fileID: 0}
+  gauche: {fileID: 0}
+  reculer: {fileID: 0}
+  droite: {fileID: 0}
+  action: {fileID: 0}
+  saut: {fileID: 0}
+  pouvoirSpecial: {fileID: 0}
+  pouvoir1: {fileID: 0}
+  pouvoir2: {fileID: 0}
+  pouvoir3: {fileID: 0}
+  pouvoir4: {fileID: 0}
+  courir: {fileID: 0}
+  accroupir: {fileID: 0}
+  attaque: {fileID: 0}
+  garde: {fileID: 0}
+  menuPause: {fileID: 0}
+  menuInventaire: {fileID: 0}
+  texteAssignationTouche: []
+--- !u!114 &874244191350045879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874244191350045874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d376ceae99ed63540ae887b8c5048b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raccourciClavier: {fileID: 0}
+  MenuPause: {fileID: 0}
+  MenuInventaire: {fileID: 0}
+  voirMenu: 0
+  menuPauseOuvert: 0
+  menuInventaireOuvert: 0
+  menuOptionOuvert: 0
+  menuSlots: 0
+  MessageInteraction: {fileID: 0}
+  TexteMessageInteraction: {fileID: 0}
+  ParentBarresVieMana: {fileID: 0}
+  ParentCompas: {fileID: 0}
+  ParentSlotSave: {fileID: 0}
+  ParentSlotLoad: {fileID: 0}
+  ParentBoutonMenu: {fileID: 0}
+  ParentOptions: {fileID: 0}
+  popUpNomSauvegarde: {fileID: 0}
+  popUpEcraserSauvegarde: {fileID: 0}
+  popUpRetourMenuPrincipal: {fileID: 0}
+  popUp: {fileID: 0}
+  SlotSaveSelect: {fileID: 0}
+  GrimoireInventaire: {fileID: 0}
+  popUpActif: 0
+  chapitreEnCours: 0
+  nomSauvegarde: 

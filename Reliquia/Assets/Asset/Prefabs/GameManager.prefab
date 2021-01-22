@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4677315279493638722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4677315279493638721}
+  - component: {fileID: 4677315279493638751}
+  - component: {fileID: 6954937260148690552}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4677315279493638721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4677315279493638722}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7766483, y: -1.1447604, z: -3.6778367}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4677315279493638751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4677315279493638722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d376ceae99ed63540ae887b8c5048b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MenuPause: {fileID: 0}
+  MenuInventaire: {fileID: 0}
+  voirMenu: 0
+  menuPauseOuvert: 0
+  menuInventaireOuvert: 0
+  menuSlots: 0
+  MessageInteraction: {fileID: 4613776203832194334, guid: 6f3d340b6efdd684daeb841001911f10,
+    type: 3}
+  TexteMessageInteraction: {fileID: 0}
+  ParentBarresVieMana: {fileID: 0}
+  ParentCompas: {fileID: 0}
+  ParentSlotSave: {fileID: 0}
+  ParentSlotLoad: {fileID: 0}
+  ParentBoutonMenu: {fileID: 0}
+  ParentOptions: {fileID: 0}
+  popUpNomSauvegarde: {fileID: 3795888232114727211, guid: 16cf51d053a490044812806d59764603,
+    type: 3}
+  popUpEcraserSauvegarde: {fileID: 7597128029782450711, guid: 1d3ec4d44c32e984b995262001d09009,
+    type: 3}
+  popUpRetourMenuPrincipal: {fileID: 3723548539194287258, guid: 85612382366484f4eaebe82a2e518aac,
+    type: 3}
+  popUp: {fileID: 0}
+  SlotSaveSelect: {fileID: 0}
+  GrimoireInventaire: {fileID: 0}
+  popUpActif: 0
+  chapitreEnCours: 0
+  nomSauvegarde: 
+--- !u!114 &6954937260148690552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4677315279493638722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949553bcbd522754ea5a7d12e933dae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpQuitter: {fileID: 3723548539194287258, guid: a3a0c08ec2447f844b9208ecb3768528,
+    type: 3}
