@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class Companion : MonoBehaviour
 {
     // Propriétés privées de l'IA
