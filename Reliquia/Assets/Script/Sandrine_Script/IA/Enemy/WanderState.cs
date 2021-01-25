@@ -47,12 +47,13 @@ public class WanderState : BaseState
         if (chaseTarget != null)
         {
             // Une fois le joueur détecté, trouver la cible la plus proche
-            var chaseTargetClosest = CheckForClosest();
+            // Non pas pour l'instant.
+            //var chaseTargetClosest = CheckForClosest();
 
-            if (chaseTargetClosest != null)
-            {
-                chaseTarget = chaseTargetClosest;
-            }
+            //if (chaseTargetClosest != null)
+            //{
+            //    chaseTarget = chaseTargetClosest;
+            //}
             _enemy.SetTarget((Transform)chaseTarget);
             return typeof(ChaseState); // Change l'état pour "Chase" 
         }
@@ -135,6 +136,7 @@ public class WanderState : BaseState
         if (target != null && target == playerTarget)
         {
             _enemy.SetTarget((Transform)playerTarget);
+            _enemy.SetChaser((Transform)playerTarget);
             return playerTarget;
 
         }
@@ -148,28 +150,29 @@ public class WanderState : BaseState
     private Transform CheckForAggro()
     {
         RaycastHit hit;
-        var angle = transform.rotation * startingAngle;
-        var direction = angle * Vector3.forward;
+        Quaternion angle = transform.rotation * startingAngle;
+        Vector3 direction = angle * Vector3.forward;
+        Vector3 rayOrigine = _enemyPosition + Vector3.up;
 
         for (var i = 0; i < 35; i++)
         {
-            if (Physics.Raycast(_enemyPosition, direction, out hit, GameSettings.AggroRadius))
+            if (Physics.Raycast(rayOrigine, direction, out hit, GameSettings.AggroRadius))
             {
 
                 var target = hit.transform;
                 if (target != null && target == playerTarget) //  enemy.Team != gameObject.GetComponent<Enemy>().Team
                 {
-                    Debug.DrawRay(_enemyPosition, direction * hit.distance, Color.red);
+                    Debug.DrawRay(rayOrigine, direction * hit.distance, Color.red);
                     return playerTarget.transform;
                 }
                 else
                 {
-                    Debug.DrawRay(_enemyPosition, direction * hit.distance, Color.yellow);
+                    Debug.DrawRay(rayOrigine, direction * hit.distance, Color.yellow);
                 }
             }
             else
             {
-                Debug.DrawRay(_enemyPosition, direction * hit.distance, Color.white);
+                Debug.DrawRay(rayOrigine, direction * hit.distance, Color.white);
             }
             direction = stepAngle * direction;
         }

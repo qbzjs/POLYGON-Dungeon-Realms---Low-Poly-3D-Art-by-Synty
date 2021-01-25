@@ -21,8 +21,10 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public Renderer alphaRenderer;  // Provisoire à sup
 
-    public Transform Target { get; private set; }
-    
+    public Transform Target; // { get; private set; }
+    public Transform Chaser;// { get; private set; } //private set
+    //public bool playerTarget { get; private set; } //private set
+
     // Les getters des propriétés de l'IA
     public StateMachine StateMachine => GetComponent<StateMachine>();
     public Vector3 InitPosition => initPosition;
@@ -57,22 +59,29 @@ public class Enemy : MonoBehaviour
         GetComponent<StateMachine>().SetStates(states);
     }
 
+    // Suspendu il n'y a pas de combat au corps à corps => A conserver tant qu'on ne sais pas détaecter la cible du joueur
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Companion>() != null || other.CompareTag("Player"))
+        if (other.CompareTag("Player")) //other.GetComponent<Companion>() != null || 
         {
-            Animator anim = other.GetComponent<Animator>();
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Punching"))
-            {
-                SetTarget(other.transform);
-                return;
-            }
-
-            if (Target != null && Target.CompareTag("Player") )
-            {
-                return;
-            }
+            // des qu'il entre dans son rayon le joueur devient la cible et le chasseur.
+            //// On change sa cible par celle qui l'attaque ? 
+            //Animator anim = other.GetComponent<Animator>();
+            //if (anim != null && anim.GetCurrentAnimatorStateInfo(0).IsName("Punching"))
+            //{
+            //    SetTarget(other.transform);
+            //    SetChaser(other.transform);
+            //    return;
+            //}
+            //// Uniquement si c'est le joueur, on sette targetedBy ? Pourquoi ?
+            //// Le compagnon a déjà renseigné cette variable dans PrepareToAttackState.
+            ////if (Target != null && Target == other)
+            ////{
+            ////    SetTargetedBy(Target.transform);
+            ////    return;
+            ////}
             SetTarget(other.transform);
+            SetChaser(other.transform);
 
         }
     }
@@ -87,12 +96,10 @@ public class Enemy : MonoBehaviour
         // Set anim Attack
         alphaRenderer.material.SetColor("_ColorTint", Color.black); // Provisoire
 
-        if (NavAgent.remainingDistance <= 2f)
-        {
-            navAgent.isStopped = true;
-            anim.SetBool("Avancer", false);
-            // anim.SetBool("Attaque", true);
-        }
+        navAgent.isStopped = true;
+        anim.SetBool("Avancer", false);
+        anim.SetBool("Attaque", true);
+
     }
 
     /// <summary>
@@ -107,6 +114,23 @@ public class Enemy : MonoBehaviour
             alphaRenderer.material.SetColor("_ColorTint", Color.white); // Provisoire 
         }
     }
+
+    public void SetChaser(Transform adverser)
+    {
+        Chaser = adverser;
+    }
+
+    public void ResetTargets()
+    {
+        SetTarget(null);
+        SetChaser(null);
+    }
+
+    //public void SetPlayerTarget(bool value)
+    //{
+    //    playerTarget = value;
+    //}
+
 
 
     internal void LookAt(Vector3 lookAtPosition, float speed)
@@ -124,8 +148,26 @@ public class Enemy : MonoBehaviour
         Anim.SetBool("Attaque", false);
         Anim.SetBool("Course", false);
 
-        Anim.SetBool(animation, true);
+        if (animation != "")
+        {
+            Anim.SetBool(animation, true);
+        }
+        
         NavAgent.SetDestination(destination);
+    }
+
+    internal void StopMoving()
+    {
+        Anim.SetBool("Course", false);
+        Anim.SetBool("Avancer", false);
+        NavAgent.speed = 0;
+    }
+
+    internal void StopAttack()
+    {
+        anim.SetBool("Attaque", false);
+
+
     }
 
 }

@@ -6,6 +6,7 @@ public class WalkState : BaseState
     public Companion _companion;
     private Vector3 playerLastPosition;
     private Vector3 _companionPosition;
+    private Vector3 _companionLastPosition;
 
     private Vector3 playerPosition;
     private Vector3 _destination;
@@ -21,29 +22,48 @@ public class WalkState : BaseState
 
     public override Type Tick()
     {
+        _companionLastPosition = _companion.transform.position;
         _companionPosition = _companion.transform.position;
         _companion.StopAttack();
         _companion.NavAgent.isStopped = false;
         _companion.Anim.SetBool("Avancer", true);
+
+        // Utiliser pour revenir à l'état précédent dans PrepareToAtteckState
+        // _companion.SetLastState(this);
 
         playerLastPosition = playerPosition;
         playerPosition = _companion.Player.position;
 
         var distance = Vector3.Distance(_companionPosition, playerPosition);
 
+        if (distance <= GameSettings.CompanionPlayerRange)
+        {
+            _companion.StopMoving();
+        }
+
         FollowPlayer(); // assigne une nouvelle destination et rotation au compagnon
 
         Vector3 lookAtDirection = _companionPosition + _direction;
         _companion.LookAt(lookAtDirection, 0.5f);
 
-        // si le player attaque alors compagnon attaque aussi
-        if (!_companion.AnimPlayer.IsInTransition(0) && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Punching"))
+        // Si le compagnon arrive trop pres du player
+        // Alors return typeof(WaitState);
+        if (distance <= GameSettings.DistanceToWalk) // || distance < GameSettings.DistanceToWalk
         {
+            return typeof(WaitState);
+
+        }
+
+        // si le player attaque alors compagnon attaque aussi
+        if (_companion.AttackNumber > 0 && !_companion.AnimPlayer.IsInTransition(0) && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Punching"))
+        {
+            // Par défaut
+           
             return typeof(PrepareToAttackState);
         }
 
-            // si le player court alors compagnon cours aussi
-            if ( !_companion.AnimPlayer.IsInTransition(0) && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Running"))
+        // si le player court alors compagnon cours aussi
+        if ( _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Running"))
         {
             _companion.Move(_destination, GameSettings.SpeedRunning, "Course");
             return null;
@@ -52,21 +72,21 @@ public class WalkState : BaseState
         else
         {
             // Par défaut
-            float speed = GameSettings.SpeedWalking + Vector3.Distance(_destination, _companionPosition) / (Time.deltaTime * 20f);
+            float speed = GameSettings.SpeedWalking; // + Vector3.Distance(_destination, _companionPosition) / (Time.deltaTime * 20f);
             _companion.Move(_destination, speed);
-
         }
 
         // si le player s'arrete alors compagnon s'arrete aussi 
-        if (!_companion.AnimPlayer.IsInTransition(0) && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("run to stop"))
+        if (!_companion.AnimPlayer.IsInTransition(0) && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("run to stop") && distance < 2.2f)
         {
             _companion.StopMoving();
+
             return typeof(WaitState);
         }
 
         // Si le player arrive à destination ou que la distance <= DistanceToWalk
         // Alors return typeof(WaitState);
-        if (_companion.NavAgent.remainingDistance <= 0.05f && playerLastPosition == playerPosition) // || distance < GameSettings.DistanceToWalk
+        if (_companion.NavAgent.remainingDistance <= 0.05f && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // playerLastPosition == playerPosition || distance < GameSettings.DistanceToWalk
         {
             return typeof(WaitState);
 
@@ -75,14 +95,6 @@ public class WalkState : BaseState
         // Si le player arrive à destination
         // Alors return typeof(WaitState);
         if (_companion.NavAgent.remainingDistance <= 0.05f) // || distance < GameSettings.DistanceToWalk
-        {
-            return typeof(WaitState);
-
-        }
-
-        // Si le compagnon arrive trop pres du player
-        // Alors return typeof(WaitState);
-        if (distance <= GameSettings.DistanceToWalk) // || distance < GameSettings.DistanceToWalk
         {
             return typeof(WaitState);
 
@@ -97,11 +109,11 @@ public class WalkState : BaseState
         Vector3 _lastDirection = _direction == Vector3.zero ? playerPosition - _companionPosition : _direction;
 
         // Par défaut Compagnon = Roxane
-        _destination = playerPosition - (_companion.Player.forward * 3.2f) + (_companion.Player.right * 0.5f);
+        _destination = playerPosition - (_companion.Player.forward * 2f) + (_companion.Player.right * 0.5f);
 
         if (_companion.Name == "David")
         {
-            _destination = playerPosition - (_companion.Player.forward * 3.2f) - (_companion.Player.right * 0.8f);
+            _destination = playerPosition - (_companion.Player.forward * 3f) - (_companion.Player.right * 0.8f);
         }
 
         // ---- Positionne le compagnon à côté du Player et non derrière => je laisse au cas où se serait utilise par la suite.

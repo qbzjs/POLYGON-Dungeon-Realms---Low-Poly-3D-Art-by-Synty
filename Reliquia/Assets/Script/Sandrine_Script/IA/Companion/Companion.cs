@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 public class Companion : MonoBehaviour
 {
     // Propriétés privées de l'IA
@@ -17,7 +16,12 @@ public class Companion : MonoBehaviour
     private Transform player;
     private Animator animPlayer;
 
-    public Transform Target { get; private set; }
+    public Transform Target; // { get; private set; }
+    public BaseState LastState { get; private set; }
+
+    public float AttackReadyTimer { get; private set; }
+
+    public int AttackNumber { get; private set; }
 
     public Transform Player => player;
     public Animator Anim => anim;
@@ -33,6 +37,8 @@ public class Companion : MonoBehaviour
     [HideInInspector]
     public Renderer alphaRenderer;  // Provisoire à sup
 
+    public bool flagAttack; // Provsoire To Sup
+
     private void Awake()
     {
         InitializeStateMachine();
@@ -44,11 +50,28 @@ public class Companion : MonoBehaviour
 
         // A supprimer
         alphaRenderer = alphaSurface.GetComponent<Renderer>(); // Provisoire Attack Effect
+        SetAttackReadyTimer();
+        AttackNumber = 30; // 30;
     }
 
-    internal void SetTarget(Transform target)
+    public void DecreaseAttackNumber()
     {
+        AttackNumber--;
+    }
+    public void SetTarget(Transform target)
+    {
+
         Target = target;
+    }
+
+    internal void SetAttackReadyTimer()
+    {
+        AttackReadyTimer = Name == "Roxane" ? 10f : 15f;
+    }
+
+    internal void SetLastState(BaseState state)
+    {
+        LastState = state;
     }
 
     internal void SetSpeed(float speed)
@@ -69,7 +92,8 @@ public class Companion : MonoBehaviour
             {typeof(WalkState), new WalkState(companion: this) },
             {typeof(WaitState), new WaitState(companion: this) },
             {typeof(PrepareToAttackState), new PrepareToAttackState(companion: this) },
-            {typeof(CompagnonAttackState), new CompagnonAttackState(companion: this) }
+            {typeof(CompanionAttackState), new CompanionAttackState(companion: this) },
+            {typeof(LostState), new LostState(companion: this) }
         };
 
         GetComponent<StateMachine>().SetStates(states);
@@ -79,7 +103,7 @@ public class Companion : MonoBehaviour
     {
         NavAgent.isStopped = true;
         Anim.SetBool("Avancer", false);
-        //Anim.SetBool("Attaque", true);
+        Anim.SetBool("Attaque", true);
         NavAgent.speed = speed;
     }
 
@@ -98,7 +122,15 @@ public class Companion : MonoBehaviour
        Anim.SetBool("Attaque", false);
        Anim.SetBool("Course", false);
 
-       Anim.SetBool(animation, true);
+        if (animation != "")
+        {
+            Anim.SetBool(animation, true);
+        }
+        if (animation == "Reculer")
+        {
+            Anim.SetBool("Avancer", false);
+        }
+        
        NavAgent.SetDestination(destination);
     }
 
@@ -115,16 +147,17 @@ public class Companion : MonoBehaviour
     {
         Anim.SetBool("Course", false);
         Anim.SetBool("Avancer", false);
+        Anim.SetBool("Reculer", false);
         NavAgent.speed = 0;
     }
 
-    internal bool NotAttacking()
+    internal bool IsAttacking()
     {
-        if ( ! anim.IsInTransition(0) && anim.GetCurrentAnimatorStateInfo(0).IsName("Puching"))
+        if ( !anim.IsInTransition(0) && anim.GetCurrentAnimatorStateInfo(0).IsName("Puching"))
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     internal bool ReachDestination()
@@ -146,5 +179,7 @@ public class Companion : MonoBehaviour
     internal void StopAttack()
     {
         anim.SetBool("Attaque", false);
+
+
     }
 }
