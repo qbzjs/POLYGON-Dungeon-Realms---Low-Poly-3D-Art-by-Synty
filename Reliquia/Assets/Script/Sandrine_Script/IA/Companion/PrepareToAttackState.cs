@@ -14,6 +14,7 @@ public class PrepareToAttackState : BaseState
     private Quaternion checkPlayerAngle = Quaternion.AngleAxis(-5, Vector3.up); // -20
     private Quaternion stepAngle = Quaternion.AngleAxis(5, Vector3.up);
     private bool playerTarget;
+    private bool isPlayerBlock;
 
     public PrepareToAttackState(Companion companion) : base(companion.gameObject)
     {
@@ -35,48 +36,50 @@ public class PrepareToAttackState : BaseState
         if (distance > GameSettings.PlayerLeavingRange)
         {
             //Debug.Log("Go to WalkState, player leaving");
+            _companion.SetTarget(null);
             return typeof(WalkState);
         }
 
+        // Le compagnon est trop proche du joueur, il se déplace
         if (distance <= GameSettings.CompanionPlayerRange)
         {
-            _companion.StopMoving();
+           
+            Vector3 destination = Vector3.forward + Vector3.right;
+            _companion.Move(destination, GameSettings.SpeedWalking);
+            return null;
         }
 
-        //chaseTarget = CheckForAggro();
-        _companion.SetTarget(CheckForAggro());
+        // Lorsqu'il est déplacé il s'arrête
+        if(_companion.NavAgent.remainingDistance < 0.5f)
+        {
+            // _companion.SetTarget(null);
+            _companion.StopMoving();
+            return null;
+        }
+
+        chaseTarget = CheckForAggro();
+        _companion.SetTarget(chaseTarget);
 
         if (_companion.Target != null)
         {
             targetPosition = _companion.Target.position;
-            Vector3 relativePos = targetPosition - _companionPosition;
-            float targetDistance = Vector3.Distance(targetPosition, _companionPosition);
             Enemy enemy = _companion.Target.GetComponent<Enemy>();
 
-            // Le joueur et l'ennemi se combatte le compagnon ne fait rien => pb si le joueur est chasseur des 2 Ennemis
-            // Je commente pour l'instant le compagnon peut attaquer la cible du joueur
-            if (enemy.Chaser == _companion.Player)
-            {
-                //_companion.SetTarget(null);
-                //return typeof(WaitState);
-            }
-            //_companion.Target.GetComponent<Enemy>().SetChaser(transform);
+            _companion.LookAtDirection(targetPosition - _companionPosition, 10f);
 
-            // _companion.LookAt(relativePos, 10f);
-            _companion.LookAt(targetPosition - _companionPosition, 10f); //
-
-            // Si le joueur est sistué entre la target et le compagnon, le compagnon s'arrête.
-            if (checkBeInTheWayOfPlayer())
+            isPlayerBlock = checkBeInTheWayOfPlayer();
+            //Debug.Log("isPlayerBlock : " + isPlayerBlock);
+            // Si le joueur est situé entre la target et le compagnon, le compagnon s'arrête.
+            if (isPlayerBlock)
             {
                 //Debug.Log("checkBeInTheWayOfPlayer");
-                // se déplace à droite où à gauche du joueur s'il y a de la place (pas de mur) => plus tard pe inutile
-                //var randomDeplacement = new System.Random().Next(-5, 5);
-                Vector3 newDestination = _companion.Player.position + transform.right * 2f;
+                Vector3 newDestination = playerPosition + UnityEngine.Random.insideUnitSphere;// _companion.transform.right; // * 2f
                 //Debug.Log("newDestination : " + newDestination);
                 RaycastHit hit;
-                _companion.LookAt(newDestination, GameSettings.SpeedWalking);
+                _companion.LookAtDirection(newDestination, GameSettings.SpeedWalking);
                 Quaternion angle = transform.rotation;
-                var direction = angle * Vector3.forward;
+                var direction = Vector3.forward; // angle * 
+                // Test s'il y a de la place pour se déplacer
                 if (Physics.Raycast(_companionPosition, direction, out hit, GameSettings.AggroRadius / 10f))
                 {
                     Transform target = hit.transform;
@@ -96,29 +99,12 @@ public class PrepareToAttackState : BaseState
                 return typeof(WaitState);
             }
 
-            Vector3 attackPosition = targetPosition;
-            String anim = "";
-
-            if (targetDistance <= GameSettings.CompanionPlayerRange)
-            {
-                attackPosition = _companionPosition - (transform.forward );
-                anim = "Reculer";
-            }
-            _companion.LookAt(targetPosition - _companionPosition, GameSettings.SpeedWalking); // 
-            _companion.Move(attackPosition, GameSettings.SpeedAttackWalking, anim); // targetPosition
+            _companion.LookAtDirection(targetPosition - _companionPosition, GameSettings.SpeedWalking); // 
 
             //Debug.Log("Go to Companion Attack State");
             return typeof(CompanionAttackState);
         }
 
-        //chaseTarget = CheckForAggro();
-        if (chaseTarget != null)
-        {
-
-            _companion.SetTarget((Transform)chaseTarget);            
-            return null;
-            
-        }
         //Debug.Log("Go to WaitState, target is null");
         return typeof(WaitState); //WalkState
     }
@@ -127,23 +113,25 @@ public class PrepareToAttackState : BaseState
     {
 
         RaycastHit hit;
-        var angle = transform.rotation * checkPlayerAngle;
+        var angle = _companion.transform.rotation * checkPlayerAngle;
         var direction = angle * Vector3.forward;
+        _companion.LookAtDirection(_companion.Target.position, 10f);
 
         for (var i = 0; i < 5; i++)
         {
             if (Physics.Raycast(_companionPosition, direction, out hit, GameSettings.AggroRadius))
             {
-                Debug.DrawRay(_companionPosition, direction * hit.distance, Color.white, 10f);
+                Debug.DrawRay(_companionPosition, direction * hit.distance, Color.white, 2f);
                 var target = hit.transform;
+                //Debug.Log("target : " + target);
                 if (target != null && target == _companion.Player )
                 {
-                    Debug.DrawRay(_companionPosition, direction * hit.distance, Color.red, 10f);
+                    Debug.DrawRay(_companionPosition, direction * hit.distance, Color.red, 5f);
                     return true;
                 }
             } else
             { 
-                Debug.DrawRay(_companionPosition, direction * hit.distance, Color.green, 10f);
+                Debug.DrawRay(_companionPosition, direction * hit.distance, Color.green, 5f);
             }
 
             direction = stepAngle * direction;

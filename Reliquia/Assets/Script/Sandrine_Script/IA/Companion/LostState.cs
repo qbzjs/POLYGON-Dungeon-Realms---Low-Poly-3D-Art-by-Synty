@@ -71,7 +71,7 @@ public class LostState : BaseState
         if (distance <= GameSettings.CompanionPlayerRange)
         {
             //  _companion.StopMoving();
-            _companion.LookAt(transform.right * 3f, GameSettings.SpeedWalking);
+            _companion.LookAtDirection(transform.right * 3f, GameSettings.SpeedWalking);
             _companion.Move(transform.forward * 2f, GameSettings.SpeedWalking);
             return null;
             

@@ -21,7 +21,7 @@ public class GameSettings : MonoBehaviour
     //[SerializeField] private float chaseWaitingTime = 4500;
     public float chaseWaitingTime = 4500;
 
-    public float attackEnemyTimer = 9f;
+    public float attackEnemyTimer = 7f;
 
 
     // Companion Settings
@@ -37,7 +37,7 @@ public class GameSettings : MonoBehaviour
     public float playerLeavingRange = 5f;
 
     //[SerializeField] private float attackRange = 3f;
-    public float companionAttackRange = 3f;
+    public float companionAttackRange = 1f;
 
     public float companionPlayerRange = 3f;
 

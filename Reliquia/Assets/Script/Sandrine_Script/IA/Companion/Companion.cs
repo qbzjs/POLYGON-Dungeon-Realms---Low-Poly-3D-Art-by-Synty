@@ -51,7 +51,7 @@ public class Companion : MonoBehaviour
         // A supprimer
         alphaRenderer = alphaSurface.GetComponent<Renderer>(); // Provisoire Attack Effect
         SetAttackReadyTimer();
-        AttackNumber = 30; // 30;
+        AttackNumber = 500; // 30;
     }
 
     public void DecreaseAttackNumber()
@@ -99,15 +99,16 @@ public class Companion : MonoBehaviour
         GetComponent<StateMachine>().SetStates(states);
     }
 
-    internal void Attack(float speed)
+    internal void LaunchAttack(float speed)
     {
+        //Debug.Log("Companion launch attack");
         NavAgent.isStopped = true;
         Anim.SetBool("Avancer", false);
         Anim.SetBool("Attaque", true);
         NavAgent.speed = speed;
     }
 
-    internal void LookAt(Vector3 lookAtPosition, float speed)
+    internal void LookAtDirection(Vector3 lookAtPosition, float speed)
     {
         Vector3 relativePos = lookAtPosition; // targetPosition - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
@@ -145,6 +146,7 @@ public class Companion : MonoBehaviour
 
     internal void StopMoving()
     {
+        NavAgent.isStopped = false;
         Anim.SetBool("Course", false);
         Anim.SetBool("Avancer", false);
         Anim.SetBool("Reculer", false);

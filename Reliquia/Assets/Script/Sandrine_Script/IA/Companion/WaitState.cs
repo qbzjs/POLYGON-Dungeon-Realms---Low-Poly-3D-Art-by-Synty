@@ -56,7 +56,7 @@ public class WaitState : BaseState
         if (!_companion.Anim.IsInTransition(0) && _companion.Anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             _direction = playerPosition - _companionPosition;
-            _companion.LookAt(_direction, 5f);
+            _companion.LookAtDirection(_direction, 5f);
             
         }
 

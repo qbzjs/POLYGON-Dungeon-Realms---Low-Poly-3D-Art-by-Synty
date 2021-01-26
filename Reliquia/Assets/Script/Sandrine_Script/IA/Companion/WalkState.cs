@@ -44,7 +44,7 @@ public class WalkState : BaseState
         FollowPlayer(); // assigne une nouvelle destination et rotation au compagnon
 
         Vector3 lookAtDirection = _companionPosition + _direction;
-        _companion.LookAt(lookAtDirection, 0.5f);
+        _companion.LookAtDirection(lookAtDirection, 0.5f);
 
         // Si le compagnon arrive trop pres du player
         // Alors return typeof(WaitState);

@@ -3923,11 +3923,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 2356022809863183683, guid: 3566afee9cbbd94498038a92e54effc8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3566afee9cbbd94498038a92e54effc8, type: 3}
 --- !u!1 &1196940295
@@ -4853,14 +4848,14 @@ MonoBehaviour:
   chaseRange: 15
   outOfChaseRange: 20
   chaseWaitingTime: 30
-  attackEnemyTimer: 9
+  attackEnemyTimer: 7
   distanceToWalk: 4.5
   speedWalking: 3
   speedAttackWalking: 3
   followInAttackStateDistance: 2
   playerLeavingRange: 5
-  companionAttackRange: 3
-  companionPlayerRange: 5
+  companionAttackRange: 1
+  companionPlayerRange: 2
   speedRunning: 16
 --- !u!1 &1502861861
 GameObject:

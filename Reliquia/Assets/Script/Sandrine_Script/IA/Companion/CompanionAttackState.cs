@@ -51,6 +51,7 @@ public class CompanionAttackState : BaseState
 
         if (_companion.AttackNumber <= 0 && _attackReadyTimer <= 0f)
         {
+            //Debug.Log("Go to WaitState, AttackNumber <= 0");
             _companion.SetTarget(null);
             return typeof(WaitState);
         }
@@ -67,21 +68,13 @@ public class CompanionAttackState : BaseState
         var distance = Vector3.Distance(_companionPosition, targetPosition);
         var distanceToPlayer = Vector3.Distance(_companionPosition, playerPosition);
 
-        if (distance <= GameSettings.CompanionPlayerRange)
+        //if (distance <= GameSettings.CompanionAttackRange && flagStartAttack == false)
+        if (!flagStartAttack && _companion.NavAgent.remainingDistance < 1.5f)
         {
+            //Debug.Log("Stop Moving");
+            _companion.LookAtDirection(targetPosition - _companionPosition, GameSettings.SpeedAttackWalking);
             _companion.StopMoving();
-        }
 
-
-        //Debug.Log("disatance attack state: " + distance);
-        //Debug.Log("_attackReadyTimer for : " + _companion.Name + " " + _attackReadyTimer);
-        //Debug.Log("IsAttacking ? " + _companion.IsAttacking());
-
-        if (distance <= GameSettings.CompanionAttackRange )
-        {
-            
-            _companion.LookAt(targetPosition - _companionPosition, GameSettings.SpeedAttackWalking);
-            _companion.StopMoving();
         }
 
         checkAttackTurn = false;
@@ -99,35 +92,48 @@ public class CompanionAttackState : BaseState
             _companion.flagAttack = true;
             //Debug.Log("start attack for : " + _companion.Name);
             lastPosition = _companionPosition;
-            Vector3 attackPosition = _companionPosition + (targetPosition - _companionPosition) / 2;
 
+            targetPosition = _companion.Target.position;
+            _companionPosition = _companion.transform.position;
             Vector3 relativePos = targetPosition - _companionPosition;  // 
-            _companion.LookAt(relativePos, 10f);
+            _companion.LookAtDirection(relativePos, 10f);
 
-            //_companion.Move(attackPosition, GameSettings.SpeedAttackWalking);
+            // Se déplacer jusqu'à l'ennemi :
+
+            Vector3 spacePosition = Vector3.Normalize(targetPosition - _companionPosition);
+            _companion.Move(targetPosition, GameSettings.SpeedAttackWalking); //_companionPosition + 2 * spacePosition
 
             flagStartAttack = true;
-
-            // Set enemy targeted : déjà fait dans le prepare to attack
-            _companion.Attack(10f);
-            
             _attackReadyTimer = _companion.AttackReadyTimer;
-            //return null;
+
+
 
         }
-        if (_attackReadyTimer <= _companion.AttackReadyTimer - 3f && flagStartAttack)
+
+        if (flagStartAttack && _companion.NavAgent.remainingDistance < 1.5f)
         {
-            //Debug.Log("stop attack for : " + _companion.Name);
-            _companion.flagAttack = false;
-            _companion.StopAttack();
-            
-            flagStartAttack = false;
-            _companion.DecreaseAttackNumber();
+            if (_attackReadyTimer <= _companion.AttackReadyTimer - 5f)
+            {
+                //Debug.Log("stop attack for : " + _companion.Name);
+                _companion.flagAttack = false;
+                _companion.StopAttack();
+
+                flagStartAttack = false;
+                _companion.DecreaseAttackNumber();
+            }
+            else if (distance <= GameSettings.CompanionAttackRange)
+            {
+                //Debug.Log("LaunchAttack");
+                // Set enemy targeted : déjà fait dans le prepare to attack
+                _companion.LaunchAttack(10f);
+
+                //_attackReadyTimer = _companion.AttackReadyTimer;
+                //return null;
+            }
+
         }
 
-         
-
-        // Si le joeur sort de la zone d'attaque
+        // Si le joueur sort de la zone d'attaque
         // Retour à l'état Chase
         if (!_companion.IsAttacking() && distanceToPlayer > GameSettings.PlayerLeavingRange)
         {
@@ -142,7 +148,7 @@ public class CompanionAttackState : BaseState
         if (distance >= 5f ) // To Replace GameSettings.FollowInAttackStateDistance) //2f
         {
             Vector3 relativePos = targetPosition - _companionPosition;// - _companionPosition;
-            _companion.LookAt(relativePos, 10f);
+            _companion.LookAtDirection(relativePos, 10f);
 
             _companion.Move(targetPosition, GameSettings.SpeedAttackWalking); //3f
 

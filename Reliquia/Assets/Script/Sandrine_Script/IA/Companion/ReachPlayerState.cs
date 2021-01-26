@@ -33,7 +33,7 @@ public class ReachPlayerState : BaseState
 
         if (distance >= 10f)
         {
-            Debug.Log("Go to walkState 6");
+            //Debug.Log("Go to walkState 6");
             return typeof(WalkState);
         }
 
@@ -42,7 +42,7 @@ public class ReachPlayerState : BaseState
         // Alors return typeof(WaitState);
         if (distance <= GameSettings.DistanceToWalk) // || distance < GameSettings.DistanceToWalk
         {
-            Debug.Log("Go to WaitState 10");
+            //Debug.Log("Go to WaitState 10");
             return typeof(WaitState);
 
         }
@@ -75,7 +75,7 @@ public class ReachPlayerState : BaseState
 
         if (_companion.NavAgent.remainingDistance <= 1f && _companion.NavAgent.remainingDistance != 0)
         {
-            Debug.Log("Go to WaitState 6");
+            //Debug.Log("Go to WaitState 6");
             return typeof(WaitState);
         }
 
@@ -83,7 +83,7 @@ public class ReachPlayerState : BaseState
         // Alors return typeof(WaitState);
         if (_companion.NavAgent.remainingDistance <= 2f && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // playerLastPosition == playerPosition || distance < GameSettings.DistanceToWalk
         {
-            Debug.Log("Go to WaitState 7 ");
+            //Debug.Log("Go to WaitState 7 ");
             _companion.Move(playerPosition, GameSettings.SpeedWalking);
             return typeof(WaitState);
 

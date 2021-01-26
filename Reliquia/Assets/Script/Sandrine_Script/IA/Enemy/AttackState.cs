@@ -8,10 +8,9 @@ public class AttackState : BaseState
     public Enemy _enemy;
     private Vector3 _enemyPosition;
 
-    private float _attackReadyTimer = 5f;
+    private float _attackReadyTimer = 3f;
 
     private Vector3 targetPosition;
-    private bool checkAttackTurn;
     private bool flagStartAttack;
 
     public AttackState(Enemy enemy) : base(enemy.gameObject)
@@ -35,9 +34,15 @@ public class AttackState : BaseState
         Vector3 relativePos = targetPosition - _enemyPosition;
         _enemy.LookAt(relativePos, 10f);
 
-        if (distance <= GameSettings.AttackRange)
+        if (distance <= GameSettings.AttackRange && flagStartAttack == false)
         {
             _enemy.StopMoving();
+        }
+
+        if (_enemy.NavAgent.remainingDistance <= 0.5f)
+        {
+            _enemy.ResetTargets();
+            return typeof(ReturnState);
         }
 
         Companion companion = _enemy.Target.GetComponent<Companion>();
@@ -46,27 +51,26 @@ public class AttackState : BaseState
             _enemy.ResetTargets();
             return typeof(WanderState);
         }
-        // Remplace        
-        //Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10f);
+
         _attackReadyTimer -= Time.deltaTime;
 
-        checkAttackTurn = false;
-        // A faire : l'IA Attaque (animation, dégats ...)
-        //if (_attackReadyTimer <= 0f)
-        //{
-        //    checkAttackTurn = CheckForAttack();
-        //}
-
-        if (_attackReadyTimer <= 0f) // checkAttackTurn
+        // Position l'enemy pres de sa cible
+        if (_attackReadyTimer <= 0f) 
         {
             flagStartAttack = true;
-            _enemy.LaunchAttack();
+            Vector3 spacePosition = Vector3.Normalize(targetPosition - _enemyPosition);
+            _enemy.Move(targetPosition, GameSettings.SpeedAttackWalking); //_enemyPosition + spacePosition
             _attackReadyTimer = GameSettings.AttackEnemyTimer;
         }
-        
 
+        // Arrivé à destination lancé l'attaque
+        if (_enemy.NavAgent.remainingDistance < 1f && flagStartAttack == true)
+        {
+            _enemy.LaunchAttack();
+            
+        }
 
+        // Après 2s arrêter l'attaque
         if (_attackReadyTimer <= GameSettings.AttackEnemyTimer - 3f && flagStartAttack)
         {
             //Debug.Log("stop attack for : Enemy");
@@ -86,27 +90,5 @@ public class AttackState : BaseState
         //_enemy.StopMoving();
         return null;
     }
-
-    private bool CheckForAttack()
-    {
-        // check si la cible attaque 
-        Transform target = _enemy.Target;
-        Animator targetAnim = target.GetComponent<Animator>();
-        //Animator targetAnim = target.GetComponentInParent<Animator>();
-
-        //Debug.Log("Component  Animator " + targetCompanion);
-        //Debug.Log("Component Animator in Parent" + targetAnim);
-
-        if (!targetAnim.IsInTransition(0) && targetAnim.GetCurrentAnimatorStateInfo(0).IsName("Punching"))
-        {
-            //Debug.Log("Compagnon attaque return false");
-            return false;
-        }
-        // Si non => attaquer
-        // Si oui attendre.
-        //DebugDebug.Log("Enemy can attack return true");
-        return true;
-    }
-
 
 }

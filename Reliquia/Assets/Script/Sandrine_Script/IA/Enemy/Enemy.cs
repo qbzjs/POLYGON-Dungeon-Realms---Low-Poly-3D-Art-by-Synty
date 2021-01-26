@@ -152,7 +152,6 @@ public class Enemy : MonoBehaviour
         {
             Anim.SetBool(animation, true);
         }
-        
         NavAgent.SetDestination(destination);
     }
 
