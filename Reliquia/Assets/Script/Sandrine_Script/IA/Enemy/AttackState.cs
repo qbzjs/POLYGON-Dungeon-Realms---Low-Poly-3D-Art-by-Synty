@@ -13,6 +13,10 @@ public class AttackState : BaseState
     private Vector3 targetPosition;
     private bool flagStartAttack;
 
+    private Quaternion startingAngle = Quaternion.AngleAxis(-90, Vector3.up);
+    private Quaternion stepAngle = Quaternion.AngleAxis(10, Vector3.up);
+
+
     public AttackState(Enemy enemy) : base(enemy.gameObject)
     {
         _enemy = enemy;
@@ -49,14 +53,32 @@ public class AttackState : BaseState
         if (companion != null && companion.AttackNumber <= 0)
         {
             _enemy.ResetTargets();
+            _enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
             return typeof(WanderState);
         }
 
+        // Si la target sort de la zone d'attaque
+        // Retour Ã  l'Ã©tat Chase
+        if (distance > GameSettings.AttackRange)
+        {
+            Debug.Log("attackstate 6");
+            //Debug.Log("Go to ChaseState 1");
+            //_enemy.SetTarget(null);
+
+            _enemy.StopAttack();
+            _enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
+            return typeof(ChaseState);
+        }
+
+
+        Debug.Log("attackstate 2");
         _attackReadyTimer -= Time.deltaTime;
 
         // Position l'enemy pres de sa cible
         if (_attackReadyTimer <= 0f) 
         {
+            Debug.Log("attackstate 3");
+            CheckIfNeedToChangeTarget();
             flagStartAttack = true;
             Vector3 spacePosition = Vector3.Normalize(targetPosition - _enemyPosition);
             _enemy.Move(targetPosition, GameSettings.SpeedAttackWalking); //_enemyPosition + spacePosition
@@ -78,17 +100,52 @@ public class AttackState : BaseState
             flagStartAttack = false;
         }
 
-        // Si le joeur sort de la zone d'attaque
-        // Retour à l'état Chase
-        if (distance > GameSettings.AttackRange)
-        {
-            //Debug.Log("Go to ChaseState 1");
-            //_enemy.SetTarget(null);
-            return typeof(ChaseState);
-        }
 
         //_enemy.StopMoving();
         return null;
     }
 
+     private void CheckIfNeedToChangeTarget()
+    {
+        Debug.Log("CheckIfNeedToChangeTarget");
+        RaycastHit hit;
+        Quaternion angle = transform.rotation * startingAngle;
+        Vector3 direction = angle * Vector3.forward;
+        Vector3 rayOrigine = _enemyPosition + Vector3.up;
+        Companion companionChaser = null;
+        bool isAnotherEnemyInThePlace = false;
+
+        for (var i = 0; i < 50; i++)
+        {
+            if (Physics.Raycast(rayOrigine, direction, out hit, GameSettings.AggroRadius))
+            {
+                Debug.DrawRay(rayOrigine, direction, Color.magenta, 5f);
+                var target = hit.transform;
+                Enemy enemyDetected = target.GetComponent<Enemy>();
+                Companion companionDetected = target.GetComponent<Companion>();
+                Debug.Log("target is : " + target);
+                if (target != null && companionDetected != null && companionDetected.Target == _enemy.transform)
+                {
+                    Debug.Log("Companion detected");
+                    companionChaser = companionDetected;
+                }
+                if (target != null && enemyDetected != null) //  enemy.Team != gameObject.GetComponent<Enemy>().Team
+                {
+                    Debug.Log("Enemy detected");
+                    isAnotherEnemyInThePlace = true;
+
+                }
+
+            }
+            direction = stepAngle * direction;
+        }
+
+        if (isAnotherEnemyInThePlace && companionChaser != null)
+        {
+            Debug.Log("Change Target for : " + companionChaser);
+            _enemy.SetChaser(companionChaser.transform);
+            _enemy.SetTarget(companionChaser.transform);
+
+        }
+    }
 }

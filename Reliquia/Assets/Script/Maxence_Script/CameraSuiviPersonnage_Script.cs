@@ -51,6 +51,17 @@ public class CameraSuiviPersonnage_Script : MonoBehaviour
             cameraTransform.rotation = Quaternion.Euler(9.5f, currentX, 0);
 
             if (mouvementWilliam.enMouvement) Personnage.localRotation = rotation;
+
+        }
+
+
+         RaycastHit hitInfo;
+        Vector3 originLine = mouvementWilliam.transform.position + Vector3.up * 2;
+        if (Physics.Linecast(originLine, cameraTransform.position, out hitInfo))
+        {
+
+            cameraTransform.position = new Vector3(hitInfo.point.x, cameraTransform.position.y, hitInfo.point.z);
+
         }
     }
 }

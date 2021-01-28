@@ -68,6 +68,13 @@ public class CompanionAttackState : BaseState
         var distance = Vector3.Distance(_companionPosition, targetPosition);
         var distanceToPlayer = Vector3.Distance(_companionPosition, playerPosition);
 
+        if (flagStartAttack && distance > 1.5f)
+        {
+            _companion.StopAttack();
+            Vector3 spacePosition = Vector3.Normalize(targetPosition - _companionPosition);
+            _companion.Move(targetPosition, GameSettings.SpeedAttackWalking); //_companionPosition + 2 * spacePosition
+        }
+
         //if (distance <= GameSettings.CompanionAttackRange && flagStartAttack == false)
         if (!flagStartAttack && _companion.NavAgent.remainingDistance < 1.5f)
         {
