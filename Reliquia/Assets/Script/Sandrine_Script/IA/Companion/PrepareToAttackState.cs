@@ -57,8 +57,11 @@ public class PrepareToAttackState : BaseState
             return null;
         }
 
-        chaseTarget = CheckForAggro();
-        _companion.SetTarget(chaseTarget);
+         if (_companion.Target == null)
+        {
+            chaseTarget = CheckForAggro();
+            _companion.SetTarget(chaseTarget);
+        }
 
         if (_companion.Target != null)
         {
@@ -99,10 +102,22 @@ public class PrepareToAttackState : BaseState
                 return typeof(WaitState);
             }
 
-            _companion.LookAtDirection(targetPosition - _companionPosition, GameSettings.SpeedWalking); // 
+           }
 
-            //Debug.Log("Go to Companion Attack State");
-            return typeof(CompanionAttackState);
+        if (_companion.Target != null)
+        {
+
+
+            Vector3 spaceDestination = _companion.Target.position - (playerPosition - _companion.Target.position);
+            _companion.Move(spaceDestination, GameSettings.SpeedWalking);
+
+            if (_companion.NavAgent.remainingDistance < 2f)
+            {
+                _companion.LookAtDirection(targetPosition - _companionPosition, GameSettings.SpeedWalking);
+
+                return typeof(CompanionAttackState);
+            }
+            return null;
         }
 
         //Debug.Log("Go to WaitState, target is null");
@@ -149,6 +164,7 @@ public class PrepareToAttackState : BaseState
         //Transform targetTempPlay = null;
         Vector3 raySource = _companionPosition + Vector3.up * 0.5f;
         playerTarget = false;
+        bool beTheTarget = false;
 
         for (var i = 0; i < 90; i++)
         {
@@ -160,7 +176,7 @@ public class PrepareToAttackState : BaseState
                 if (target != null && null != target.GetComponent<Enemy>()) 
                 {
                     Debug.DrawRay(raySource, direction * hit.distance, Color.red);
-                    Enemy enemy = target.GetComponent<Enemy>();
+                    Enemy enemyDetected = target.GetComponent<Enemy>();
                     // si l'ennemi est déjà la cible d'un compagnon ou du joueur, alors on cherche un autre ennemi
 
                     //if (enemy.Chaser == null)
@@ -180,17 +196,18 @@ public class PrepareToAttackState : BaseState
                             if (playerTarget == false)
                             {
                             //Debug.Log("1er enemy, je sette ma target " + enemy.transform);
-                                targetTemp = enemy.transform;
+                                targetTemp = enemyDetected.transform;
                                 playerTarget = true;
-                                enemy.SetChaser(_companion.Player);
+                                enemyDetected.SetChaser(_companion.Player);
                                 break;
                             }
-                            if (playerTarget == true && targetTemp != enemy.transform)
+                            if (playerTarget == true && targetTemp != enemyDetected.transform)
                             {
                             //Debug.Log("2e enemy, je set ma target et le chasseur de l'enemy " + enemy.transform);
-                            enemy.SetChaser(transform);
-                            enemy.SetTarget(transform);
-                                targetTemp = enemy.transform;
+                            enemyDetected.SetChaser(_companion.transform);
+                            enemyDetected.SetTarget(_companion.transform);
+                                targetTemp = enemyDetected.transform;
+								beTheTarget = true;
                                 //enemy.SetTarget(transform);
                                 break;
                             }
