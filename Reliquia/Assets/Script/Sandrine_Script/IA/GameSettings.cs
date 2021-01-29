@@ -13,31 +13,38 @@ public class GameSettings : MonoBehaviour
     //[SerializeField] private float aggroRadius = 20f;
     public float aggroRadius = 20f;
     //[SerializeField] private float attackRange = 3f;
-    public float attackRange = 5f;
+    public float attackRange = 3f;
     //[SerializeField] private float chaseRange = 15f;
-    public float chaseRange = 30f;
+    public float chaseRange = 10f;
     //[SerializeField] private float outOfChaseRange = 20f;
     public float outOfChaseRange = 30f;
     //[SerializeField] private float chaseWaitingTime = 4500;
     public float chaseWaitingTime = 4500;
 
+    public float attackEnemyTimer = 7f;
+
 
     // Companion Settings
     //[SerializeField] private float distanceToWalk = 4f;
-    public float distanceToWalk = 3.5f;
+    public float distanceToWalk = 4.5f;
 
-    public float speedWalking = 5f;
+    public float speedWalking = 3f; //5f;
 
     public float speedAttackWalking = 3f;
 
-    public float companionAttackRange = 2f;
+    public float followInAttackStateDistance = 3f;
 
-    public float followInAttackStateDistance = 2f;
+    public float playerLeavingRange = 5f;
+
+    //[SerializeField] private float attackRange = 3f;
+    public float companionAttackRange = 1f;
+
+    public float companionPlayerRange = 3f;
 
 
     // Compagnon et Ennemi 
     //[SerializeField] 
-    public float speedRunning = 16f; 
+    public float speedRunning = 16f; //16f; 
 
 
     public static GameSettings Instance { get; private set; }
@@ -53,7 +60,11 @@ public class GameSettings : MonoBehaviour
     public static float SpeedWalking => Instance.speedWalking;
     public static float SpeedAttackWalking => Instance.speedAttackWalking;
     public static float CompanionAttackRange => Instance.companionAttackRange;
+    public static float CompanionPlayerRange => Instance.companionPlayerRange;
     public static float FollowInAttackStateDistance => Instance.followInAttackStateDistance;
+    public static float AttackEnemyTimer => Instance.attackEnemyTimer;
+
+    public static float PlayerLeavingRange => Instance.playerLeavingRange;
 
     private void Awake()
     {

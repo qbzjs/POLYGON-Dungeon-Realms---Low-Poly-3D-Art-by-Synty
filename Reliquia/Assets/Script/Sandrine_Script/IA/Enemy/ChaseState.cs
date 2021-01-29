@@ -23,14 +23,18 @@ public class ChaseState : BaseState
     public override Type Tick()
     {
         if (_enemy.Target == null)
+        {
+            _enemy.SetChaser(null);
             return typeof(WanderState);
+        }
+            
 
         // Assigne la position de l'ennemi
         _enemyPosition = _enemy.transform.position;
 
         targetLastPosition = targetPosition;
         targetPosition = _enemy.Target.position;
-        targetSpeed = Vector3.Distance(targetPosition, targetLastPosition) / Time.deltaTime;
+        //targetSpeed = Vector3.Distance(targetPosition, targetLastPosition) / Time.deltaTime;
 
         _enemy.NavAgent.speed = _enemy.EnemyChaseSpeed;
 
@@ -39,7 +43,7 @@ public class ChaseState : BaseState
         // L'unique cas dans cet état où elle peut rejoindre sa destination.
         if (_enemy.NavAgent.remainingDistance <= 0.5f)
         {
-            _enemy.SetTarget(null);
+            _enemy.ResetTargets();
             return typeof(ReturnState);
         }
         // Suivre la cible
@@ -47,7 +51,7 @@ public class ChaseState : BaseState
 
         _enemy.LookAt(_direction, 0.5f);
 
-        _enemy.Move(_destination, GameSettings.SpeedWalking);
+        _enemy.Move(_destination, _enemy.EnemyChaseSpeed); // GameSettings.SpeedWalking);
 
         var distance = Vector3.Distance(_enemyPosition, _enemy.Target.position);
 
@@ -63,26 +67,32 @@ public class ChaseState : BaseState
         // le joeur n'est plus la cible de l'IA.
         if (distance > GameSettings.ChaseRange) 
         {
-            _enemy.SetTarget(null);
-            return null;
+            //_enemy.SetTarget(null);
+            //return null;
+            // Plutôt
+            //Debug.Log("Go to ReturnState");
+            _enemy.ResetTargets();
+            return typeof(ReturnState);
         }
 
         // si le joueur se cache
         // le joeur n'est plus la cible de l'IA
         if (seekCounter >= GameSettings.ChaseWaintingTime && false == CheckToContinue()) // Check if target hide.
         {
-            _enemy.SetTarget(null);
-            
+            //Debug.Log("Go to WanderState");
+            _enemy.ResetTargets();
+
             return null;
         }
 
-        // si le player court alors compagnon cours aussi
-        if (targetSpeed >= GameSettings.SpeedRunning - 5)
-        {
-            _enemy.Move(_destination, GameSettings.SpeedRunning, "Course");
-            return null;
+        // Non l'ennemi ne court pas.
+        //// si le player court alors compagnon cours aussi
+        //if (targetSpeed >= GameSettings.SpeedRunning - 5)
+        //{
+        //    _enemy.Move(_destination, GameSettings.SpeedRunning, "Course");
+        //    return null;
 
-        }
+        //}
 
         _enemy.Anim.SetBool("Course", false);
         seekCounter++; // compteur utilisé pour la fonction CheckToContinue
