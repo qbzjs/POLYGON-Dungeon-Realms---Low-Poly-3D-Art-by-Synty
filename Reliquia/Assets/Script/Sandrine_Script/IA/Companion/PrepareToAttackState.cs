@@ -25,6 +25,11 @@ public class PrepareToAttackState : BaseState
     public override Type Tick()
     {
         //Debug.Log("PrepareToAttackState");
+
+        if (_companion.AttackNumber <= 0)
+        {
+            return typeof(WalkState);
+        }
         
         _companionLastPosition = _companion.transform.position;
         _companionPosition = _companion.transform.position;
@@ -41,20 +46,24 @@ public class PrepareToAttackState : BaseState
         }
 
         // Le compagnon est trop proche du joueur, il se déplace
+        // Pe ajouter une contrainte pour le return null => ano. marche dans le vide 
         if (distance <= GameSettings.CompanionPlayerRange)
         {
-           
-            Vector3 destination = Vector3.forward + Vector3.right;
+            //Debug.Log("Compagnon trop proche");
+            Vector3 destination = _companion.transform.forward + _companion.transform.right;
+            _companion.LookAtDirection(destination - _companionPosition, GameSettings.SpeedWalking);
             _companion.Move(destination, GameSettings.SpeedWalking);
-            return null;
+            //return null;
         }
 
-        // Lorsqu'il est déplacé il s'arrête
+        // Lorsqu'il est déplacé il s'arrête 
+        // Pe ajouter une contrainte pour le return null
         if(_companion.NavAgent.remainingDistance < 0.5f)
         {
+            //Debug.Log("Compa arrivé à destination");
             // _companion.SetTarget(null);
             _companion.StopMoving();
-            return null;
+            //return null;
         }
 
          if (_companion.Target == null)
@@ -65,16 +74,24 @@ public class PrepareToAttackState : BaseState
 
         if (_companion.Target != null)
         {
+            //Debug.Log("Got Target");
             targetPosition = _companion.Target.position;
             Enemy enemy = _companion.Target.GetComponent<Enemy>();
+            float distanceToTarget = Vector3.Distance(targetPosition, _companionPosition);
 
             _companion.LookAtDirection(targetPosition - _companionPosition, 10f);
 
             isPlayerBlock = checkBeInTheWayOfPlayer();
             //Debug.Log("isPlayerBlock : " + isPlayerBlock);
             // Si le joueur est situé entre la target et le compagnon, le compagnon s'arrête.
-            if (isPlayerBlock)
+            if (isPlayerBlock && distanceToTarget >= distance)
             {
+
+                _companion.SetTarget(null);
+                
+                //Debug.Log("Go to WaitState, player in the way");
+                return typeof(WaitState);
+                /// Provoque des bugs et inutile ou traiter le déplacement autrement
                 //Debug.Log("checkBeInTheWayOfPlayer");
                 Vector3 newDestination = playerPosition + UnityEngine.Random.insideUnitSphere;// _companion.transform.right; // * 2f
                 //Debug.Log("newDestination : " + newDestination);
@@ -107,14 +124,17 @@ public class PrepareToAttackState : BaseState
         if (_companion.Target != null)
         {
 
-
+            //Debug.Log("Move to Target with a space destination");
             Vector3 spaceDestination = _companion.Target.position - (playerPosition - _companion.Target.position);
+            _companion.LookAtDirection(spaceDestination - _companionPosition, GameSettings.SpeedWalking);
+            //_companion.LookAtDirection(spaceDestination, GameSettings.SpeedWalking);
+            //_companion.LookAtDirection(_companionPosition - spaceDestination, GameSettings.SpeedWalking);
             _companion.Move(spaceDestination, GameSettings.SpeedWalking);
 
-            if (_companion.NavAgent.remainingDistance < 2f)
+            if (_companion.NavAgent.remainingDistance < 1f)
             {
                 _companion.LookAtDirection(targetPosition - _companionPosition, GameSettings.SpeedWalking);
-
+                //Debug.Log("Go to CompanionAttackState");
                 return typeof(CompanionAttackState);
             }
             return null;
@@ -179,21 +199,21 @@ public class PrepareToAttackState : BaseState
                     Enemy enemyDetected = target.GetComponent<Enemy>();
                     // si l'ennemi est déjà la cible d'un compagnon ou du joueur, alors on cherche un autre ennemi
 
-                    //if (enemy.Chaser == null)
+                    //if (enemyDetected.Chaser == null)
                     //{
-                    //    enemy.SetChaser(transform);
+                    //    enemyDetected.SetChaser(transform);
                     //    return target.transform;
                     //}
                     //else
                     //{
-                    //Debug.Log("enemy is " + enemy.transform);
+                    //Debug.Log("enemy is " + enemyDetected.transform);
                     //Debug.Log("targetTemp is " + targetTemp);
                     // inutile
-                    //    if (enemy.Target == _companion.Player) //enemy.Chaser == _companion.Player
+                    //    if (enemyDetected.Target == _companion.Player) //enemy.Chaser == _companion.Player
                     //{
-                            //targetTempPlay = enemy.transform;
-                            // 1er ennemi target du player, conserve l'ennemi en cible temp
-                            if (playerTarget == false)
+                    //targetTempPlay = enemy.transform;
+                    // 1er ennemi target du player, conserve l'ennemi en cible temp
+                    if (playerTarget == false)
                             {
                             //Debug.Log("1er enemy, je sette ma target " + enemy.transform);
                                 targetTemp = enemyDetected.transform;
@@ -201,7 +221,8 @@ public class PrepareToAttackState : BaseState
                                 enemyDetected.SetChaser(_companion.Player);
                                 break;
                             }
-                            if (playerTarget == true && targetTemp != enemyDetected.transform)
+                            //Si j'ai déja un annemi sur le joueur et que j'ai détecté un autre ennemi et que sa target n'est pas l'autre companion
+                            if (playerTarget == true && targetTemp != enemyDetected.transform && enemyDetected.Target.GetComponent<Companion>() == null)
                             {
                             //Debug.Log("2e enemy, je set ma target et le chasseur de l'enemy " + enemy.transform);
                             enemyDetected.SetChaser(_companion.transform);

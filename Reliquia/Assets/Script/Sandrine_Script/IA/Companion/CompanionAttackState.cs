@@ -25,6 +25,12 @@ public class CompanionAttackState : BaseState
     private bool flagStartAttack;
     private bool playerTarget;
 
+    private Vector3 _destination;
+    private Vector3 _relativePos;
+    private Vector3 _directionArrival;
+    private Vector3 _spacePosition;
+    private float _distanceRecorded = 0;
+
     private Quaternion startingAngle = Quaternion.AngleAxis(-135, Vector3.up);
     private Quaternion stepAngle = Quaternion.AngleAxis(5, Vector3.up);
 
@@ -37,7 +43,7 @@ public class CompanionAttackState : BaseState
 
     public override Type Tick()
     {
-        //Debug.Log("Companion AttackState");
+        //Debug.Log(this);
         if (_attackReadyTimer == 1000f)
         {
             _attackReadyTimer = _companion.AttackReadyTimer - 5f;
@@ -52,11 +58,32 @@ public class CompanionAttackState : BaseState
         if (_companion.AttackNumber <= 0 && _attackReadyTimer <= 0f)
         {
             //Debug.Log("Go to WaitState, AttackNumber <= 0");
+            Enemy enemyCompanion = _companion.Target.GetComponent<Enemy>();
+            if (enemyCompanion != null && enemyCompanion.Target == _companion.transform)
+            {
+                enemyCompanion.SetTarget(null);
+            }
+            if (enemyCompanion != null && enemyCompanion.Chaser == _companion.transform)
+            {
+                enemyCompanion.SetChaser(null);
+            }
             _companion.SetTarget(null);
             return typeof(WaitState);
         }
+        Vector3 test =  _companionPosition - targetPosition;
 
+
+        _directionArrival = targetPosition - _companionPosition;
         
+        _spacePosition = targetPosition - _companionPosition;
+        _relativePos = Vector3.Normalize(targetPosition + _companionPosition);
+        if (targetPosition.x < _companionPosition.x)
+        {
+            _relativePos = Vector3.Normalize(targetPosition - _companionPosition);
+        }
+        _destination = targetPosition;
+        
+
         // Assignation des positions
         _companionPosition = _companion.transform.position;
         targetPosition = _companion.Target.transform.position;
@@ -67,19 +94,20 @@ public class CompanionAttackState : BaseState
 
         var distance = Vector3.Distance(_companionPosition, targetPosition);
         var distanceToPlayer = Vector3.Distance(_companionPosition, playerPosition);
+        
 
         if (flagStartAttack && distance > 1.5f)
         {
             _companion.StopAttack();
-            Vector3 spacePosition = Vector3.Normalize(targetPosition - _companionPosition);
-            _companion.Move(targetPosition, GameSettings.SpeedAttackWalking); //_companionPosition + 2 * spacePosition
+            _companion.LookAtDirection(_relativePos, GameSettings.SpeedAttackWalking);
+            _companion.Move(_destination, GameSettings.SpeedAttackWalking); //_companionPosition + 2 * spacePosition
         }
 
         //if (distance <= GameSettings.CompanionAttackRange && flagStartAttack == false)
         if (!flagStartAttack && _companion.NavAgent.remainingDistance < 1.5f)
         {
             //Debug.Log("Stop Moving");
-            _companion.LookAtDirection(targetPosition - _companionPosition, GameSettings.SpeedAttackWalking);
+            _companion.LookAtDirection(_directionArrival, GameSettings.SpeedAttackWalking);
             _companion.StopMoving();
 
         }
@@ -96,19 +124,18 @@ public class CompanionAttackState : BaseState
 
         if (checkAttackTurn && _attackReadyTimer <= 0f) 
         {
+            _companion.StopMoving();
             _companion.flagAttack = true;
             //Debug.Log("start attack for : " + _companion.Name);
             lastPosition = _companionPosition;
 
             targetPosition = _companion.Target.position;
             _companionPosition = _companion.transform.position;
-            Vector3 relativePos = targetPosition - _companionPosition;  // 
-            _companion.LookAtDirection(relativePos, 10f);
+            _companion.LookAtDirection(_directionArrival, 10f);
 
             // Se déplacer jusqu'à l'ennemi :
 
-            Vector3 spacePosition = Vector3.Normalize(targetPosition - _companionPosition);
-            _companion.Move(targetPosition, GameSettings.SpeedAttackWalking); //_companionPosition + 2 * spacePosition
+            _companion.Move(_destination, GameSettings.SpeedAttackWalking); //_companionPosition + 2 * spacePosition
 
             flagStartAttack = true;
             _attackReadyTimer = _companion.AttackReadyTimer;
@@ -119,11 +146,13 @@ public class CompanionAttackState : BaseState
 
         if (flagStartAttack && _companion.NavAgent.remainingDistance < 1.5f)
         {
-            if (_attackReadyTimer <= _companion.AttackReadyTimer - 5f)
+            _companion.LookAtDirection(_directionArrival, 10f);
+            if (_attackReadyTimer <= _companion.AttackReadyTimer - 5f || _distanceRecorded - distance > 0.5f)
             {
                 //Debug.Log("stop attack for : " + _companion.Name);
                 _companion.flagAttack = false;
                 _companion.StopAttack();
+                _distanceRecorded = 0;
 
                 flagStartAttack = false;
                 _companion.DecreaseAttackNumber();
@@ -133,7 +162,7 @@ public class CompanionAttackState : BaseState
                 //Debug.Log("LaunchAttack");
                 // Set enemy targeted : déjà fait dans le prepare to attack
                 _companion.LaunchAttack(10f);
-
+                _distanceRecorded = distance;
                 //_attackReadyTimer = _companion.AttackReadyTimer;
                 //return null;
             }
@@ -152,12 +181,12 @@ public class CompanionAttackState : BaseState
         }
 
         // Suivre l'ennemi et continuer à attaquer
-        if (distance >= 5f ) // To Replace GameSettings.FollowInAttackStateDistance) //2f
+        if (distance >= 3f ) // To Replace GameSettings.FollowInAttackStateDistance) //2f
         {
-            Vector3 relativePos = targetPosition - _companionPosition;// - _companionPosition;
-            _companion.LookAtDirection(relativePos, 10f);
+            _companion.StopMoving();
+            _companion.LookAtDirection(_relativePos, 10f);
 
-            _companion.Move(targetPosition, GameSettings.SpeedAttackWalking); //3f
+            _companion.Move(_destination, GameSettings.SpeedAttackWalking); //3f
 
         }
 
@@ -194,6 +223,7 @@ public class CompanionAttackState : BaseState
                         //
                         _companion.Target.GetComponent<Enemy>().SetTarget(transform);
                         _companion.Target.GetComponent<Enemy>().SetChaser(transform);
+
                         //Debug.Log("CheckNewEnemy Yes : tragetTemp & enemy.transform : " + targetTemp + " " + enemyCast.transform);
                         return;
                     }

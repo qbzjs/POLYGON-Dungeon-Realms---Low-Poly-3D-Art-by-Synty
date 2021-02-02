@@ -22,6 +22,7 @@ public class WalkState : BaseState
 
     public override Type Tick()
     {
+        //Debug.Log(this);
         _companionLastPosition = _companion.transform.position;
         _companionPosition = _companion.transform.position;
         _companion.StopAttack();
@@ -65,6 +66,7 @@ public class WalkState : BaseState
         // si le player court alors compagnon cours aussi
         if ( _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Running"))
         {
+            _companion.LookAtDirection(_direction, GameSettings.SpeedWalking);
             _companion.Move(_destination, GameSettings.SpeedRunning, "Course");
             return null;
 
@@ -73,6 +75,7 @@ public class WalkState : BaseState
         {
             // Par défaut
             float speed = GameSettings.SpeedWalking; // + Vector3.Distance(_destination, _companionPosition) / (Time.deltaTime * 20f);
+            _companion.LookAtDirection(_direction, GameSettings.SpeedWalking);
             _companion.Move(_destination, speed);
         }
 

@@ -4844,18 +4844,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   aggroRadius: 20
-  attackRange: 3
+  attackRange: 5
   chaseRange: 15
   outOfChaseRange: 20
   chaseWaitingTime: 30
-  attackEnemyTimer: 7
+  attackEnemyTimer: 6
   distanceToWalk: 4.5
   speedWalking: 3
   speedAttackWalking: 3
   followInAttackStateDistance: 2
-  playerLeavingRange: 5
-  companionAttackRange: 1
-  companionPlayerRange: 2
+  playerLeavingRange: 10
+  companionAttackRange: 3
+  companionPlayerRange: 3
   speedRunning: 16
 --- !u!1 &1502861861
 GameObject:
@@ -6383,7 +6383,7 @@ PrefabInstance:
     - target: {fileID: 3389811491461491816, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
         type: 3}
       propertyPath: m_Constraints
-      value: 84
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 3389811491461491816, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
         type: 3}

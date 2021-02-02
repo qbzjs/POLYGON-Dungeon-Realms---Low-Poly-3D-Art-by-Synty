@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour
             {typeof(WanderState), new WanderState(enemy: this) },
             {typeof(ReturnState), new ReturnState(enemy: this) },
             {typeof(ChaseState), new ChaseState(enemy: this) },
+            {typeof(ChasePlayerState), new ChasePlayerState(enemy: this) },
             {typeof(AttackState), new AttackState(enemy: this) }
         };
 
@@ -126,14 +127,7 @@ public class Enemy : MonoBehaviour
         SetChaser(null);
     }
 
-    //public void SetPlayerTarget(bool value)
-    //{
-    //    playerTarget = value;
-    //}
-
-
-
-    internal void LookAt(Vector3 lookAtPosition, float speed)
+    internal void LookAtDirection(Vector3 lookAtPosition, float speed)
     {
         Vector3 relativePos = lookAtPosition; // targetPosition - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
@@ -142,6 +136,7 @@ public class Enemy : MonoBehaviour
 
     internal void Move(Vector3 destination, float speed, string animation = "")
     {
+
         NavAgent.isStopped = false;
         NavAgent.speed = speed;
         Anim.SetBool("Avancer", true);
@@ -157,6 +152,8 @@ public class Enemy : MonoBehaviour
 
     internal void StopMoving()
     {
+
+        NavAgent.isStopped = true;
         Anim.SetBool("Course", false);
         Anim.SetBool("Avancer", false);
         NavAgent.speed = 0;
@@ -165,6 +162,7 @@ public class Enemy : MonoBehaviour
     internal void StopAttack()
     {
         anim.SetBool("Attaque", false);
+        NavAgent.isStopped = false;
 
 
     }

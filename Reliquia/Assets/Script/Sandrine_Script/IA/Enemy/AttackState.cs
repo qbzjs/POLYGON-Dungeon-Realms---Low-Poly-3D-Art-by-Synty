@@ -12,6 +12,7 @@ public class AttackState : BaseState
 
     private Vector3 targetPosition;
     private bool flagStartAttack;
+    private float _distanceRecorded = 0f;
 
     private Quaternion startingAngle = Quaternion.AngleAxis(-90, Vector3.up);
     private Quaternion stepAngle = Quaternion.AngleAxis(10, Vector3.up);
@@ -24,7 +25,7 @@ public class AttackState : BaseState
 
     public override Type Tick()
     {
-
+        //Debug.Log(this);
         if (_enemy.Target == null)
             return typeof(WanderState);
 
@@ -36,78 +37,105 @@ public class AttackState : BaseState
         _enemy.NavAgent.speed = _enemy.EnemyAttackSpeed;
 
         Vector3 relativePos = targetPosition - _enemyPosition;
-        _enemy.LookAt(relativePos, 10f);
+        Vector3 closePosition = Vector3.Normalize(targetPosition - _enemyPosition);
+        _enemy.LookAtDirection(relativePos, 10f);
 
-        if (distance <= GameSettings.AttackRange && flagStartAttack == false)
+        if (flagStartAttack == false && distance <= GameSettings.AttackRange - 3f) //  Trop pret du joueur
         {
+            //Debug.Log("istance <= GameSettings.AttackRange");
             _enemy.StopMoving();
         }
 
-        if (_enemy.NavAgent.remainingDistance <= 0.5f)
-        {
-            _enemy.ResetTargets();
-            return typeof(ReturnState);
-        }
 
+        // Stop enemy quand il arrive au limite du navmesh => Trouver autre chose NOK
+        //if (_enemy.NavAgent.remainingDistance <= 0.5f)
+        //{
+        //    Debug.Log("return returnstate : " + _enemy.gameObject.name);
+        //    _enemy.ResetTargets();
+        //    return typeof(ReturnState);
+        //}
         Companion companion = _enemy.Target.GetComponent<Companion>();
-        if (companion != null && companion.AttackNumber <= 0)
-        {
-            _enemy.ResetTargets();
-            _enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
-            return typeof(WanderState);
-        }
-
         // Si la target sort de la zone d'attaque
         // Retour Ã  l'Ã©tat Chase
         if (distance > GameSettings.AttackRange)
         {
-            Debug.Log("attackstate 6");
+            //Debug.Log("Leave ChaseState");
+            //Debug.Log("return ChaseState : " + _enemy.gameObject.name);
             //Debug.Log("Go to ChaseState 1");
             //_enemy.SetTarget(null);
 
             _enemy.StopAttack();
-            _enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
+            flagStartAttack = false;
+            relativePos = targetPosition - _enemyPosition;
+            _enemy.LookAtDirection(relativePos, GameSettings.SpeedAttackWalking);
+            if (companion != null)
+            {
+                _enemy.ResetTargets();
+            }
+            
+            //_enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
             return typeof(ChaseState);
         }
 
 
-        Debug.Log("attackstate 2");
+        if (companion != null && companion.AttackNumber <= 0)
+        {
+            //Debug.Log("return wanderchase : " + _enemy.gameObject.name);
+            _enemy.StopAttack();
+            //Debug.Log("Change State to Chase Player ------------------------- " + _enemy.gameObject.name);
+            // Nouvel état : ChasePlayer ----------------------------------------------------------------------------*********************
+            //_enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
+            return typeof(ChasePlayerState);
+        }
+
+        
+
         _attackReadyTimer -= Time.deltaTime;
 
         // Position l'enemy pres de sa cible
         if (_attackReadyTimer <= 0f) 
         {
-            Debug.Log("attackstate 3");
+            //Debug.Log("Timer GO");
             CheckIfNeedToChangeTarget();
             flagStartAttack = true;
-            Vector3 spacePosition = Vector3.Normalize(targetPosition - _enemyPosition);
+            targetPosition = _enemy.Target.position;
+            _enemy.LookAtDirection(closePosition, GameSettings.SpeedAttackWalking);
             _enemy.Move(targetPosition, GameSettings.SpeedAttackWalking); //_enemyPosition + spacePosition
             _attackReadyTimer = GameSettings.AttackEnemyTimer;
         }
 
+
         // Arrivé à destination lancé l'attaque
-        if (_enemy.NavAgent.remainingDistance < 1f && flagStartAttack == true)
+        if (flagStartAttack && _enemy.NavAgent.remainingDistance < 1.5f)
         {
+            //Debug.Log("LaunchAttack");
             _enemy.LaunchAttack();
-            
+            _distanceRecorded = distance;
+
+
         }
 
         // Après 2s arrêter l'attaque
-        if (_attackReadyTimer <= GameSettings.AttackEnemyTimer - 3f && flagStartAttack)
+        if (flagStartAttack && _attackReadyTimer <= GameSettings.AttackEnemyTimer - 3f) // || _distanceRecorded - distance > 1f
         {
             //Debug.Log("stop attack for : Enemy");
             _enemy.StopAttack();
             flagStartAttack = false;
         }
 
-
+        //Debug.Log("return null : " + _enemy.gameObject.name);
         //_enemy.StopMoving();
         return null;
     }
 
-     private void CheckIfNeedToChangeTarget()
+    private void FollowPlayer()
     {
-        Debug.Log("CheckIfNeedToChangeTarget");
+        
+    }
+
+    private void CheckIfNeedToChangeTarget()
+    {
+        //Debug.Log("CheckIfNeedToChangeTarget");
         RaycastHit hit;
         Quaternion angle = transform.rotation * startingAngle;
         Vector3 direction = angle * Vector3.forward;
@@ -115,7 +143,7 @@ public class AttackState : BaseState
         Companion companionChaser = null;
         bool isAnotherEnemyInThePlace = false;
 
-        for (var i = 0; i < 50; i++)
+        for (var i = 0; i < 90; i++)
         {
             if (Physics.Raycast(rayOrigine, direction, out hit, GameSettings.AggroRadius))
             {
@@ -123,15 +151,15 @@ public class AttackState : BaseState
                 var target = hit.transform;
                 Enemy enemyDetected = target.GetComponent<Enemy>();
                 Companion companionDetected = target.GetComponent<Companion>();
-                Debug.Log("target is : " + target);
+                //Debug.Log("target is : " + target);
                 if (target != null && companionDetected != null && companionDetected.Target == _enemy.transform)
                 {
-                    Debug.Log("Companion detected");
+                    //Debug.Log("Companion detected");
                     companionChaser = companionDetected;
                 }
                 if (target != null && enemyDetected != null) //  enemy.Team != gameObject.GetComponent<Enemy>().Team
                 {
-                    Debug.Log("Enemy detected");
+                    //Debug.Log("Enemy detected");
                     isAnotherEnemyInThePlace = true;
 
                 }
@@ -140,9 +168,9 @@ public class AttackState : BaseState
             direction = stepAngle * direction;
         }
 
-        if (isAnotherEnemyInThePlace && companionChaser != null)
+        if (isAnotherEnemyInThePlace && companionChaser != null && companionChaser.Target == _enemy.transform && companionChaser.AttackNumber >= 0)
         {
-            Debug.Log("Change Target for : " + companionChaser);
+            //Debug.Log("Change Target of " + _enemy.gameObject.name + " for : " + companionChaser);
             _enemy.SetChaser(companionChaser.transform);
             _enemy.SetTarget(companionChaser.transform);
 

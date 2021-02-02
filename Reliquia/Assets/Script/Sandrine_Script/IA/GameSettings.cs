@@ -13,7 +13,7 @@ public class GameSettings : MonoBehaviour
     //[SerializeField] private float aggroRadius = 20f;
     public float aggroRadius = 20f;
     //[SerializeField] private float attackRange = 3f;
-    public float attackRange = 3f;
+    public float attackRange = 5f;
     //[SerializeField] private float chaseRange = 15f;
     public float chaseRange = 10f;
     //[SerializeField] private float outOfChaseRange = 20f;
@@ -34,7 +34,7 @@ public class GameSettings : MonoBehaviour
 
     public float followInAttackStateDistance = 3f;
 
-    public float playerLeavingRange = 5f;
+    public float playerLeavingRange = 10f;
 
     //[SerializeField] private float attackRange = 3f;
     public float companionAttackRange = 1f;

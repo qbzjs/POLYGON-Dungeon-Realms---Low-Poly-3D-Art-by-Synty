@@ -84,6 +84,7 @@ public class ReachPlayerState : BaseState
         if (_companion.NavAgent.remainingDistance <= 2f && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // playerLastPosition == playerPosition || distance < GameSettings.DistanceToWalk
         {
             //Debug.Log("Go to WaitState 7 ");
+            _companion.LookAtDirection(playerPosition - _companionPosition, GameSettings.SpeedWalking);
             _companion.Move(playerPosition, GameSettings.SpeedWalking);
             return typeof(WaitState);
 

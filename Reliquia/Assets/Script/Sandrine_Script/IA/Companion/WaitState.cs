@@ -17,6 +17,7 @@ public class WaitState : BaseState
 
     public override Type Tick()
     {
+        //Debug.Log(this);
         _companionPosition = _companion.transform.position;
         playerPosition = _companion.Player.position;
         var distance = Vector3.Distance(_companionPosition, playerPosition);
@@ -67,8 +68,7 @@ public class WaitState : BaseState
 
             return typeof(PrepareToAttackState);
         }
-
-
+        _companion.StopMoving();
         // Not Sure.... Du coup l'IA s'arrete derrière les murs ... à voir
         RaycastHit hit;
         Quaternion angle = transform.rotation;

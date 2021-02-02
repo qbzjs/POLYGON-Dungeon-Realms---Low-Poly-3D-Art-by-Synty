@@ -51,7 +51,7 @@ public class Companion : MonoBehaviour
         // A supprimer
         alphaRenderer = alphaSurface.GetComponent<Renderer>(); // Provisoire Attack Effect
         SetAttackReadyTimer();
-        AttackNumber = 500; // 30;
+        AttackNumber = 20; // 30;
     }
 
     public void DecreaseAttackNumber()

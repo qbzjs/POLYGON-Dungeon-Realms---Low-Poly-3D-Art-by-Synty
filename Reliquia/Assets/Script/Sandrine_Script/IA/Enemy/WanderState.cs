@@ -6,6 +6,7 @@ public class WanderState : BaseState
     // Enemy propriétés
     public Enemy _enemy;
     private Vector3 _enemyPosition;
+    private Vector3 _enemyLastPosition;
 
     private Vector3 _destination;
     private Vector3 _direction;
@@ -30,7 +31,10 @@ public class WanderState : BaseState
 
         // assigne les positions 
         _enemyPosition = _enemy.transform.position;
+        _enemyLastPosition = _enemyPosition;
         playerPosition = playerTarget.transform.position;
+
+        _enemy.NavAgent.isStopped = false;
 
         // Deplacer plus bas
         //_enemy.Anim.SetBool("Avancer", true);
@@ -58,11 +62,11 @@ public class WanderState : BaseState
             return typeof(ChaseState); // Change l'état pour "Chase" 
         }
 
-        if (_enemy.NavAgent.remainingDistance <= 0.5f  ) // l'agent a atteint sa destination
+        if (_enemy.NavAgent.remainingDistance <= 0.5f ) // l'agent a atteint sa destination
         {
             FindRandomDestination(); // assigne une nouvelle destination et rotation          
 
-            _enemy.LookAt(_direction, 0.5f);
+            _enemy.LookAtDirection(_direction, 0.5f);
 
             _enemy.Move(_destination, _enemy.EnemyWanderSpeed);
 
@@ -80,6 +84,17 @@ public class WanderState : BaseState
                 _enemy.SetTarget((Transform)checkAttackState);
                 return typeof(AttackState); //AttackState
             }
+        }
+
+        // Ano sur l'Enemy bloqué à modifier
+        _enemyPosition = _enemy.transform.position;
+        if (_enemyLastPosition == _enemyPosition)
+        {
+            FindRandomDestination(); // assigne une nouvelle destination et rotation          
+
+            _enemy.LookAtDirection(_direction, 0.5f);
+
+            _enemy.Move(_destination, _enemy.EnemyWanderSpeed);
         }
         return null;
     }
