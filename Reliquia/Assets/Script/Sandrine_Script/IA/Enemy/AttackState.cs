@@ -39,6 +39,8 @@ public class AttackState : BaseState
         Vector3 relativePos = targetPosition - _enemyPosition;
         Vector3 closePosition = Vector3.Normalize(targetPosition - _enemyPosition);
         _enemy.LookAtDirection(relativePos, 10f);
+        _enemy.Move(targetPosition, GameSettings.SpeedAttackWalking);
+
 
         if (flagStartAttack == false && distance <= GameSettings.AttackRange - 3f) //  Trop pret du joueur
         {
