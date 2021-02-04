@@ -44,7 +44,7 @@ public class RessourcesVitalesWilliam_Scrip : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name == "test")
+        if(SceneManager.GetActiveScene().name == "test" || SceneManager.GetActiveScene().name == "sarah_Scene_Pouvoirs")
         {
             vieWilliam = maxVie;
             manaWilliam = maxMana;
