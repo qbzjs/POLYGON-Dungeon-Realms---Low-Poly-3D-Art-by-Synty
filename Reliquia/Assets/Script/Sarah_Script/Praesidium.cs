@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Powers : MonoBehaviour
+public class Praesidium : MonoBehaviour
 {
     public Animator _animator;
     public GameObject lighting;
@@ -13,8 +13,8 @@ public class Powers : MonoBehaviour
     public bool isLighting;
     public int manaPool;
 
-    void Start()
-    {
+    void Start() {
+        
         manaPool = ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam;
         isCreated = false;
         isLighting = false;
@@ -30,9 +30,12 @@ public class Powers : MonoBehaviour
 
     IEnumerator ManaSubstract() {
 
-        ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().EnleverMana((manaPool / 100) * 2 );
+        ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().EnleverMana((manaPool / 100) * 30 );
         Debug.Log(ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(20);
+        _animator.SetBool("Lighting", false);
+        g.SetActive(false);
+        isCreated = false;
 
         if (isCreated == true) {
             isLighting = true;
@@ -49,23 +52,13 @@ public class Powers : MonoBehaviour
             isLighting = false;
         }
     
-        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) {
+        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.T)) {
 
             if(!isCreated) {
                 _animator.SetBool("Lighting", true);
                 g.SetActive(true);
                 isCreated = true;
                 isLighting = true;
-            }
-        }
-
-        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.R)) {
-
-            if(isCreated) {
-                _animator.SetBool("Lighting", false);
-                g.SetActive(false);
-                isCreated = false;
-                isLighting = false;
             }
         }
 
