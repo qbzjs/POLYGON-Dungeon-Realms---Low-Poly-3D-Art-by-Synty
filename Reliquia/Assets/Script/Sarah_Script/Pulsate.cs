@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Praesidium : MonoBehaviour
+public class Pulsate : MonoBehaviour
 {
     public Animator _animator;
     public GameObject lighting;
@@ -33,12 +33,11 @@ public class Praesidium : MonoBehaviour
         ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().EnleverMana((manaPool / 100) * 30 );
         Debug.Log(ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam);
 
-        for (int spellDuration = 20; spellDuration > 0; spellDuration--)
+        while (true)
         {
-            yield return new WaitForSeconds(1);
-            Debug.Log(spellDuration);
-        } 
-        
+            
+        }
+        yield return new WaitForSeconds(20);
         _animator.SetBool("Lighting", false);
         g.SetActive(false);
         isCreated = false;
