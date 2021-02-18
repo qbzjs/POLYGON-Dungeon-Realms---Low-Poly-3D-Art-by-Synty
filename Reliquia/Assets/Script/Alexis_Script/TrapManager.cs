@@ -9,6 +9,9 @@ public class TrapManager : MonoBehaviour{
     public Camera cameraTrappe;
     public Camera cameraEboulement;
 
+    public Animator[] animTrappe;
+
+
     string piègeTrappe = "PiègeTrappe"; 
     string piègeEboulement = "PiègeEboulement"; 
 
@@ -16,6 +19,11 @@ public class TrapManager : MonoBehaviour{
 
         if (other.gameObject.name == piègeTrappe){
             cameraTrappe.enabled = true;
+
+            foreach (Animator anim in animTrappe){
+                anim.SetTrigger("Activated");
+            }
+            
         }
 
         if (other.gameObject.name == piègeEboulement){
