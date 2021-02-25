@@ -5,27 +5,27 @@ using UnityEngine;
 public class Praesidium : MonoBehaviour
 {
     public Animator _animator;
-    public GameObject lighting;
-    public Transform tlighting;
+    public GameObject praesidium;
+    public Transform tpraesidium;
     public bool isCreated;
     public GameObject g;
     public GameObject ybot;
-    public bool isLighting;
+    public bool isPraesidium;
     public int manaPool;
 
     void Start() {
         
         manaPool = ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam;
         isCreated = false;
-        isLighting = false;
+        isPraesidium = false;
         _animator = GetComponent<Animator>();
-        g = Instantiate(lighting, tlighting);
+        g = Instantiate(praesidium, tpraesidium);
         g.SetActive(false);
     }
 
     public void InstantiateSpell() {
 
-        Instantiate(lighting, transform);
+        Instantiate(praesidium, transform);
     }
 
     IEnumerator ManaSubstract() {
@@ -39,38 +39,42 @@ public class Praesidium : MonoBehaviour
             Debug.Log(spellDuration);
         } 
         
-        _animator.SetBool("Lighting", false);
         g.SetActive(false);
         isCreated = false;
 
         if (isCreated == true) {
-            isLighting = true;
+            isPraesidium = true;
         }
+    }
+
+    IEnumerator PraesidiumAnimation() {
+
+        _animator.SetBool("Lighting", true);
+        yield return new WaitForSeconds(1);
+        _animator.SetBool("Lighting", false);
     }
    
     public void Update() { 
 
         if (ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam <= 0) {
-
-            _animator.SetBool("Lighting", false);
             g.SetActive(false);
             isCreated = false;
-            isLighting = false;
+            isPraesidium = false;
         }
     
         else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.T)) {
 
             if(!isCreated) {
-                _animator.SetBool("Lighting", true);
+                StartCoroutine(PraesidiumAnimation());
                 g.SetActive(true);
                 isCreated = true;
-                isLighting = true;
+                isPraesidium = true;
             }
         }
 
-        if (isLighting == true) {
+        if (isPraesidium == true) {
             StartCoroutine(ManaSubstract());
-            isLighting = false;
+            isPraesidium = false;
         }
     }
 }
