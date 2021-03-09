@@ -5,27 +5,27 @@ using UnityEngine;
 public class Pulsate : MonoBehaviour
 {
     public Animator _animator;
-    public GameObject lighting;
-    public Transform tlighting;
+    public GameObject pulsate;
+    public Transform tpulsate;
     public bool isCreated;
     public GameObject g;
     public GameObject ybot;
-    public bool isLighting;
+    public bool isPulsate;
     public int manaPool;
 
     void Start() {
         
         manaPool = ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam;
         isCreated = false;
-        isLighting = false;
+        isPulsate = false;
         _animator = GetComponent<Animator>();
-        g = Instantiate(lighting, tlighting);
+        g = Instantiate(pulsate, tpulsate);
         g.SetActive(false);
     }
 
     public void InstantiateSpell() {
 
-        Instantiate(lighting, transform);
+        Instantiate(pulsate, transform);
     }
 
     IEnumerator ManaSubstract() {
@@ -43,7 +43,7 @@ public class Pulsate : MonoBehaviour
         isCreated = false;
 
         if (isCreated == true) {
-            isLighting = true;
+            isPulsate = true;
         }
     }
    
@@ -54,7 +54,7 @@ public class Pulsate : MonoBehaviour
             _animator.SetBool("Lighting", false);
             g.SetActive(false);
             isCreated = false;
-            isLighting = false;
+            isPulsate = false;
         }
     
         else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.T)) {
@@ -63,13 +63,13 @@ public class Pulsate : MonoBehaviour
                 _animator.SetBool("Lighting", true);
                 g.SetActive(true);
                 isCreated = true;
-                isLighting = true;
+                isPulsate = true;
             }
         }
-
-        if (isLighting == true) {
+ 
+        if (isPulsate == true) {
             StartCoroutine(ManaSubstract());
-            isLighting = false;
+            isPulsate = false;
         }
     }
 }
