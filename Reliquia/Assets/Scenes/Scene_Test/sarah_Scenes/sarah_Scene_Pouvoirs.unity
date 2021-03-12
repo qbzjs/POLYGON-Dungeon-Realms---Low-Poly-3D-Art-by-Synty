@@ -260,9 +260,9 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373363692}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 2.44
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -1146,6 +1146,30 @@ MonoBehaviour:
   g: {fileID: 0}
   ybot: {fileID: 1794078249}
   isPraesidium: 0
+  manaPool: 0
+--- !u!114 &1794078251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794078249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbc72dbf36994badd7d4ed1da3556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  pulsate: {fileID: 158764, guid: d3ea60607b1ce414a9416c252b7fd89f, type: 3}
+  g: {fileID: 0}
+  ybot: {fileID: 1794078249}
+  capsule: {fileID: 373363692}
+  tpulsate: {fileID: 373363696}
+  ennemy: {fileID: 373363693}
+  isCreated: 0
+  isPulsate: 0
+  isNear: 0
+  isStunt: 0
   manaPool: 0
 --- !u!114 &1794078256
 MonoBehaviour:
