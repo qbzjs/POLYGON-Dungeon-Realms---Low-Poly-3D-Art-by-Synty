@@ -10,10 +10,8 @@ public class Pulsate : MonoBehaviour
     public GameObject ybot;
     public GameObject capsule;
     public Transform tpulsate;
-    public Collider ennemy;
     public bool isCreated;
     public bool isPulsate;
-    public bool isNear;
     public bool isStunt;
     public int manaPool;
 
@@ -43,7 +41,7 @@ public class Pulsate : MonoBehaviour
             Debug.Log(spellDuration);
         }
 
-        _animator.SetBool("Lighting", false);
+        _animator.SetBool("Attaque", false);
         g.SetActive(false);
         isCreated = false;
 
@@ -56,11 +54,15 @@ public class Pulsate : MonoBehaviour
 
         isStunt = true;
 
+        yield return new WaitForSeconds(0.1f);
+        _animator.SetBool("Attaque", false);
+
         for (int stunt = 10; stunt > 0; stunt--) {
             Debug.Log("Ennemy stunt for " + stunt + " sec");
             yield return new WaitForSeconds(1);
         }
 
+        capsule.GetComponent<Capsule>().isMoving = false;
         isStunt = false;
     }
 
@@ -68,7 +70,7 @@ public class Pulsate : MonoBehaviour
 
         if (ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().manaWilliam <= 0) {
 
-            _animator.SetBool("Lighting", false);
+            _animator.SetBool("Attaque", false);
             g.SetActive(false);
             isCreated = false;
             isPulsate = false;
@@ -76,9 +78,9 @@ public class Pulsate : MonoBehaviour
     
         else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.P)) {
 
-            if(!isCreated && isNear == true) {
-                 StartCoroutine(EnnemyAnimation());
-                _animator.SetBool("Lighting", true);
+            if(!isCreated && capsule.GetComponent<Capsule>().isNear == true) {
+                _animator.SetBool("Attaque", true);
+                StartCoroutine(EnnemyAnimation());
                 g.SetActive(true);
                 isCreated = true;
                 isPulsate = true;
@@ -91,17 +93,7 @@ public class Pulsate : MonoBehaviour
         }
 
         if (isStunt == true) {
-            capsule.transform.position = capsule.transform.position;
+            capsule.GetComponent<Capsule>().isMoving = true;
         }
-    }
-
-    void OnTriggerEnter(Collider ennemy)
-    {
-        isNear = true;
-    }
-
-    void OnTriggerExit(Collider ennemy)
-    {
-        isNear = false;
     }
 }

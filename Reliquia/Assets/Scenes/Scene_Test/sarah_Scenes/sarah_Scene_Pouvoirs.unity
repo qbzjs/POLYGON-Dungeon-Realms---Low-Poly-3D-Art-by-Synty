@@ -339,9 +339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f0c4897959b4b45b99925fd99a9496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capsule: {fileID: 373363692}
   pos1: {fileID: 2107527801}
   pos2: {fileID: 1058685839}
+  isNear: 0
   isArrived: 0
+  isMoving: 0
 --- !u!1 &456688482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,7 +1171,6 @@ MonoBehaviour:
   ennemy: {fileID: 373363693}
   isCreated: 0
   isPulsate: 0
-  isNear: 0
   isStunt: 0
   manaPool: 0
 --- !u!114 &1794078256
