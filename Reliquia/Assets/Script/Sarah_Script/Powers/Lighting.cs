@@ -16,12 +16,21 @@ public class Lighting : MonoBehaviour
     // Var (Alexis)
 
     public GameObject targetImage;
+    public Transform cameraStandardAngle;
+    public Transform cameraAimingAngle;
+
+    public Camera gameCamera;
+
+    public float cameraSpeed = 5f;
+
+
     public bool shot;
-    public float yOrigin = 1.5f;
     public float force = 1000f;
     public float duration = 3f;
     public float cooldownBase = 0.5f;
     public float cooldown;
+
+
 
     void Start() {
         
@@ -31,6 +40,8 @@ public class Lighting : MonoBehaviour
         _animator = GetComponent<Animator>();
         g = Instantiate(lighting, tlighting);
         g.SetActive(false);
+
+        cameraStandardAngle.transform.position = gameCamera.transform.position;
     }
 
     public void InstantiateSpell() {
@@ -61,38 +72,49 @@ public class Lighting : MonoBehaviour
     
         else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) {
 
+            targetImage.gameObject.SetActive(true);
+            // gameCamera.transform.position = cameraAimingAngle.transform.position;
+
+            float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
+            gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
+
             if(!isCreated) {
                 _animator.SetBool("Lighting", true);
                 g.SetActive(true);
                 isCreated = true;
                 isLighting = true;
-
-                targetImage.gameObject.SetActive(true);
             }
         }
+        
 
         else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.R)) {
+
+            targetImage.gameObject.SetActive(false);
+            //gameCamera.GetComponent<Transform>().transform.position = new Vector3(cameraStandardAngle.x, cameraStandardAngle.y, cameraStandardAngle.z);
+
+            float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
+            gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraStandardAngle.position, step);
 
             if(isCreated) {
                 _animator.SetBool("Lighting", false);
                 g.SetActive(false);
                 isCreated = false;
                 isLighting = false;
-
-                targetImage.gameObject.SetActive(false);
             }
         }
 
         // Comportement Offensif (Alexis)
 
-        if (Input.GetMouseButtonDown(0) && isCreated == true && shot == false){
+       if (Input.GetMouseButtonDown(0) && isCreated == true && shot == false){
             shot = true;
 
             ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().EnleverMana((manaPool / 100) * 10);
 
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Rigidbody sphereRg = sphere.AddComponent(typeof(Rigidbody)) as Rigidbody;
-            sphere.transform.position = new Vector3(transform.position.x, transform.position.y+yOrigin, transform.position.z+1f);
+            sphere.transform.position = new Vector3(tlighting.transform.position.x, tlighting.transform.position.y, tlighting.transform.position.z);
+            sphere.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+            sphereRg.useGravity = false;
             sphereRg.AddForce(transform.forward * force);
 
             Destroy(sphere, duration);

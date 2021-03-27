@@ -17,8 +17,8 @@ public class Puzzle_Tile_Speak : MonoBehaviour{
         }
 
         void OnTriggerExit(Collider other){
-        if (other.gameObject.name == puzzleTileSpeak){
-            solved = false;
+            if (other.gameObject.name == puzzleTileSpeak){
+                solved = false;
+            }
         }
-    }
 }
