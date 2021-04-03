@@ -15,14 +15,18 @@ public class Lighting : MonoBehaviour
 
     // Var (Alexis)
 
+    [Header("Essentials")]
+
+    public GameObject lightProjectilePrefab;
     public GameObject targetImage;
     public Transform cameraStandardAngle;
     public Transform cameraAimingAngle;
 
     public Camera gameCamera;
 
-    public float cameraSpeed = 5f;
+    [Header("Values")]
 
+    public float cameraSpeed = 5f;
 
     public bool shot;
     public float force = 1000f;
@@ -110,14 +114,13 @@ public class Lighting : MonoBehaviour
 
             ybot.GetComponent<RessourcesVitalesWilliam_Scrip>().EnleverMana((manaPool / 100) * 10);
 
-            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Rigidbody sphereRg = sphere.AddComponent(typeof(Rigidbody)) as Rigidbody;
-            sphere.transform.position = new Vector3(tlighting.transform.position.x, tlighting.transform.position.y, tlighting.transform.position.z);
-            sphere.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
-            sphereRg.useGravity = false;
-            sphereRg.AddForce(transform.forward * force);
-
-            Destroy(sphere, duration);
+            //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Instantiate(lightProjectilePrefab, new Vector3 (tlighting.transform.position.x, tlighting.transform.position.y, tlighting.transform.position.z), Quaternion.identity);
+            //Rigidbody lightProjectilePrefabRg = lightProjectilePrefab.AddComponent(typeof(Rigidbody)) as Rigidbody;
+            //gRg.transform.position = new Vector3(tlighting.transform.position.x, tlighting.transform.position.y, tlighting.transform.position.z);
+            //sphere.transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
+            //lightProjectilePrefabRg.useGravity = false;
+            
         }
 
 
