@@ -41,6 +41,7 @@ public class WalkState : BaseState
         {
             _companion.StopMoving();
         }
+        
 
         FollowPlayer(); // assigne une nouvelle destination et rotation au compagnon
 
@@ -103,9 +104,29 @@ public class WalkState : BaseState
 
         }
 
+        // La destination est hors navmeh ou le companon est bloqué
+        // Alors return typeof(WaitState);
+        //if (_companion.NavAgent.remainingDistance <= 2f && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        //{
+        //    _companion.StopMoving();
+        //    return typeof(WaitState);
+
+        //}
+
+        
+
+        if (_companionLastPosition == _companion.transform.position && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            _companion.StopMoving();
+            return typeof(WaitState);
+        }
+
+        
+
         return null;
     }
 
+    
     private void FollowPlayer()
     {
 
@@ -119,7 +140,7 @@ public class WalkState : BaseState
             _destination = playerPosition - (_companion.Player.forward * 3f) - (_companion.Player.right * 0.8f);
         }
 
-        // ---- Positionne le compagnon à côté du Player et non derrière => je laisse au cas où se serait utilise par la suite.
+        //// ---- Begin Positionne le compagnon à côté du Player et non derrière => je laisse au cas où se serait utilise par la suite.
         //_destination = playerPosition + _companion.Player.right;
 
         //if (_companion.Name == "David")
@@ -127,8 +148,8 @@ public class WalkState : BaseState
         //    _destination = playerPosition - _companion.Player.right;
         //}
 
-        // Vérifie si la destination du compagnon est libre
-        // Sinon place le compagnon de l'autre côté du player
+        //// Vérifie si la destination du compagnon est libre
+        //// Sinon place le compagnon de l'autre côté du player
         //float rayDistance = Vector3.Distance(_destination, _companionPosition);
         //RaycastHit hit;
         //Vector3 rayDirection = (_destination - _companionPosition) + Vector3.up;
@@ -137,14 +158,14 @@ public class WalkState : BaseState
         //{
         //    if (Physics.Raycast(_companionPosition, rayDirection, out hit, rayDistance))
         //    {
-        //        Debug.DrawRay(_companionPosition, rayDirection,  Color.green);
+        //        Debug.DrawRay(_companionPosition, rayDirection, Color.green);
         //        var target = hit.transform;
         //        if (target != null && target != _companion.Player && target != transform)
         //        {
-        //            _destination = playerPosition - _companion.Player.right;
+        //            _destination = playerPosition - _companion.Player.right * 2f;
         //            if (_companion.Name == "David")
         //            {
-        //                _destination = playerPosition + _companion.Player.right;
+        //                _destination = playerPosition + _companion.Player.right * 2f;
         //            }
         //            break;
         //        }
@@ -153,7 +174,7 @@ public class WalkState : BaseState
         //    rayDirection = stepAngle * rayDirection;
         //}
 
-        /// ---- End Positionnement du compagnon à côté du player.
+        ///// ---- End Positionnement du compagnon à côté du player.
 
         _destination = new Vector3(_destination.x, y: 1f, _destination.z);
 

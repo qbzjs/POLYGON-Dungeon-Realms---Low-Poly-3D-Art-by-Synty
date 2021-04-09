@@ -42,6 +42,10 @@ public class WaitState : BaseState
             // && (!_companion.AnimPlayer.IsInTransition(0) && _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Walking")) 
             )
         {
+            if ( _companion.AnimPlayer.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !checkDestiAvailable()) // Compagnon est bloqué, la destination n'est pas atteignable
+            {
+                return null;
+            }
             return typeof(WalkState);
         }
 
@@ -97,6 +101,25 @@ public class WaitState : BaseState
         }
         return null;
 
+    }
+
+    private bool checkDestiAvailable()
+    {
+        RaycastHit hit;
+        Vector3 rayDirection = _companion.Player.position + Vector3.up;
+        float rayDistance = Vector3.Distance(_companion.Player.position, _companionPosition);
+
+
+        if (Physics.Raycast(_companionPosition, rayDirection, out hit, rayDistance))
+        {
+            Debug.DrawRay(_companionPosition, rayDirection, Color.green);
+            var target = hit.transform;
+            if (target != null && target != _companion.Player && target != transform)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 
