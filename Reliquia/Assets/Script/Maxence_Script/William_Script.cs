@@ -51,7 +51,11 @@ public class William_Script : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        gameManager.FermerMessageInteraction();
+        if (gameManager != null) // work arround : error on play (sandrine)
+        {
+            gameManager.FermerMessageInteraction();
+        }
+        
     }
 
     private void Update()

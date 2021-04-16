@@ -15,29 +15,29 @@ public class GameSettings : MonoBehaviour
     //[SerializeField] private float attackRange = 3f;
     public float attackRange = 5f;
     //[SerializeField] private float chaseRange = 15f;
-    public float chaseRange = 10f;
+    public float chaseRange = 15f;
     //[SerializeField] private float outOfChaseRange = 20f;
-    public float outOfChaseRange = 30f;
+    public float outOfChaseRange = 20f;
     //[SerializeField] private float chaseWaitingTime = 4500;
-    public float chaseWaitingTime = 4500;
+    public float chaseWaitingTime = 30f;
 
-    public float attackEnemyTimer = 7f;
+    public float attackEnemyTimer = 6f;
 
 
     // Companion Settings
     //[SerializeField] private float distanceToWalk = 4f;
     public float distanceToWalk = 4.5f;
 
-    public float speedWalking = 3f; //5f;
+    public float speedWalking = 5f; //5f;
 
     public float speedAttackWalking = 3f;
 
-    public float followInAttackStateDistance = 3f;
+    public float followInAttackStateDistance = 2f;
 
     public float playerLeavingRange = 10f;
 
     //[SerializeField] private float attackRange = 3f;
-    public float companionAttackRange = 1f;
+    public float companionAttackRange = 3f;
 
     public float companionPlayerRange = 3f;
 
