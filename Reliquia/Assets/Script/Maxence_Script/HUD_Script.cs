@@ -77,7 +77,7 @@ public class HUD_Script : MonoBehaviour
             Destroy(gameObject);
         }
 
-        for(int i = 0; i < LevelLoader.instance.Canvas.Length; i++) LevelLoader.instance.Canvas[i].SetActive(false);
+        //for(int i = 0; i < LevelLoader.instance.Canvas.Length; i++) LevelLoader.instance.Canvas[i].SetActive(false);
 
         colors[0] = new Color(1, 1, 1, 0);
 

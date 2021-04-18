@@ -170,7 +170,7 @@ public class SaveManager : MonoBehaviour
     private void NewSavePlayerData(SaveData data)
     {
         data.MySceneData = new SceneData(3, "maxence_SceneTestPersonnage");
-        data.MyPlayerData = new PlayerData(100, 100, 100, 100, new Vector3(0,5,0));
+        data.MyPlayerData = new PlayerData(100, 100, 100, 100, new Vector3(0,0,0));
     }
 
     public void SaveMap(string nomSave)
