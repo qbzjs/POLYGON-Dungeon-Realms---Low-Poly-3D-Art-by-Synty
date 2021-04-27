@@ -2,22 +2,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Interactable : MonoBehaviour
 {
     public bool contour;
 
-    
+
     //public keyParameter keyParam;
+    [Header("objet et axe de rotation")]
+    public GameObject axisObject;
+    public Axis axis;
 
     public delegate void Actions();
     static public event Actions INTERACT_ACTIONS;
     static public event Actions UNDO_ACTIONS;
 
-    public eActionState actionState;
+    //public eActionState actionState;
 
     private Outline InteractOutline;
     private bool isOutline;
+
+    private bool rotate;
+    private bool rotateDirection;
+
+    private Quaternion delta;
+    private Quaternion deltaInit;
 
 
     // Start is called before the first frame update
@@ -30,6 +40,20 @@ public class Interactable : MonoBehaviour
             INTERACT_ACTIONS += showOutline;
             UNDO_ACTIONS += hideOutline;
         }
+        if (axisObject == null)
+        {
+            return;
+        }
+        deltaInit = axisObject.transform.rotation;
+        if (axis == Axis.X)
+        {
+            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f);
+        }
+        if (axis == Axis.Y)
+        {
+            delta = Quaternion.Euler(axisObject.transform.rotation.x, axisObject.transform.rotation.y - 180, axisObject.transform.rotation.z);
+        }
+
     }
 
    
@@ -37,14 +61,31 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (rotate && rotateDirection)
+        {
+            axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime); //
+        }
+        if (rotate && !rotateDirection)
+        {
+            axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, deltaInit, 5f * Time.deltaTime);
+        }
         
     }
 
     public void ExecuteActions()
     {
-        Debug.Log("This is : " + this);
         // INTERACT_ACTIONS();
-        showOutline();
+        if (!InteractOutline.enabled)
+        {
+            showOutline();
+            return;
+        }
+        if (InteractOutline.enabled)
+        {
+            PlayAnim(true);
+            return;
+        } 
+        
 
     }
     
@@ -52,6 +93,7 @@ public class Interactable : MonoBehaviour
     {
         // UNDO_ACTIONS();
         hideOutline();
+        PlayAnim(false);
     }
 
     public void showOutline()
@@ -65,6 +107,16 @@ public class Interactable : MonoBehaviour
         InteractOutline.enabled = false;
     }
 
+    private void PlayAnim(bool open)
+    {
+        hideOutline();
+        if (axisObject != null)
+        {
+            rotate = true;
+            rotateDirection = open;
+        }
+    }
+
 }
 
 public enum eActionState
@@ -74,9 +126,3 @@ public enum eActionState
     anim,
 }
 
-[Serializable]
-public struct keyParameter
-{
-    public bool isKey;
-    public char key;
-}

@@ -39,6 +39,8 @@ public class William_Script : MonoBehaviour
     }
 
     ItemInventaire item;
+    Interactable interactableItem;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
@@ -47,12 +49,11 @@ public class William_Script : MonoBehaviour
             item = physicaltemInventaire.thisItem;
             gameManager.AfficherMessageInteraction("");
         }
-        if (other.CompareTag("Interactable"))
+        if (other.CompareTag("Interactable") && interactableItem == null)
         {
-            Debug.Log("Interact");
-            // PostProcessing solution
-            // other.gameObject.layer = 27;
-            other.gameObject.GetComponent<Interactable>().ExecuteActions();
+
+            interactableItem = other.gameObject.GetComponent<Interactable>();
+            interactableItem.ExecuteActions();
 
         }
     }
@@ -65,21 +66,22 @@ public class William_Script : MonoBehaviour
         }
         if (other.CompareTag("Interactable"))
         {
-            Debug.Log("Interact");
-            // PostProcessing solution
-            // other.gameObject.layer = 27;
+            interactableItem = null;
             other.gameObject.GetComponent<Interactable>().ExecuteUndo();
-
         }
 
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && GameManager.instance.MessageInteraction.activeSelf == true)
+        if(Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
         {
             physicaltemInventaire.AddItem(item);
             gameManager.FermerMessageInteraction();
+        }
+        if (Input.GetKeyDown(KeyCode.E) && interactableItem != null)
+        {
+            interactableItem.ExecuteActions();
         }
     }
 }
