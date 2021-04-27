@@ -47,6 +47,14 @@ public class William_Script : MonoBehaviour
             item = physicaltemInventaire.thisItem;
             gameManager.AfficherMessageInteraction("");
         }
+        if (other.CompareTag("Interactable"))
+        {
+            Debug.Log("Interact");
+            // PostProcessing solution
+            // other.gameObject.layer = 27;
+            other.gameObject.GetComponent<Interactable>().ExecuteActions();
+
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -55,7 +63,15 @@ public class William_Script : MonoBehaviour
         {
             gameManager.FermerMessageInteraction();
         }
-        
+        if (other.CompareTag("Interactable"))
+        {
+            Debug.Log("Interact");
+            // PostProcessing solution
+            // other.gameObject.layer = 27;
+            other.gameObject.GetComponent<Interactable>().ExecuteUndo();
+
+        }
+
     }
 
     private void Update()

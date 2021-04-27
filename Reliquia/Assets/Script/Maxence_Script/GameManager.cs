@@ -141,6 +141,10 @@ public class GameManager : MonoBehaviour
 
     public void FermerMessageInteraction()
     {
-        MessageInteraction.SetActive(false);
+        if (MessageInteraction != null)
+        {
+            MessageInteraction.SetActive(false);
+        }
+        
     }
 }
