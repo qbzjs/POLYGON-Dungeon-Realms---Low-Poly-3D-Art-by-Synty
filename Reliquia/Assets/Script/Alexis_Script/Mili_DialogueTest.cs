@@ -24,12 +24,21 @@ public class Mili_DialogueTest : MonoBehaviour{
 
         // Continue here
 
+        if (c.gameObject.name == "Dialogue Trigger 2")
+        {
+            selectedString = dialoguesTestMili[1];
+            dialogueTest.text = selectedString;
+        }
+
+        
+
     }
 
     IEnumerator DialogueTrigger(){
         dialogueTest.gameObject.SetActive(true);
         yield return new WaitForSeconds (textTimeDisplay[0]);
         dialogueTest.gameObject.SetActive(false);
+        yield break;
     }
 
 
