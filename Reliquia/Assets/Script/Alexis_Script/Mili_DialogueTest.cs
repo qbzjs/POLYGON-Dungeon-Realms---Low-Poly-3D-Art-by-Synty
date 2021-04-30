@@ -30,7 +30,14 @@ public class Mili_DialogueTest : MonoBehaviour{
             dialogueTest.text = selectedString;
         }
 
-        
+        if (c.gameObject.name == "Dialogue Trigger 3")
+        {
+            selectedString = dialoguesTestMili[2];
+            dialogueTest.text = selectedString;
+        }
+
+
+
 
     }
 
