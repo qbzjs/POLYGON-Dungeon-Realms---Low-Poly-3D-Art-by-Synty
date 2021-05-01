@@ -158,7 +158,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110916}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tlighting: {fileID: 0}
+  fxImpact: {fileID: 119322, guid: e322ac6f694c2f84bb227112512c13ce, type: 3}
   force: 1000
   duration: 3
 --- !u!1 &113918

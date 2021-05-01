@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class Lighting_Gabriel : MonoBehaviour
 {
@@ -59,6 +60,10 @@ public class Lighting_Gabriel : MonoBehaviour
         g.SetActive(false);
 
         cameraStandardAngle.transform.position = gameCamera.transform.position;
+
+        
+        
+
     }
 
     public void InstantiateSpell() {
@@ -85,6 +90,8 @@ public class Lighting_Gabriel : MonoBehaviour
             g.SetActive(false);
             isCreated = false;
             isLighting = false;
+            aim = false;
+            SwitchAimCamera();
         }
     
         else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) {
@@ -155,7 +162,7 @@ public class Lighting_Gabriel : MonoBehaviour
             StartCoroutine(ManaSubstract());
             isLighting = false;
         }
-
+        // touche pour switcher de camera (entre visée et normal)
         if (Input.GetKeyDown(KeyCode.T) && isCreated == true)
         {
             if (aim)
@@ -169,10 +176,24 @@ public class Lighting_Gabriel : MonoBehaviour
                 SwitchAimCamera();
             }
         }
+        // Raycast pour savoir si quelque chose est devant la lighting et est donc touchable et donc changer la couleur du viseur
+        if (Physics.Raycast(tlighting.position, tlighting.forward , 100f, 1 << 10))
+        {
+            print("There is something in front of the object!");
+            targetImage.GetComponent<Image>().color = new Color32(255, 0, 0, 100);
+        }
+        else
+        {
+            targetImage.GetComponent<Image>().color = new Color32(255, 255, 225, 100);
+        }
+            
 
-    
+        Debug.DrawRay(tlighting.position, tlighting.forward, Color.green);
+
+
     }
 
+    
     private void SwitchAimCamera()  // script pour placer la camera en position de visée ou non.
     {
         if (aim)
@@ -189,12 +210,14 @@ public class Lighting_Gabriel : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other) //Si un objet avec lequel le joueur peut interragir est dans un collider précis devant william, on peux l'allumer
     {
         if (Input.GetKeyDown(KeyCode.Y) && other.gameObject.CompareTag("lightingCheck") && isCreated == true)
         {
-            other.SendMessage("lightObject");
+            other.SendMessage("lightObject", this.transform);
         }
-            
+
     }
+
+    
 }
