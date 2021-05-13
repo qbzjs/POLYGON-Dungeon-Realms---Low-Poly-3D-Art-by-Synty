@@ -49,11 +49,11 @@ public class William_Script : MonoBehaviour
             item = physicaltemInventaire.thisItem;
             gameManager.AfficherMessageInteraction("");
         }
-        if (other.CompareTag("Interactable") && interactableItem == null)
+        if (other.CompareTag("Interactable")) //&& interactableItem == null
         {
 
             interactableItem = other.gameObject.GetComponent<Interactable>();
-            interactableItem.ExecuteActions();
+            interactableItem.applyOutline();
 
         }
     }
@@ -67,7 +67,7 @@ public class William_Script : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             interactableItem = null;
-            other.gameObject.GetComponent<Interactable>().ExecuteUndo();
+            other.gameObject.GetComponent<Interactable>().applyOutline();
         }
 
     }
