@@ -7794,6 +7794,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491816, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491823, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: b6c2c2aadf95cd94bba322121da2e46e,
+        type: 2}
+    - target: {fileID: 3389811491461491823, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491823, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491823, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491828, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491828, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3389811491461491829, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
         type: 3}
       propertyPath: m_Name
@@ -32998,11 +33034,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d376ceae99ed63540ae887b8c5048b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raccourciClavier: {fileID: 0}
   MenuPause: {fileID: 0}
   MenuInventaire: {fileID: 0}
   voirMenu: 0
   menuPauseOuvert: 0
   menuInventaireOuvert: 0
+  menuOptionOuvert: 0
   menuSlots: 0
   MessageInteraction: {fileID: 0}
   TexteMessageInteraction: {fileID: 0}
@@ -33011,13 +33049,16 @@ MonoBehaviour:
   ParentSlotSave: {fileID: 0}
   ParentSlotLoad: {fileID: 0}
   ParentBoutonMenu: {fileID: 0}
+  ParentOptions: {fileID: 0}
   popUpNomSauvegarde: {fileID: 0}
   popUpEcraserSauvegarde: {fileID: 0}
   popUpRetourMenuPrincipal: {fileID: 0}
   popUp: {fileID: 0}
   SlotSaveSelect: {fileID: 0}
+  GrimoireInventaire: {fileID: 0}
   popUpActif: 0
   chapitreEnCours: 0
+  nomSauvegarde: 
 --- !u!4 &1549233800
 Transform:
   m_ObjectHideFlags: 0
@@ -36554,26 +36595,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.16000004, y: 5.12, z: 5.1200013}
   m_Center: {x: 0, y: 2.56, z: 2.5600007}
---- !u!1 &1723454062 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3389811491461491829, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
-    type: 3}
-  m_PrefabInstance: {fileID: 350030443}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &1723454063
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723454062}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.7
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1725205056
 PrefabInstance:
   m_ObjectHideFlags: 0
