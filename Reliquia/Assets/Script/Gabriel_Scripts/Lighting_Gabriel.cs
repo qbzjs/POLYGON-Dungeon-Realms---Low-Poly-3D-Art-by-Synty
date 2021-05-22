@@ -45,7 +45,8 @@ public class Lighting_Gabriel : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera normalCam;
     [SerializeField]
-    private bool aim = false;
+    private Transform followTarget;
+    public bool aim = false;
     private Transform position_test;
 
 
@@ -186,8 +187,8 @@ public class Lighting_Gabriel : MonoBehaviour
         {
             targetImage.GetComponent<Image>().color = new Color32(255, 255, 225, 100);
         }
-            
 
+        tlighting.localRotation = followTarget.localRotation;
         Debug.DrawRay(tlighting.position, tlighting.forward, Color.green);
 
 

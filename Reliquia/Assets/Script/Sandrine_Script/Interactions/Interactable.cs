@@ -6,13 +6,21 @@ using UnityEngine.Animations;
 
 public class Interactable : MonoBehaviour
 {
-    public bool contour;
+    [Header("Object pour contour blanc")]
+    //public bool contour;
+    public GameObject goContour;
+
 
 
     //public keyParameter keyParam;
-    [Header("objet et axe de rotation")]
+
     public GameObject axisObject;
     public Axis axis;
+    [Header("Pour l'axe Y uniquement")]
+    public rotationDirection direction;
+
+    [HideInInspector]
+    
 
     public delegate void Actions();
     static public event Actions INTERACT_ACTIONS;
@@ -26,6 +34,9 @@ public class Interactable : MonoBehaviour
     private bool rotate;
     private bool rotateDirection;
 
+    private bool itemActive; // si l'objet a déjà interagit
+
+
     private Quaternion delta;
     private Quaternion deltaInit;
 
@@ -33,8 +44,19 @@ public class Interactable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isOutline = contour;
-        InteractOutline = GetComponent<Outline>();
+        //isOutline = contour;
+        if (goContour != null)
+        {
+            isOutline = true;
+            InteractOutline = goContour.GetComponent<Outline>();
+        }
+        else if (GetComponent<Outline>() != null)
+        {
+            InteractOutline = GetComponent<Outline>();
+        }
+            
+
+        // InteractOutline = GetComponent<Outline>();
         if (isOutline)
         {
             INTERACT_ACTIONS += showOutline;
@@ -47,11 +69,16 @@ public class Interactable : MonoBehaviour
         deltaInit = axisObject.transform.rotation;
         if (axis == Axis.X)
         {
-            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f);
+            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f); //  + 178.094f corrige rotation en z
         }
-        if (axis == Axis.Y)
+        if (axis == Axis.Y && direction == rotationDirection.Forward)
         {
-            delta = Quaternion.Euler(axisObject.transform.rotation.x, axisObject.transform.rotation.y - 180, axisObject.transform.rotation.z);
+
+            delta = axisObject.transform.rotation * Quaternion.Euler(0, 90, 0);
+        }
+        if (axis == Axis.Y && direction == rotationDirection.Backward)
+        {
+            delta = axisObject.transform.rotation * Quaternion.Euler(0, -90, 0);
         }
 
     }
@@ -61,55 +88,87 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rotate && rotateDirection)
+        if (rotate && rotateDirection && axisObject.transform.rotation != delta)
         {
-            axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime); //
+
+            axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime);
+
         }
-        if (rotate && !rotateDirection)
+        if (rotate && !rotateDirection && axisObject.transform.rotation != deltaInit)
         {
+
             axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, deltaInit, 5f * Time.deltaTime);
+
         }
         
+    }
+
+    public void applyOutline()
+    {
+        if (InteractOutline == null)
+        {
+            return;
+        }
+        // INTERACT_ACTIONS();
+        if (!InteractOutline.enabled) // afficher le contour (OnTriggerExit)
+        {
+            showOutline();
+
+        } else
+        {
+            hideOutline();
+
+        }
     }
 
     public void ExecuteActions()
     {
-        // INTERACT_ACTIONS();
-        if (!InteractOutline.enabled)
+
+        if (InteractOutline.enabled && !itemActive) // ouvrir, jouer l'anim (E)
         {
-            showOutline();
-            return;
-        }
-        if (InteractOutline.enabled)
-        {
+            itemActive = true;
             PlayAnim(true);
             return;
-        } 
-        
+        }
+        if (InteractOutline.enabled && itemActive) // ouvrir, jouer l'anim (E)
+        {
+            itemActive = false;
+            PlayAnim(false);
+            return;
+        }
+
 
     }
     
-    public void ExecuteUndo()
+    public void ExecuteUndo() 
     {
-        // UNDO_ACTIONS();
+        // UNDO_ACTIONS(); OnTriggerExit()
         hideOutline();
-        PlayAnim(false);
+        // PlayAnim(false); 
     }
 
     public void showOutline()
     {
+        if (InteractOutline == null)
+        {
+            return;
+        }
         InteractOutline.OutlineMode = Outline.Mode.OutlineVisible;
         InteractOutline.enabled = true;
     }
 
     private void hideOutline()
     {
+        if (InteractOutline == null)
+        {
+            return;
+        }
         InteractOutline.enabled = false;
     }
 
     private void PlayAnim(bool open)
     {
-        hideOutline();
+        //hideOutline();
         if (axisObject != null)
         {
             rotate = true;
@@ -124,5 +183,11 @@ public enum eActionState
     outline,
     key,
     anim,
+}
+
+public enum rotationDirection
+{
+    Forward,
+    Backward
 }
 
