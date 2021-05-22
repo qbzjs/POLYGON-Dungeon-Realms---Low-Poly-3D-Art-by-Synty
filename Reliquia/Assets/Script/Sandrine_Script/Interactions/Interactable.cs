@@ -103,14 +103,14 @@ public class Interactable : MonoBehaviour
         
     }
 
-    public void applyOutline()
+    public void applyOutline(bool show)
     {
         if (InteractOutline == null)
         {
             return;
         }
         // INTERACT_ACTIONS();
-        if (!InteractOutline.enabled) // afficher le contour (OnTriggerExit)
+        if (show) // !InteractOutline.enabled // afficher le contour (OnTriggerExit)
         {
             showOutline();
 

@@ -53,10 +53,11 @@ public class William_Script : MonoBehaviour
         {
 
             interactableItem = other.gameObject.GetComponent<Interactable>();
-            interactableItem.applyOutline();
+            interactableItem.applyOutline(true);
 
         }
     }
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -67,7 +68,7 @@ public class William_Script : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             interactableItem = null;
-            other.gameObject.GetComponent<Interactable>().applyOutline();
+            other.gameObject.GetComponent<Interactable>().applyOutline(false);
         }
 
     }
@@ -79,7 +80,7 @@ public class William_Script : MonoBehaviour
             physicaltemInventaire.AddItem(item);
             gameManager.FermerMessageInteraction();
         }
-        if (Input.GetKeyDown(KeyCode.E) && interactableItem != null)
+        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && interactableItem != null)
         {
             interactableItem.ExecuteActions();
         }
