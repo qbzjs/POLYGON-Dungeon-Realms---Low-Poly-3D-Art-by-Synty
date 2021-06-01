@@ -39,6 +39,7 @@ public class William_Script : MonoBehaviour
     }
 
     ItemInventaire item;
+    Interactable interactableObject;
     Interactable interactableItem;
 
     private void OnTriggerEnter(Collider other)
@@ -52,8 +53,8 @@ public class William_Script : MonoBehaviour
         if (other.CompareTag("Interactable")) //&& interactableItem == null
         {
 
-            interactableItem = other.gameObject.GetComponent<Interactable>();
-            interactableItem.applyOutline(true);
+            interactableObject = other.gameObject.GetComponent<Interactable>();
+            interactableObject.applyOutline(true);
 
         }
     }
@@ -67,7 +68,7 @@ public class William_Script : MonoBehaviour
         }
         if (other.CompareTag("Interactable"))
         {
-            interactableItem = null;
+            interactableObject = null;
             other.gameObject.GetComponent<Interactable>().applyOutline(false);
         }
 
@@ -77,12 +78,44 @@ public class William_Script : MonoBehaviour
     {
         if(Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
         {
-            physicaltemInventaire.AddItem(item);
-            gameManager.FermerMessageInteraction();
+            if (physicaltemInventaire != null && item != null)
+            {
+                physicaltemInventaire.AddItem(item);
+                gameManager.FermerMessageInteraction();
+                interactableItem = null;
+            }
+            
         }
-        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && interactableItem != null)
+        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && interactableObject != null)
         {
-            interactableItem.ExecuteActions();
+            bool isOnlyOnceInteract = interactableObject.ExecuteActions();
+
+            if (isOnlyOnceInteract)
+            {
+                interactableObject.applyOutline(false);
+                interactableObject = null;                
+            }
+        }
+        RaycastHit hit;
+        Vector3 rayDirection = Vector3.forward - Vector3.up;
+        float rayDistance = 2f;
+
+        if (Physics.Raycast(transform.position + Vector3.up , rayDirection, out hit, rayDistance))
+        {
+            //Debug.DrawRay(transform.position + Vector3.up, rayDirection, Color.red);
+            var target = hit.transform;
+            if (target != null && target.CompareTag("ItemInteractable"))
+            {
+            //Debug.DrawRay(transform.position, rayDirection, Color.green);
+            // Set Inventaire
+            physicaltemInventaire = target.gameObject.GetComponent<PhysicaltemInventaire>();
+            item = physicaltemInventaire.thisItem;
+            gameManager.AfficherMessageInteraction("");
+            // Add Contour Blanc
+            interactableItem = target.gameObject.GetComponent<Interactable>();
+            interactableItem.applyOutline(true);
+            }
+        }
+
         }
     }
-}

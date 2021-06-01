@@ -28,7 +28,11 @@ public class PhysicaltemInventaire : MonoBehaviour
 
     public void AddItem(ItemInventaire item)
     {
-        Compas_Script.instance.RemoveMarqueurQuete(gameObject.GetComponent<MarqeurQuete_Script>());
+        MarqeurQuete_Script marqueur = gameObject.GetComponent<MarqeurQuete_Script>();
+        if (marqueur != null)
+        {
+            Compas_Script.instance.RemoveMarqueurQuete(marqueur);
+        }
 
         if (typeItemValue == TypeItem.Quetes)
         {
