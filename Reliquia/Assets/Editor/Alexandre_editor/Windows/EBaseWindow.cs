@@ -29,12 +29,21 @@ namespace AlexandreDialogues
 
 		private void OnEnable()
 		{
-			_myStyle = new GUIStyle(EditorStyles.textArea);
-			_myStyle.wordWrap = true;
+			if (_myStyle == null)
+			{
+				_myStyle = new GUIStyle(EditorStyles.textArea);
+				_myStyle.wordWrap = true;
+			}
 		}
 
 		private void OnGUI()
 		{
+			if (EditorApplication.isPlayingOrWillChangePlaymode)
+			{
+				this.Close();
+				return;
+			}
+
 			_targetSO.Update();
 
 			EditorGUILayout.BeginHorizontal();
