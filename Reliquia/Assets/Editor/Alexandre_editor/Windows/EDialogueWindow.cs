@@ -142,7 +142,7 @@ namespace AlexandreDialogues
 
 			if (_target.m_casting == null || _target.m_casting.Length == 0)
 			{
-				if (_target.m_replies.Length > 0)
+				if (_target.m_replies != null && _target.m_replies.Length > 0)
 				{
 					_target.m_replies = new Reply[0];
 				}
