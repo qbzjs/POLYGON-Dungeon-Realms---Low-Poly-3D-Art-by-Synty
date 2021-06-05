@@ -10,11 +10,12 @@ public class Mili_Torches : MonoBehaviour{
 
     public Transform[] torches;
 
-    public GameObject torcheFinale;
+    public Transform torcheFinale;
+
+    public Transform flammeFinale;
+    public Transform lumièreFinale;
 
     [Header("Variables")]
-
-    public string selectedTorch;
 
     public float minimumDistance = 2f;
 
@@ -37,7 +38,16 @@ public class Mili_Torches : MonoBehaviour{
 
             if (Vector3.Distance(transform.position, torches[i].transform.position) <= minimumDistance /*&& lightingScript.isLighting == true*/){
                 Debug.Log("Torch nearby !");
-                //torcheFinale = torches[i].gameObject.transform.GetChild(0).GetChild(0).gameObject;
+
+                torcheFinale = 
+
+
+
+                flammeFinale = torches[i].transform.GetChild(0);
+                lumièreFinale = torches[i].transform.GetChild(1);
+                //torches[i].GetComponentsInChildren<Transform>();
+                flammeFinale.gameObject.SetActive(true);
+                lumièreFinale.gameObject.SetActive(true);
             }
 
         }
