@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HelpFile
   m_EditorClassIdentifier: 
   m_title: Reliquia Dialogue System
-  m_date: 03-06-2021
+  m_date: 05-06-2021
   m_author: Alexandre Venet
   m_link: 'https://twitter.com/alhomepage '
   m_helpTexts:
@@ -180,3 +180,13 @@ MonoBehaviour:
       le script <b>DialogueColorsRef</b>."
     - "Le r\xE9sultat attendu est une liste de styles dans le menu d\xE9roulant du
       champ <b>Color</b>, dans la fen\xEAtre d\u2019\xE9dition de <b>Dialogue</b>."
+  - m_title: Lancer un fichier de dialogue
+    m_text:
+    - "<b>DialogueManager</b> fournit une m\xE9thode pour lancer un fichier de dialogue
+      <b>directement</b>. Cette m\xE9thode requiert une r\xE9f\xE9rence de fichier
+      de dialogue, une cam\xE9ra virtuelle et deux bool\xE9ens : ces deux variables
+      relatives aux interfaces <b>IEnableForDialogue</b> stipulent si <b>DialogueManager</b>
+      doit ou non lancer la fonction <b>EnableMe(bool value)</b>, respectivement
+      au d\xE9marrage du dialogue et \xE0 la fin du dialogue. "
+    - 'Exemple : <b>DialogueManager.Instance.StartDialogueFromFile(_d, _c, true,
+      true); </b>'

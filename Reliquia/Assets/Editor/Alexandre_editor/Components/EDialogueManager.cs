@@ -12,7 +12,7 @@ namespace AlexandreDialogues
 		private SerializedObject _targetSO;
 		private SerializedProperty _inventory, _defaultCamera, _canvas, _textLastCharIdentifier, _UICharacterLeft, _UICharacterRight, _replyText;
 		private SerializedProperty m_controledScripts, m_conditionsBools;
-		private SerializedProperty _levelProgress, _currentCamera, _currentDialogue, _currentUIObject, _currentReply, _isDialogueStarted, _clickState, _isCoroutineStarted, _hashPosition;
+		private SerializedProperty _levelProgress, _currentCamera, _currentDialogue, _currentUIObject, _currentReply, _isDialogueStarted, _isStartedFromFile, _clickState, _isCoroutineStarted, _hashPosition;
 
 		private void OnEnable()
 		{
@@ -35,6 +35,7 @@ namespace AlexandreDialogues
 			_currentUIObject = _targetSO.FindProperty("_currentUIObject");
 			_currentReply = _targetSO.FindProperty("_currentReply");
 			_isDialogueStarted = _targetSO.FindProperty("_isDialogueStarted");
+			_isStartedFromFile = _targetSO.FindProperty("_isStartedFromFile");
 			_clickState = _targetSO.FindProperty("_clickState");
 			_isCoroutineStarted = _targetSO.FindProperty("_isCoroutineStarted");
 			_hashPosition = _targetSO.FindProperty("_hashPosition");
@@ -75,6 +76,7 @@ namespace AlexandreDialogues
 			EditorGUILayout.PropertyField(_currentUIObject, new GUIContent("Current UI Object", "Les éléments d'UI utilisés actuellement."));
 			EditorGUILayout.PropertyField(_currentReply, new GUIContent("Current reply", "Le numéro de la réplique actuelle."));
 			EditorGUILayout.PropertyField(_isDialogueStarted, new GUIContent("Is dialogue started", "Le dialogue est-il lancé ?"));
+			EditorGUILayout.PropertyField(_isStartedFromFile, new GUIContent("Is started from file", "Le dialogue est-il lancé à partir d'un fichier (et non à partir d'un DialogueRef) ?"));
 			EditorGUILayout.PropertyField(_clickState, new GUIContent("Click state", "L'état du clic (0 ou 1) déterminant le contrôle attendu : afficher le texte ou passer la réplique."));
 			EditorGUILayout.PropertyField(_isCoroutineStarted, new GUIContent("Is coroutine started", "La coroutine d'affichage des lettres est-elle lancée ?"));
 			EditorGUILayout.PropertyField(_hashPosition, new GUIContent("Hash position", "La position du caractère identifiant une fin de texte."));

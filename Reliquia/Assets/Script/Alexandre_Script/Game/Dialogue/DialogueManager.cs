@@ -68,6 +68,8 @@ namespace AlexandreDialogues
 		[SerializeField] private int _currentReply;
 		private DialogueEntry _currentDialogueEntry;
 		[SerializeField] private bool _isDialogueStarted;
+		[SerializeField] private bool _isStartedFromFile;
+		private bool _useControledScriptsAtStartForFile, _useControledScriptsAtEndForFile;
 		[SerializeField] private int _clickState;
 		[SerializeField] private bool _isCoroutineStarted;
 		[SerializeField] private int _hashPosition;
@@ -267,56 +269,110 @@ namespace AlexandreDialogues
 			}
 		}
 
+		public void StartDialogueFromFile(Dialogue dialogue, GameObject virtualCamera, bool useControledScriptsAtStart, bool useControledScriptsAtEnd)
+		{
+			// Si le dialogue n'a pas déjà démarré
+			if (!_isDialogueStarted)
+			{
+				// Conserver la référence du dialogue 
+				_currentDialogue = dialogue;
+
+				if (dialogue.m_test != null && dialogue.m_test != string.Empty)
+				{
+					Debug.Log($"<color=magenta>DialogueManager</color> > Dialogue {dialogue.name} > {dialogue.m_test}");
+				}
+
+				// Activer la caméra de dialogue
+				_currentCamera = virtualCamera;
+				_currentCamera.SetActive(true);
+
+				// On veut utiliser IEnableForDialogue ? Alors lancer la méthode afférente pour tous les objets renseignés
+				_useControledScriptsAtStartForFile = useControledScriptsAtStart;
+				if (_useControledScriptsAtStartForFile)
+				{
+					IEnableForDialogueMethod(false);
+				}
+
+				// On veut utiliser IEnableForDialogue en fin de dialogue ? 
+				_useControledScriptsAtEndForFile = useControledScriptsAtEnd;
+
+				// Lancer le Canvas
+				_canvas.SetActive(true);
+
+				// Lancer l'affichage de la première réplique
+				PrepareReply();
+
+				// Dire que le dialogue est commencé
+				_isDialogueStarted = true;
+
+				// Dire qu'on démarre à partir du fichier (et pas à partir d'un DialogueRef)
+				_isStartedFromFile = true;
+			}
+		}
+
 		#endregion
 
 
 
 		#region Private methods
 
+		// Lancer la méthode EnableMe(bool value) de la collecton m_IEnableForDialogue (obtenue à partir de ControledScripts)
+		private void IEnableForDialogueMethod(bool value)
+		{
+			foreach (IEnableForDialogue controlledScript in m_IEnableForDialogue)
+			{
+				controlledScript.EnableMe(value);
+			}
+		}
+
 		private void StartDialogue(DialogueEntry entry, Dialogue dialogue)
 		{
-			// Conserver la référence du dialogue 
-			_currentDialogue = dialogue;
-
-			// Conserver la référence de l'entrée de dialogue
-			_currentDialogueEntry = entry;
-
-			if (dialogue.m_test != null && dialogue.m_test != string.Empty)
+			// Si le dialogue n'a pas déjà démarré
+			if (!_isDialogueStarted)
 			{
-				Debug.Log($"<color=magenta>DialogueManager</color> > Dialogue {dialogue.name} > {dialogue.m_test}");
-			}
+				// Conserver la référence du dialogue 
+				_currentDialogue = dialogue;
 
-			// Activer la caméra de dialogue
-			if (_currentCamera == null)
-			{
-				Debug.LogError($"<color=magenta>DialogueManager</color> > Le champ <b>Default camera</b> est null.");
-				return;
-			}
-			_currentCamera.SetActive(true);
+				// Conserver la référence de l'entrée de dialogue
+				_currentDialogueEntry = entry;
 
-			// Si on utilise la liste des IEnableForDialogue, lancer la méthode afférente pour tous les objets renseignés
-			if (entry.m_useControledScriptsAtStart)
-			{
-				foreach (IEnableForDialogue controlledScript in m_IEnableForDialogue)
+				if (dialogue.m_test != null && dialogue.m_test != string.Empty)
 				{
-					controlledScript.EnableMe(false);
+					Debug.Log($"<color=magenta>DialogueManager</color> > Dialogue {dialogue.name} > {dialogue.m_test}");
 				}
+
+				// Activer la caméra de dialogue
+				if (_currentCamera == null)
+				{
+					Debug.LogError($"<color=magenta>DialogueManager</color> > Le champ <b>Default camera</b> est null.");
+					return;
+				}
+				_currentCamera.SetActive(true);
+
+				// Si on utilise la liste des IEnableForDialogue, lancer la méthode afférente pour tous les objets renseignés
+				if (entry.m_useControledScriptsAtStart)
+				{
+					IEnableForDialogueMethod(false);
+				}
+
+				// S'il y a des abonnés à l'UnityEvent de démarrage, lancer l'événement
+				if (entry.m_eventAtStart != null)
+				{
+					entry.m_eventAtStart.Invoke();
+				}
+
+				// Lancer le Canvas
+				_canvas.SetActive(true);
+
+				// Lancer l'affichage de la première réplique
+				PrepareReply();
+
+				// Dire que le dialogue est commencé
+				_isDialogueStarted = true;
+
+				// Dire qu'on démarre à partir d'un DialogueRef (et pas à partir d'un fichier)
+				_isStartedFromFile = false;
 			}
-
-			// S'il y a des abonnés à l'UnityEvent de démarrage, lancer l'événement
-			if (entry.m_eventAtStart != null)
-			{
-				entry.m_eventAtStart.Invoke();
-			}
-
-			// Lancer le Canvas
-			_canvas.SetActive(true);
-
-			// Lancer l'affichage de la première réplique
-			PrepareReply();
-
-			// Dire que le dialogue est commencé
-			_isDialogueStarted = true;
 		}
 
 		private void PrepareReply()
@@ -486,22 +542,29 @@ namespace AlexandreDialogues
 
 		private void FinishDialogue()
 		{
-			if (_currentDialogueEntry.m_levelChangesAtEnd)
+			if (!_isStartedFromFile)
 			{
-				_levelProgress.m_levelStep = _currentDialogueEntry.m_nextLevel;
-			}
-
-			if (_currentDialogueEntry.m_useControledScriptsAtEnd)
-			{
-				foreach (IEnableForDialogue controlledScript in m_IEnableForDialogue)
+				if (_currentDialogueEntry.m_levelChangesAtEnd)
 				{
-					controlledScript.EnableMe(true);
+					_levelProgress.m_levelStep = _currentDialogueEntry.m_nextLevel;
+				}
+
+				if (_currentDialogueEntry.m_useControledScriptsAtEnd)
+				{
+					IEnableForDialogueMethod(true);
+				}
+
+				if (_currentDialogueEntry.m_eventAtEnd != null)
+				{
+					_currentDialogueEntry.m_eventAtEnd.Invoke();
 				}
 			}
-
-			if (_currentDialogueEntry.m_eventAtEnd != null)
+			else
 			{
-				_currentDialogueEntry.m_eventAtEnd.Invoke();
+				if (_useControledScriptsAtEndForFile)
+				{
+					IEnableForDialogueMethod(true);
+				}
 			}
 
 			_currentCamera.SetActive(false);
@@ -518,6 +581,9 @@ namespace AlexandreDialogues
 			_currentReply = 0;
 			_hashPosition = 0;
 			_isDialogueStarted = false;
+			_isStartedFromFile = false;
+			_useControledScriptsAtStartForFile = false;
+			_useControledScriptsAtEndForFile = false;
 		}
 
 		#endregion
