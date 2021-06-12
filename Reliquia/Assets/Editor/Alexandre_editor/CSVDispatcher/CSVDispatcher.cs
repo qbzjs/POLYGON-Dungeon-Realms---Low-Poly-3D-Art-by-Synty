@@ -227,7 +227,7 @@ namespace AlexandreDialogues
 							replies[i].m_text = _superArray[i][2];
 						}
 
-						GUILayout.Label(new GUIContent("Dialogue file name", "Entrer un nom pour générer le fichier ScriptableOject .asset du dialogue."), _subLabelStyle);
+						GUILayout.Label(new GUIContent("Dialogue file", "Cliquer sur le bouton suivant pour générer le fichier de dialogue à l'emplacement de votre choix."), _subLabelStyle);
 						if (GUILayout.Button(new GUIContent("Create Asset", "Générer le fichier.")))
 						{
 							string path = EditorUtility.SaveFilePanelInProject("Save dialogue", "", "asset", "Save file at path"); 
