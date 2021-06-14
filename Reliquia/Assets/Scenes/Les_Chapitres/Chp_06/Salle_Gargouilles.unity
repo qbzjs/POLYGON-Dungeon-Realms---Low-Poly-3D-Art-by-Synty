@@ -2588,6 +2588,27 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491823, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: b6c2c2aadf95cd94bba322121da2e46e,
+        type: 2}
+    - target: {fileID: 3389811491461491823, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491828, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389811491461491828, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3389811491461491829, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
         type: 3}
       propertyPath: m_Name
@@ -4513,43 +4534,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1475093546}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &596950343 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3389811491461491829, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
-    type: 3}
-  m_PrefabInstance: {fileID: 376480296}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &596950344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596950343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0fd6c74cde711545a36d897626bceeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTrappe: {fileID: 0}
-  cameraEboulement: {fileID: 0}
-  animTrappe:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!136 &596950345
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596950343}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.7
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &596950346 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1824061544687705702, guid: 045237dd0f8a7a742b9d4d5ed002cfde,
