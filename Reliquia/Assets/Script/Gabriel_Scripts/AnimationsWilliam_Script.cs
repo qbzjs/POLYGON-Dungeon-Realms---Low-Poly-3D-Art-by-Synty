@@ -68,7 +68,7 @@ public class AnimationsWilliam_Script : MonoBehaviour
     {
         if (Input.GetKey(raccourciClavier.toucheClavier["Avancer"]))
         {
-            enMouvement = true;
+
 
             _animator.SetBool("Reculer", false);
             _animator.SetBool("Droite", false);
@@ -76,11 +76,11 @@ public class AnimationsWilliam_Script : MonoBehaviour
             _animator.SetBool("Course", false);
             _animator.SetBool("Avancer", enMouvement);
 
-            transform.position += transform.forward * vitesse * Time.deltaTime;
+
         }
         else if (Input.GetKeyUp(raccourciClavier.toucheClavier["Avancer"]))
         {
-            enMouvement = false;
+
             _animator.SetBool("Avancer", enMouvement);
         }
     }
@@ -89,19 +89,17 @@ public class AnimationsWilliam_Script : MonoBehaviour
     {
         if (Input.GetKey(raccourciClavier.toucheClavier["Reculer"]))
         {
-            enMouvement = true;
+
 
 
             _animator.SetBool("Avancer", false);
             _animator.SetBool("Droite", false);
             _animator.SetBool("Gauche", false);
             _animator.SetBool("Reculer", enMouvement);
-
-            transform.position += -transform.forward * vitesse * Time.deltaTime;
         }
         else if (Input.GetKeyUp(raccourciClavier.toucheClavier["Reculer"]))
         {
-            enMouvement = false;
+
             _animator.SetBool("Reculer", enMouvement);
         }
     }
@@ -110,7 +108,7 @@ public class AnimationsWilliam_Script : MonoBehaviour
     {
         if (Input.GetKey(raccourciClavier.toucheClavier["Gauche"]))
         {
-            enMouvement = true;
+
 
 
             _animator.SetBool("Avancer", false);
@@ -118,11 +116,11 @@ public class AnimationsWilliam_Script : MonoBehaviour
             _animator.SetBool("Droite", false);
             _animator.SetBool("Gauche", enMouvement);
 
-            transform.position += -transform.right * 2 * Time.deltaTime;
+
         }
         else if (Input.GetKeyUp(raccourciClavier.toucheClavier["Gauche"]))
         {
-            enMouvement = false;
+
             _animator.SetBool("Gauche", enMouvement);
         }
     }
@@ -131,7 +129,7 @@ public class AnimationsWilliam_Script : MonoBehaviour
     {
         if (Input.GetKey(raccourciClavier.toucheClavier["Droite"]))
         {
-            enMouvement = true;
+
 
 
             _animator.SetBool("Avancer", false);
@@ -139,11 +137,11 @@ public class AnimationsWilliam_Script : MonoBehaviour
             _animator.SetBool("Gauche", false);
             _animator.SetBool("Droite", enMouvement);
 
-            transform.position += transform.right * 2 * Time.deltaTime;
+
         }
         else if (Input.GetKeyUp(raccourciClavier.toucheClavier["Droite"]))
         {
-            enMouvement = false;
+
             _animator.SetBool("Droite", enMouvement);
         }
     }
