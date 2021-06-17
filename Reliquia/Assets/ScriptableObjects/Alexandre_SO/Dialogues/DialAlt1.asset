@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: DialAlt1
+  m_EditorClassIdentifier: 
+  m_test: Un dialogue alternatif...
+  m_casting:
+  - m_character: {fileID: 11400000, guid: 453e17a97ee08e74a9ff09804e22960b, type: 2}
+    m_characterView: 0
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: 453e17a97ee08e74a9ff09804e22960b, type: 2}
+      m_characterView: 0
+    m_stageDirections: Roo...
+    m_styleColorHash: -919277916
+    m_charSpeed: 0.1
+    m_spaceSpeed: 0.5
+    m_text: Pas de texte
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 453e17a97ee08e74a9ff09804e22960b, type: 2}
+      m_characterView: 0
+    m_stageDirections: Cyan
+    m_styleColorHash: 2470837
+    m_charSpeed: 0.1
+    m_spaceSpeed: 0.5
+    m_text: Na !
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []

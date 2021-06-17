@@ -36,6 +36,8 @@ public class Interactable : MonoBehaviour
 
     private bool itemActive; // si l'objet a déjà interagit
 
+    private Interactable[] childrenInteractable;
+
 
     private Quaternion delta;
     private Quaternion deltaInit;
@@ -121,23 +123,50 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    public void ExecuteActions()
+    public bool ExecuteActions()
     {
-
+        bool isOnlyOnce = false;
+       
         if (InteractOutline.enabled && !itemActive) // ouvrir, jouer l'anim (E)
         {
             itemActive = true;
             PlayAnim(true);
-            return;
+            return InOnlyOnce();
+
         }
         if (InteractOutline.enabled && itemActive) // ouvrir, jouer l'anim (E)
         {
             itemActive = false;
             PlayAnim(false);
-            return;
+           
+
         }
+        return isOnlyOnce;
 
+    }
 
+    private bool InOnlyOnce()
+    {
+        childrenInteractable = goContour.GetComponentsInChildren<Interactable>();// Object interactable 1 seule fois
+        // Debug.Log("childrenInteractable : " + childrenInteractable);
+        if (childrenInteractable.Length > 0)
+        {
+            for (int i = 0; i < childrenInteractable.Length; i++)
+            {
+                // Debug.Log("childre is : " + childrenInteractable[i].gameObject.name);
+                if (childrenInteractable[i].gameObject.CompareTag("ItemInteractable"))
+                {
+                    // Debug.Log("childre is with itemInteractable: " + childrenInteractable[i].gameObject.name);
+                    childrenInteractable[i].gameObject.GetComponent<Collider>().enabled = true;
+                }
+            }
+
+            goContour.GetComponent<Collider>().enabled = false;
+            hideOutline();
+            itemActive = false;
+            return true;
+        }
+        return false;
     }
     
     public void ExecuteUndo() 
@@ -159,7 +188,7 @@ public class Interactable : MonoBehaviour
 
     private void hideOutline()
     {
-        if (InteractOutline == null)
+        if (InteractOutline == null )
         {
             return;
         }

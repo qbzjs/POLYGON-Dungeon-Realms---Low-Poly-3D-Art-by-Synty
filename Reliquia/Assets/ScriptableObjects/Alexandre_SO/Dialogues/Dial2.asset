@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Dial2
+  m_EditorClassIdentifier: 
+  m_test: Ceci est un texte de dialogue...
+  m_casting:
+  - m_character: {fileID: 11400000, guid: 3bff6a8e19a4a4945ac0a6968efc58d7, type: 2}
+    m_characterView: 0
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: 3bff6a8e19a4a4945ac0a6968efc58d7, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0.1
+    m_spaceSpeed: 0.1
+    m_text: Ceci est un <color=#5adef4ff><b>texte de dialogue</b></color>...
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []

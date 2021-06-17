@@ -1,0 +1,192 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb78c8635f17054f8e772a4d50a4fae, type: 3}
+  m_Name: HelpFile
+  m_EditorClassIdentifier: 
+  m_title: Reliquia Dialogue System
+  m_date: 05-06-2021
+  m_author: Alexandre Venet
+  m_link: 'https://twitter.com/alhomepage '
+  m_helpTexts:
+  - m_title: Introduction
+    m_text:
+    - "Ce fichier pr\xE9sente un <b>tour d\u2019horizon</b> du syst\xE8me de dialogue
+      de <i>Reliquia</i>. "
+    - "On suppose que vous disposiez d\xE9j\xE0 d\u2019un objet jouable prenant en
+      compte les d\xE9tections."
+    - "Pour le contenu complet du syst\xE8me de dialogue, veuillez consulter la documentation
+      fournie."
+  - m_title: Inventaire de test
+    m_text:
+    - "L\u2019<b>inventaire de test</b> est cr\xE9\xE9 ainsi : dans <b><i>Project</i>
+      puis clic droit > Create > ScriptableObjects > Dialogue > Inventory</b>. "
+    - 'Renseignez les valeurs de type <i>string</i>, par exemple avec deux valeurs
+      : Ananas et Banane.'
+  - m_title: "Cam\xE9ra par d\xE9faut"
+    m_text:
+    - "Cr\xE9ez dans la sc\xE8ne une <b>cam\xE9ra virtuelle</b> <i>Cinemachine</i>
+      ; ce sera la cam\xE9ra de dialogue <b>par d\xE9faut</b>. "
+    - "Cette cam\xE9ra ne doit pas \xEAtre contr\xF4lable lors du dialogue."
+  - m_title: Gestionnaire de dialogues
+    m_text:
+    - "Placez une instance du <i>Prefab</i> <b>DialogueManager</b> \xE0 la racine
+      de la <i>Hierarchy</i>. "
+    - "Si la sc\xE8ne ne poss\xE8de pas d\xE9j\xE0 un <i>EventSystem</i>, cr\xE9ez-le
+      : <b><i>Hierarchy</i> puis clic droit > UI > Event System</b>."
+    - "Renseignez dans le champ <b>Default Camera</b> la cam\xE9ra (voir chapitre
+      <i>Cam\xE9ra par d\xE9faut</i>). "
+    - "Si vous voulez que <b>DialogueManager</b> consid\xE8re des scripts \xE0 <b>d\xE9sactiver
+      au d\xE9marrage d\u2019un dialogue</b> et <b>\xE0 r\xE9activer une fois le
+      dialogue termin\xE9</b>, alors il faut pr\xE9parer les scripts en question.
+      Pour cela, \xE9diter les scripts de votre choix et impl\xE9mentez l\u2019interface
+      <b>IEnableForDialogue</b>. La m\xE9thode <b>EnableMe(bool value) </b> doit
+      \xEAtre ajout\xE9e au script et vous en codez le corps \xE0 votre convenance.
+      Ensuite, dans <b>DialogueManager</b>, dans le champ <b>Controled scripts</b>,
+      indiquez le nombre d\u2019objets \xE0 renseigner et glissez dans les champs
+      les objets ou composants qui impl\xE9mentent l\u2019interface."
+  - m_title: Progression de niveau
+    m_text:
+    - "Cr\xE9ez un fichier <b>LevelProgress</b> : dans <b><i>Project</i> puis clic
+      droit > Create > ScriptableObjects > Dialogue > LevelProgress</b>. Par d\xE9faut,
+      la valeur d\u2019initialisation <b>Init Value</b> est 0 mais vous pouvez la
+      modifier."
+  - m_title: Personnage
+    m_text:
+    - "Cr\xE9ez un fichier <b>Character</b> : dans <b><i>Project</i> puis clic droit
+      > Create > ScriptableObjects > Dialogue > Character</b>. Renseignez dans les
+      champs <b>Sprite left</b> et <b>Sprite right</b> les <i>sprites</i> correspondant
+      \xE0 l\u2019image de gauche et \xE0 l\u2019image de droite. Nommez le personnage
+      dans le champ <b>Name</b>."
+  - m_title: Dialogue
+    m_text:
+    - "Cr\xE9ez un fichier <b>Dialogue</b> : dans <b><i>Project</i> puis clic droit
+      > Create > ScriptableObjects > Dialogue > Dialogue</b>. Puis cliquez sur <b>Open
+      Dialogue</b>."
+    - "Cliquez sur <b>Add character</b>. Renseignez le champ avec un <b>Character</b>
+      puis s\xE9lectionnez l\u2019<b>orientation</b> dans le menu d\xE9roulant."
+    - "Cliquez sur <b>Add reply</b>. Dans <b>Stage direction</b>, \xE9crivez un adjectif
+      de votre choix pour les didascales, et s\xE9lectionnez la couleur <b>Yellow</b>
+      dans le champ <b>Color</b>. Dans <b>Text</b>, \xE9crivez le texte de r\xE9plique
+      et choisissez des vitesses d\u2019affichage pour les <b>caract\xE8res</b> et
+      les <b>espaces entre les mots</b> dans respectivement les champs <b>Char Speed</b>
+      et <b>Space Speed</b>."
+    - "Vous pouvez abonner une m\xE9thode d\u2019<i>Asset</i> \xE0 l\u2019\xE9v\xE9nement
+      <b>Reply Event</b>."
+  - m_title: "D\xE9clencheur"
+    m_text:
+    - "Dans la sc\xE8ne, \xE0 la racine de la <i>Hierarchy</i>, cr\xE9ez un <b>objet
+      3D</b> de votre choix. Attachez-y le script <b>DialogueRef</b>. "
+    - "S\xE9lectionnez le <b>Type</b> d\u2019interaction attendue : zone <b>automatique</b>
+      (<b>Trigger Zone</b>) ou <b>par entr\xE9e utilisateur</b> (<b>Interactive Zone</b>).
+      Cette valeur est \xE0 r\xE9cup\xE9rer par le script de l\u2019objet jouable,
+      ou tout autre objet, qui en disposera pour d\xE9clencher le dialogue par appel
+      \xE0 <b>DialogueManager</b>."
+    - Renseignez le champ <b>LevelProgress</b> avec le fichier correspondant.
+    - "Si vous voulez qu\u2019une <b>cam\xE9ra virtuelle</b> soit utilis\xE9e pour
+      ce dialogue, ajouter une cam\xE9ra virtuelle dans la sc\xE8ne et r\xE9f\xE9rencez-la
+      dans le champ <b>Virtual camera</b> de <b>DialogueRef</b>."
+  - m_title: "Entr\xE9es de dialogue : g\xE9n\xE9ralit\xE9s"
+    m_text:
+    - Cliquez sur le bouton <b>Open Dialogue Entries</b> du composant <b>DialogueRef</b>.
+    - "Dans la fen\xEAtre d\u2019\xE9dition <b>DialogueRef</b>, cliquez sur <b>Add
+      entry</b> pour ajouter une <b>entr\xE9e de dialogue</b>. "
+    - "\xC9crivez dans le champ <b>Name</b> le texte : \xAB <= 3 \xBB. "
+    - Renseignez le champ <b>Dialogue SO</b> avec le fichier de <b>Dialogue</b>.
+    - "Cochez la case <b>ControledScripts disabled</b> si vous voulez que <b>DialogueManager</b>
+      lance la m\xE9thode de l\u2019interface <b>IEnableForDialogue</b> pour d\xE9sactiver
+      les objets (voir le chapitre <i>Gestionnaire de dialogue</i>)."
+    - "Vous pouvez abonner une m\xE9thode publique \xE0 l\u2019\xE9v\xE9nement <b>Event
+      At Start</b> pour la d\xE9clencher au d\xE9marrage du dialogue."
+    - Cochez la case <b>Level changes at end</b> et renseignez la valeur 4 dans le
+      champ <b>Next level</b> si vous voulez que la valeur de <b>LevelProgress</b>
+      change.
+    - "Cochez la case <b>ControledScripts enabled</b> si vous voulez que <b>DialogueManager</b>
+      lance la m\xE9thode de l\u2019interface <b>IEnableForDialogue</b> pour r\xE9activer
+      les objets (voir le chapitre <i>Gestionnaire de dialogue</i>)."
+    - "Vous pouvez abonner une m\xE9thode publique \xE0 l\u2019\xE9v\xE9nement <b>Event
+      At End</b> pour la d\xE9clencher \xE0 la fin du dialogue."
+  - m_title: "Entr\xE9es de dialogue : conditions de d\xE9marrage"
+    m_text:
+    - "Dans la fen\xEAtre d\u2019\xE9dition <b>DialogueRef</b>, cliquez sur le bouton
+      <b>Add condition</b>."
+    - "Dans le champ <b>Type</b>, choisissez <b>Level</b>. Pour l\u2019<b>Operator</b>,
+      choisissez <b>Less Than Or Equal To</b>, et dans le champ <b>Level</b> \xE9crivez
+      le nombre 3. Cette condition correspond au nom renseign\xE9 au chapitre pr\xE9c\xE9dent
+      (\xAB <= 3 \xBB)."
+    - "Pour complexifier, vous pouvez ajouter une nouvelle condition. Le type <b>Object</b>
+      pr\xE9sente un <b>champ de saisie</b> o\xF9 vous renseignerez le <b>texte</b>
+      (<i>string</i>) du nom d\u2019un objet d\u2019inventaire, par exemple : Banane
+      (voir le chapitre <i>Inventaire de test</i>)."
+    - "Si vous voulez contr\xF4ler finement les conditions, utilisez une condition
+      de type <b>Method</b>. Ceci propose un \xE9v\xE9nement auquel abonner une m\xE9thode
+      personnalis\xE9e. Cette m\xE9thode doit informer <b>DialogueManager</b> ; ceci
+      au moyen de l\u2019instruction suivante qui consiste \xE0 ajouter \xE0 une
+      liste la valeur bool\xE9enne de r\xE9sultat : <b>DialogueManager.Instance.m_conditionsBools.Add(valeurBooleenne);
+      </b> o\xF9 valeurBooleene est le r\xE9sultat <i>true</i> ou <i>false</i>)."
+    - "Les conditions <b>Object</b> et <b>Method</b> autorisent un <b>dialogue alternatif</b>
+      que l\u2019on renseigne dans le champ <b>Dialogue alt SO</b>."
+  - m_title: Exemple de lancement de dialogue
+    m_text:
+    - "Dans la sc\xE8ne d\u2019exemple fournie, l\u2019objet jouable pr\xE9sente
+      le script <b>PlayerInteract</b> et d\u2019autres scripts dans l\u2019arborescence
+      de l\u2019objet. C\u2019est une possibilit\xE9 de contr\xF4le parmi d\u2019autres."
+    - "Dans <b>PlayerInteract</b>, on r\xE9cup\xE8re une r\xE9f\xE9rence de <b>DialogueRef</b>.
+      On teste le <b>Type</b>, variable de type <i>Enum</i> dont le nom r\xE9el est
+      <b>m_dialogueRefType</b>. "
+    - "Pour appeler le <b>DialogueManager</b> afin qu\u2019il \xE9value les entr\xE9es
+      de dialogue, utiliser l\u2019instruction : <b>DialogueManager.Instance.DialogueCheckStart(_dialogueRef);</b>
+      o\xF9 _dialogueRef est la r\xE9f\xE9rence au composant de m\xEAme nom. "
+  - m_title: "Styles : texte de r\xE9plique"
+    m_text:
+    - "Dans <i>Project</i>, s\xE9lectionnez le fichier <b>TMPRO Reliquia Style Sheet</b>.
+      Le fichier contient une liste de styles (feuille de styles) utilisables pour
+      le texte des <b>r\xE9pliques</b> de dialogue."
+    - "On souhaite par exemple \xE9crire une r\xE9plique mise en forme avec une couleur
+      cyan. "
+    - "S\xE9lectionnez un <b>dialogue</b> d\xE9j\xE0 r\xE9alis\xE9 comprenant une
+      <b>r\xE9plique</b> et ouvrez la fen\xEAtre d\u2019\xE9dition. "
+    - "Ensuite, s\xE9lectionnez le fichier de feuilles de styles. Cliquez sur le
+      bouton <b>Next</b> jusqu\u2019\xE0 trouver la page du style nomm\xE9 <b>Cyan</b>. "
+    - "Dans le champ <b>Text</b> de la r\xE9plique, \xE9crivez par exemple \xAB Je
+      m\u2019appelle Choucroute. \xBB."
+    - "Puis, s\xE9lectionnez le champ <b>Opening Tags</b> de la feuille de style
+      et <b>copiez</b> dans le presse-papier son contenu. Coller le contenu du presse-papier
+      juste <b>avant la majuscule du pr\xE9nom</b>."
+    - "Enfin, s\xE9lectionnez le champ <b>Closing Tags</b> de la feuille de style
+      et <b>copiez</b> dans le presse-papier son contenu. Coller le contenu du presse-papier
+      juste <b>apr\xE8s la derni\xE8re lettre du pr\xE9nom</b>."
+  - m_title: "Styles : didascalies de r\xE9plique"
+    m_text:
+    - "Pour \xE9diter une r\xE9plique avec <b>didascalies en couleur</b>, consultez
+      le chapitre <i>Dialogue</i>."
+    - "Pour \xE9diter les styles des didascales, proc\xE9dez comme suit."
+    - "Dans <i>Project</i>, s\xE9lectionnez le fichier <b>TMPRO Reliquia Style Sheet</b>. "
+    - "Depuis <i>Project</i>, \xE9diter le script <b>DialogueColorsRef</b> dans l\u2019\xE9diteur
+      de code."
+    - "Configurez votre espace de travail de fa\xE7on \xE0 voir d\u2019un c\xF4t\xE9
+      votre fichier, de l\u2019autre la liste des styles dans <i>Unity</i>."
+    - "Que le but soit de cr\xE9er, supprimer ou modifier un style, le principe est
+      de commencer par \xE9diter le fichier des styles, puis de r\xE9cup\xE9rer les
+      donn\xE9es de <b>Name</b> et <b>HashCode</b> et de les r\xE9pertorier dans
+      le script <b>DialogueColorsRef</b>."
+    - "Le r\xE9sultat attendu est une liste de styles dans le menu d\xE9roulant du
+      champ <b>Color</b>, dans la fen\xEAtre d\u2019\xE9dition de <b>Dialogue</b>."
+  - m_title: Lancer un fichier de dialogue
+    m_text:
+    - "<b>DialogueManager</b> fournit une m\xE9thode pour lancer un fichier de dialogue
+      <b>directement</b>. Cette m\xE9thode requiert une r\xE9f\xE9rence de fichier
+      de dialogue, une cam\xE9ra virtuelle et deux bool\xE9ens : ces deux variables
+      relatives aux interfaces <b>IEnableForDialogue</b> stipulent si <b>DialogueManager</b>
+      doit ou non lancer la fonction <b>EnableMe(bool value)</b>, respectivement
+      au d\xE9marrage du dialogue et \xE0 la fin du dialogue. "
+    - 'Exemple : <b>DialogueManager.Instance.StartDialogueFromFile(_d, _c, true,
+      true); </b>'

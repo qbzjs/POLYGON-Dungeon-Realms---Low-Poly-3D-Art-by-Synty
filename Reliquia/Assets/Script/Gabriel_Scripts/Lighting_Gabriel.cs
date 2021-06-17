@@ -41,9 +41,9 @@ public class Lighting_Gabriel : MonoBehaviour
     // variables (Gabriel)
 
     [SerializeField]
-    private CinemachineVirtualCamera aimCam;
+    private CinemachineFreeLook aimCam;
     [SerializeField]
-    private CinemachineVirtualCamera normalCam;
+    private CinemachineFreeLook normalCam;
     [SerializeField]
     private Transform followTarget;
     public bool aim = false;
@@ -133,7 +133,7 @@ public class Lighting_Gabriel : MonoBehaviour
 
         // Comportement Offensif (Alexis)
 
-       if (Input.GetMouseButtonDown(0) && isCreated == true && shot == false){
+       if (Input.GetMouseButtonDown(0) && isCreated == true && shot == false && aim == true){
             shot = true;
 
             ybot.GetComponent<RessourcesVitalesWilliam_Script>().EnleverMana((manaPool / 100) * 10);
@@ -188,7 +188,7 @@ public class Lighting_Gabriel : MonoBehaviour
             targetImage.GetComponent<Image>().color = new Color32(255, 255, 225, 100);
         }
 
-        tlighting.localRotation = followTarget.localRotation;
+        tlighting.localRotation = gameCamera.transform.localRotation;
         Debug.DrawRay(tlighting.position, tlighting.forward, Color.green);
 
 
