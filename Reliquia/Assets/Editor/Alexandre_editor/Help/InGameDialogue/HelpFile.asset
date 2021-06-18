@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb78c8635f17054f8e772a4d50a4fae, type: 3}
+  m_Name: HelpFile
+  m_EditorClassIdentifier: 
+  m_title: Reliquia In Game Dialogue
+  m_date: 16-06-2021
+  m_author: Alexandre Venet
+  m_link: 'https://twitter.com/alhomepage '
+  m_helpTexts:
+  - m_title: Introduction
+    m_text:
+    - "Ce fichier pr\xE9sente un <b>tour d\u2019horizon</b> du syst\xE8me de dialogue
+      \xAB en jeu \xBB de <i>Reliquia</i>. "
+    - "Pour le contenu complet du syst\xE8me, veuillez consulter la documentation
+      fournie."
+  - m_title: Fichier de dialogue
+    m_text:
+    - "Cr\xE9er un fichier de dialogue <i>in-game</i> dans <b><i>Project</i> puis
+      clic droit > Create > ScriptableObjects > InGameDialogue > InGameDialogue</b>."
+    - "Cliquer sur le bouton <b>Add Reply</b> pour ajouter une <b>r\xE9plique</b>."
+    - 'Renseigner un <b>texte</b> dans le champ <b>Text</b>. '
+    - "Param\xE9trer une <b>dur\xE9e d\u2019affichage</b> comprise entre 0 et 5 secondes
+      pour cette r\xE9plique."
+  - m_title: Styles
+    m_text:
+    - "Dans <i>Project</i>, s\xE9lectionnez le fichier <b>TMPRO Reliquia Style Sheet</b>.
+      Le fichier contient une liste de styles (feuille de styles) utilisables pour
+      le texte des <b>r\xE9pliques</b> de dialogue."
+    - "On souhaite par exemple \xE9crire une r\xE9plique mise en forme avec une couleur
+      cyan. "
+    - "S\xE9lectionnez un <b>dialogue</b> d\xE9j\xE0 r\xE9alis\xE9 comprenant une
+      <b>r\xE9plique</b> et ouvrez la fen\xEAtre d\u2019\xE9dition. "
+    - "Ensuite, s\xE9lectionnez le fichier de feuilles de styles. Cliquez sur le
+      bouton <b>Next</b> jusqu\u2019\xE0 trouver la page du style nomm\xE9 <b>Cyan</b>. "
+    - "Dans le champ <b>Text</b> de la r\xE9plique, \xE9crivez par exemple \xAB Je
+      m\u2019appelle Choucroute. \xBB."
+    - "Puis, s\xE9lectionnez le champ <b>Opening Tags</b> de la feuille de style
+      et <b>copiez</b> dans le presse-papier son contenu. Coller le contenu du presse-papier
+      juste <b>avant la majuscule du pr\xE9nom</b>."
+    - "Enfin, s\xE9lectionnez le champ <b>Closing Tags</b> de la feuille de style
+      et <b>copiez</b> dans le presse-papier son contenu. Coller le contenu du presse-papier
+      juste <b>apr\xE8s la derni\xE8re lettre du pr\xE9nom</b>."
+  - m_title: Gestionnaire de dialogues
+    m_text:
+    - "Placez une instance du <i>Prefab</i> <b>InGameDialogueManager</b> \xE0 la
+      racine de la <i>Hierarchy</i>."
+    - "Si la sc\xE8ne ne poss\xE8de pas d\xE9j\xE0 un <i>EventSystem</i>, cr\xE9ez-le
+      : <b><i>Hierarchy</i> puis clic droit > UI > Event System</b>."
+    - "Aucun param\xE9trage n\u2019est requis. "
+  - m_title: Lancer un dialogue
+    m_text:
+    - "Pour lancer un dialogue, dans un script, ajouter un champ s\xE9rialis\xE9
+      <i>private</i> de type <b>InGameDialogue</b> et nomm\xE9 <b>gameplayDialogue</b>.
+      Dans <i>Unity</i>, en <i>Inspector</i>, renseigner un <b>InGameDialogue</b>
+      dans le champ."
+    - "Dans le script, cr\xE9er une m\xE9thode renvoyant <i>void</i>. Y \xE9crire
+      l\u2019instruction suivante : <b>InGameDialogueManager.Instance.StartDialogue(gameplayDialogue);</b> "
+    - "Appeler la m\xE9thode lancera le gestionnaire qui affichera le dialogue renseign\xE9."
+  - m_title: Interrompre un dialogue
+    m_text:
+    - "Pour interrompre un dialogue, dans un script, cr\xE9er une m\xE9thode renvoyant
+      <i>void</i> et y \xE9crire l\u2019instruction suivante : <b>InGameDialogueManager.Instance.
+      StopCurrentDialogue();</b>"

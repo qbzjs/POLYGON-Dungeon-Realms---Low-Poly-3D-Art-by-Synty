@@ -68,6 +68,7 @@ namespace AlexandreDialogues
 		[SerializeField] private int _currentReply;
 		private DialogueEntry _currentDialogueEntry;
 		[SerializeField] private bool _isDialogueStarted;
+		public bool IsDialogueStarted { get => _isDialogueStarted; private set => _isDialogueStarted = value; } // pour obtenir le champ de l'extérieur
 		[SerializeField] private bool _isStartedFromFile;
 		private bool _useControledScriptsAtStartForFile, _useControledScriptsAtEndForFile;
 		[SerializeField] private int _clickState;
@@ -274,6 +275,9 @@ namespace AlexandreDialogues
 			// Si le dialogue n'a pas déjà démarré
 			if (!_isDialogueStarted)
 			{
+				// S'il y a un InGameDialogueManager et s'il a lancé un dialogue, alors l'arrêter
+				CheckInGameDialogueAndClose();
+
 				// Conserver la référence du dialogue 
 				_currentDialogue = dialogue;
 
@@ -330,6 +334,9 @@ namespace AlexandreDialogues
 			// Si le dialogue n'a pas déjà démarré
 			if (!_isDialogueStarted)
 			{
+				// S'il y a un InGameDialogueManager et s'il a lancé un dialogue, alors l'arrêter
+				CheckInGameDialogueAndClose();
+
 				// Conserver la référence du dialogue 
 				_currentDialogue = dialogue;
 
@@ -584,6 +591,16 @@ namespace AlexandreDialogues
 			_isStartedFromFile = false;
 			_useControledScriptsAtStartForFile = false;
 			_useControledScriptsAtEndForFile = false;
+		}
+
+		// Si le InGameDialogueManager est instancié et s'il y a un dialogue en cours
+		// alors on veut arrêter ce dialogue car on ne veut pas de superposition et la boîte de dialogue est plus importante
+		private void CheckInGameDialogueAndClose()
+		{
+			if (InGameDialogueManager.Instance != null && InGameDialogueManager.Instance.IsDialogueStarted)
+			{
+				InGameDialogueManager.Instance.StopCurrentDialogue();
+			}
 		}
 
 		#endregion

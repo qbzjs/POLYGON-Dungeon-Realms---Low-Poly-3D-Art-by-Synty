@@ -62,11 +62,21 @@ namespace AlexandreDialogues
 
 			_target = (HelpSO)target;
 
+			if (_target.m_helpTexts == null)
+			{
+				return;
+			}
+
 			fold = new bool[_target.m_helpTexts.Length];
 		}
 
 		public override void OnInspectorGUI()
 		{
+			if (_target.m_helpTexts == null)
+			{
+				return;
+			}
+
 			//--------------------------------------------------------------------------
 
 			// En-tête

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AlexandreDialogues
 {
-	//[CreateAssetMenu(fileName = "HelpFile", menuName = "ScriptableObjects/Dialogue/Help File")]
+	//[CreateAssetMenu(fileName = "HelpFile", menuName = "ScriptableObjects/Help File")]
 	public class HelpSO : ScriptableObject
 	{
 		[System.Serializable]

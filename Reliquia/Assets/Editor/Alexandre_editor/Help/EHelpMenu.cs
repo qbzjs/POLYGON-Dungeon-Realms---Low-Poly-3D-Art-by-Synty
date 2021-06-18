@@ -8,28 +8,50 @@ namespace AlexandreDialogues
 {
 	public class EHelpMenu
 	{
-		[MenuItem("Tools/Reliquia/Dialogue/Help file", false, 0)]
-		private static void NestedOption1()
+		private static string _root = "Assets/Editor/Alexandre_editor/Help/";
+
+		[MenuItem("Tools/Reliquia/Dialogue Box/Help file", false, 0)]
+		private static void BoxHelp()
 		{
-			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Editor/Alexandre_editor/Help/HelpFile.asset"); ;
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}DialogueBox/HelpFile.asset"); ;
 		}
 
-		[MenuItem("Tools/Reliquia/Dialogue/Notice", false, 1)]
-		private static void NestedOption2()
+		[MenuItem("Tools/Reliquia/Dialogue Box/Notice", false, 1)]
+		private static void BoxNotice()
 		{
-			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Editor/Alexandre_editor/Help/Dialogue system - notice.pdf"); ;
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}DialogueBox/Dialogue system - notice.pdf"); ;
 		}
 
-		[MenuItem("Tools/Reliquia/Dialogue/Documentation", false, 2)]
-		private static void NestedOption3()
+		[MenuItem("Tools/Reliquia/Dialogue Box/Documentation", false, 3)]
+		private static void BoxDoc()
 		{
-			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Editor/Alexandre_editor/Help/Dialogue system - documentation.pdf"); ;
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}DialogueBox/Dialogue system - documentation.pdf"); ;
 		}
 
-		[MenuItem("Tools/Reliquia/Dialogue/CSV Dispatcher", false, 14)] 
+		[MenuItem("Tools/Reliquia/Dialogue Box/CSV Dispatcher", false, 14)]
 		public static void CVSDispatcher()
 		{
 			ECSVDispatcher.ShowWindow();
+		}
+
+
+
+		[MenuItem("Tools/Reliquia/Dialogue InGame/Help file", false, 0)]
+		private static void InGameHelp()
+		{
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}InGameDialogue/HelpFile.asset"); ;
+		}
+
+		[MenuItem("Tools/Reliquia/Dialogue InGame/Notice", false, 1)]
+		private static void InGameNotice()
+		{
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}InGameDialogue/In Game Dialogue - notice.pdf"); ;
+		}
+
+		[MenuItem("Tools/Reliquia/Dialogue InGame/Documentation", false, 3)]
+		private static void InGameDoc()
+		{
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}InGameDialogue/In Game Dialogue - documentation.pdf"); ;
 		}
 	}
 }
