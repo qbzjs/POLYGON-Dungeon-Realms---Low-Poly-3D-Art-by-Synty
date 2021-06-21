@@ -53,5 +53,11 @@ namespace AlexandreDialogues
 		{
 			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}InGameDialogue/In Game Dialogue - documentation.pdf"); ;
 		}
+
+		[MenuItem("Tools/Reliquia/Dialogue InGame/CSV Dispatcher InGame", false, 14)]
+		public static void CVSDispatcherIngame()
+		{
+			ECSVDispatcherInGame.ShowWindow();
+		}
 	}
 }
