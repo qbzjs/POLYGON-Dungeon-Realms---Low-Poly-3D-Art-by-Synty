@@ -15,9 +15,10 @@ namespace AlexandreDialogues
 
 		#region Private
 
-		[SerializeField] private bool _hasInteractiveZone, _hasTriggerZone;
+		[SerializeField] private bool _hasInteractiveZone = default;
+		[SerializeField] private bool _hasTriggerZone = default;
 
-		[SerializeField] private DialogueRef _dialogueRef;
+		[SerializeField] private DialogueRef _dialogueRef = default;
 
 		[SerializeField] private bool _isActive = true;
 

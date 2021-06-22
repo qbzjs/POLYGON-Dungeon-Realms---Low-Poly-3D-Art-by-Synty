@@ -8,7 +8,7 @@ namespace AlexandreDialogues
 	{
 		#region Private
 
-		[SerializeField] private PlayerInteract _playerInteract;
+		[SerializeField] private PlayerInteract _playerInteract = default;
 
 		#endregion
 

@@ -9,13 +9,13 @@ namespace AlexandreDialogues
 		#region Private
 
 		[Tooltip("Un fichier ScriptableObject de dialogue in-game.")]
-		[SerializeField] private InGameDialogue _inGameDialogue;
+		[SerializeField] private InGameDialogue _inGameDialogue = default;
 		[Tooltip("Un fichier ScriptableObject de progression.")]
-		[SerializeField] private LevelProgress _levelProgress;
+		[SerializeField] private LevelProgress _levelProgress = default;
 		[Tooltip("La valeur à laquelle lancer le dialogue.")]
-		[SerializeField] private int _value;
+		[SerializeField] private int _value = default;
 		[Tooltip("Le tag d'objet à tester lors du OnTriggerEnter")]
-		[SerializeField] private string _tag;
+		[SerializeField] private string _tag = default;
 
 		#endregion
 

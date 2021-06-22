@@ -9,7 +9,7 @@ namespace AlexandreDialogues
 	{
 		public int m_levelStep;
 
-		[SerializeField] private int _initValue;
+		[SerializeField] private int _initValue = default;
 
 		private void OnEnable()
 		{

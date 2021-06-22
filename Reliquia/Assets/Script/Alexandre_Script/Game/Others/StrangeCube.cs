@@ -9,8 +9,8 @@ namespace AlexandreDialogues
 		#region Private
 
 		private Transform _tr;
-		[SerializeField] private bool _isActivated;
-		[SerializeField] private float _rotationSpeed;
+		[SerializeField] private bool _isActivated = default;
+		[SerializeField] private float _rotationSpeed = default;
 
 		#endregion
 

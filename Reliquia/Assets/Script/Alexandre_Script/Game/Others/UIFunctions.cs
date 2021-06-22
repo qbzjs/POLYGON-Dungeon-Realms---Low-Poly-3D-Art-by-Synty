@@ -6,9 +6,9 @@ namespace AlexandreDialogues
 {
 	public class UIFunctions : MonoBehaviour
 	{
-		[SerializeField] private Dialogue _dialogue;
-		[SerializeField] private GameObject _virtualCamera;
-		[SerializeField] private InGameDialogue _inGameDialogue;
+		[SerializeField] private Dialogue _dialogue = default;
+		[SerializeField] private GameObject _virtualCamera = default;
+		[SerializeField] private InGameDialogue _inGameDialogue = default;
 
 		public void StartDialogueFromFile()
 		{

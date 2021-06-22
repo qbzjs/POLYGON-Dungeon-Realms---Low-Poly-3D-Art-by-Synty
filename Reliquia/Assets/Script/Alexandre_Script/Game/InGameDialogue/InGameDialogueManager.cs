@@ -10,7 +10,7 @@ namespace AlexandreDialogues
 	{
 		#region Singleton
 
-		private static InGameDialogueManager _instance;
+		private static InGameDialogueManager _instance = default;
 		public static InGameDialogueManager Instance
 		{
 			get
@@ -31,16 +31,16 @@ namespace AlexandreDialogues
 
 		#region Fields
 
-		[SerializeField] private GameObject _canvas;
-		[SerializeField] private TextMeshProUGUI _textTMPro;
+		[SerializeField] private GameObject _canvas = default;
+		[SerializeField] private TextMeshProUGUI _textTMPro = default;
 
-		[SerializeField] private bool _isDialogueStarted;
+		[SerializeField] private bool _isDialogueStarted = default;
 		public bool IsDialogueStarted { get => _isDialogueStarted; private set => _isDialogueStarted = value; } // pour y accéder de l'extérieur
-		private IEnumerator _dialogueCoroutine;
+		private IEnumerator _dialogueCoroutine = default;
 
-		[SerializeField] private int _dialogueReplyLength;
-		[SerializeField] private int _dialogueCurrentReply;
-		[SerializeField] private float _dialogueCurrentTime;
+		[SerializeField] private int _dialogueReplyLength = default;
+		[SerializeField] private int _dialogueCurrentReply = default;
+		[SerializeField] private float _dialogueCurrentTime = default;
 
 		#endregion
 

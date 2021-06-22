@@ -13,7 +13,7 @@ namespace AlexandreDialogues
 	{
 		#region Singleton
 
-		private static DialogueManager _instance;
+		private static DialogueManager _instance = default;
 		public static DialogueManager Instance
 		{
 			get
@@ -35,23 +35,23 @@ namespace AlexandreDialogues
 		#region Fields
 
 		// PRIVATE
-		[SerializeField] private Inventory _inventory;
-		[SerializeField] private GameObject _defaultCamera;
+		[SerializeField] private Inventory _inventory = default;
+		[SerializeField] private GameObject _defaultCamera = default;
 		private IEnumerator _coroutine;
-		[SerializeField] private GameObject _canvas;
-		[SerializeField] private char _textLastCharIdentifier;
+		[SerializeField] private GameObject _canvas = default;
+		[SerializeField] private char _textLastCharIdentifier = default;
 
 		[System.Serializable]
 		private class UIObjects
 		{
-			public GameObject m_character;
-			public Image m_image;
-			public TextMeshProUGUI m_name;
+			public GameObject m_character = default;
+			public Image m_image = default;
+			public TextMeshProUGUI m_name = default;
 		}
 
 		[SerializeField] private UIObjects _UICharacterLeft = new UIObjects();
 		[SerializeField] private UIObjects _UICharacterRight = new UIObjects();
-		[SerializeField] private TextMeshProUGUI _replyText;
+		[SerializeField] private TextMeshProUGUI _replyText = default;
 
 		// PUBLIC
 		// pour la liste des objets à contrôler (Interfaces non sérialisables donc contourner)

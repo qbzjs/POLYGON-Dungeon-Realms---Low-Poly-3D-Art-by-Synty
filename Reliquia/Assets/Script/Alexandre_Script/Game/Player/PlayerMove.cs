@@ -8,13 +8,13 @@ namespace AlexandreDialogues
 	{
 		#region Private
 
-		[SerializeField] private Transform _tr;
-		[SerializeField] private float _moveSpeed;
-		[SerializeField] private float _rotationSpeed;
+		[SerializeField] private Transform _tr = default;
+		[SerializeField] private float _moveSpeed = default;
+		[SerializeField] private float _rotationSpeed = default;
 
-		private Vector3 _inputAxis;
+		private Vector3 _inputAxis = default;
 
-		[SerializeField] private bool _isActive;
+		[SerializeField] private bool _isActive = default;
 
 		#endregion
 
