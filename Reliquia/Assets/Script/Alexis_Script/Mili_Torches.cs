@@ -15,6 +15,8 @@ public class Mili_Torches : MonoBehaviour{
     public Transform flammeFinale;
     public Transform lumièreFinale;
 
+    public GameObject[] traces;
+
     [Header("Variables")]
 
     public float minimumDistance = 2f;
@@ -46,7 +48,18 @@ public class Mili_Torches : MonoBehaviour{
 
         }
 
-        
+        if(lightingScript.isLighting == true){
+            foreach(var trace in traces){
+                trace.gameObject.SetActive(true);
+            }
+
+        if(lightingScript.isLighting == false){
+            foreach(var trace in traces){
+                trace.gameObject.SetActive(false);
+            }
+        }
+
+    }
 
     }
     
