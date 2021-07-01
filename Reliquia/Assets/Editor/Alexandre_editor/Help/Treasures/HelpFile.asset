@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb78c8635f17054f8e772a4d50a4fae, type: 3}
+  m_Name: HelpFile
+  m_EditorClassIdentifier: 
+  m_title: Reliquia Treasures
+  m_date: 01-07-2021
+  m_author: Alexandre Venet
+  m_link: 'https://twitter.com/alhomepage '
+  m_helpTexts:
+  - m_title: Introduction
+    m_text:
+    - "Ce fichier pr\xE9sente un <b>tour d\u2019horizon</b> du syst\xE8me de gestion
+      des tr\xE9sors \xE0 r\xE9cup\xE9rer. "
+  - m_title: "Un fichier de tr\xE9sor"
+    m_text:
+    - "Dans la fen\xEAtre <i>Project</i>, faire un clic droit puis <b>Create > ScriptableObjects
+      > Treasures > TreasureInfo</b>. Ceci cr\xE9e un nouveau fichier relatif \xE0
+      un tr\xE9sor."
+    - "Le <b>name</b> est le nom de l\u2019objet tel qu\u2019il s\u2019affiche \xE0
+      l\u2019\xE9cran."
+    - "<b>Instance Id</b> est un nombre entier quelconque et qui <b>doit \xEAtre
+      unique</b>  pour identifier ce tr\xE9sor."
+    - "<b>Sprite</b> r\xE9f\xE8re \xE0 l\u2019image du tr\xE9sor."
+    - "<b>Is Discovered</b> d\xE9finit si le tr\xE9sor est d\xE9couvert ou non. La
+      case est d\xE9coch\xE9e par d\xE9faut (valeur \xE0 <i>false</i>)."
+  - m_title: "Liste des fichiers de tr\xE9sor"
+    m_text:
+    - "Dans la fen\xEAtre <i>Project</i>, faire un clic droit puis <b>Create > ScriptableObjects
+      > Treasures > TreasuresData</b>. Ceci cr\xE9e un nouveau fichier contenant
+      la liste des tr\xE9sors du jeu."
+    - "Y renseigner le <b>nombre de tr\xE9sors \xE0 trouver</b>, puis r\xE9f\xE9rencer
+      les <b>fichiers de tr\xE9sor</b>  cr\xE9\xE9s pr\xE9c\xE9demment."
+    - "Le <b>tri par ordre alphab\xE9tique</b> est automatique au <i>runtime</i>."
+  - m_title: "Gestionnaire de tr\xE9sors"
+    m_text:
+    - "Si une sc\xE8ne doit contenir un ou plusieurs tr\xE9sors, lui ajouter un <b>TreasureManager</b>."
+    - "Par d\xE9faut, <b>ses champs sont d\xE9j\xE0 renseign\xE9s</b>."
+    - "<b>File name</b> est le nom du fichier o\xF9 seront enregistr\xE9es les d\xE9couvertes,
+      avec l\u2019extension de son choix."
+    - "<b>Treasures Data</b> r\xE9f\xE8re au fichier <i>ScriptableObject</i> des
+      <b>donn\xE9es des tr\xE9sors</b>."
+    - "Si une sc\xE8ne n\u2019a pas \xE0 pr\xE9senter de tr\xE9sors, alors il est
+      inutile d\u2019ajouter quoi que ce soit relatif aux tr\xE9sors dans la sc\xE8ne
+      (optimisation m\xE9moire)."
+    - "<b>TreasureManager</b> fournit deux m\xE9thodes publiques. <b>CheckIsDiscovered(int
+      instanceId) </b> teste si le tr\xE9sor au num\xE9ro d\u2019identifiant pass\xE9
+      en param\xE8tre a \xE9t\xE9 d\xE9couvert ou non, et renvoie un type <i>bool</i>.
+      <b>DiscoverThis(int instanceId) </b> d\xE9finit le tr\xE9sor comme d\xE9couvert,
+      tr\xE9sor cibl\xE9 par le num\xE9ro d\u2019identifiant pass\xE9 en param\xE8tre."
+  - m_title: "Ajouter un tr\xE9sor"
+    m_text:
+    - "Si une sc\xE8ne doit contenir un ou plusieurs tr\xE9sors, et qu\u2019elle
+      contient d\xE9j\xE0 un <b>TreasureManager</b>, alors ajouter un objet sp\xE9cifique."
+    - "Ajouter un objet <b>enfant</b> \xE0 cet objet. "
+    - Sur cet objet enfant, ajouter un composant <b><i>Collider</i> de type <i>trigger</i></b>,
+      quelle que soit sa forme.
+    - "Puis, sur ce m\xEAme objet, ajouter un composant <b>Treasure</b>. "
+    - "Y renseigner le <b>Treasure</b> : le fichier <i>ScriptableObject</i> de tr\xE9sor."
+    - "Au lancement de la sc\xE8ne, chaque <b>Treasure</b> appelle <b>TreasureManager</b>
+      pour v\xE9rifier s\u2019il a \xE9t\xE9 d\xE9couvert ou non. Si c\u2019est le
+      cas, alors l\u2019objet est <b>automatiquement d\xE9sactiv\xE9</b>."
+  - m_title: "Ramasser un tr\xE9sor"
+    m_text:
+    - "Pour ramasser un tr\xE9sor et mettre \xE0 jour le fichier des d\xE9couvertes
+      automatiquement, chaque composant <b>Treasure</b> expose une m\xE9thode publique
+      <b>GrabMe()</b>. L\u2019objet dispara\xEEt automatiquement de la sc\xE8ne."
+    - 'Exemple : <i>monTresor.GrabMe();</i>'
+  - m_title: UI
+    m_text:
+    - "L\u2019interface utilisateur relative aux tr\xE9sors prend la forme d\u2019un
+      UI Panel nomm\xE9 <b>TreasuresPanel</b>."
+    - "Son script <b>Treasures Panel Click</b> expose une m\xE9thode publique <b>ToggleTreasuresPanel()</b>
+      qui permet d\u2019afficher/masquer le panneau."
+    - "Par d\xE9faut, une <b>image</b> \xAB d\u2019attente \xBB est affich\xE9e \xE0
+      l\u2019\xE9cran tant qu\u2019un bouton de la liste n\u2019est pas cliqu\xE9.
+      Cette image est nomm\xE9e <b>Empty</b> dans la fen\xEAtre <i>Project</i>. Modifier
+      cette image selon les besoins."
+    - "Le <b>texte</b> d\u2019un bouton de tr\xE9sor non d\xE9couvert est par d\xE9faut
+      \xAB ??? \xBB. Pour modifier ce texte, \xE9diter le <i>Prefab</i> <b>TreasureUIBtn</b>
+      et l\u2019objet <b>Text (TMP)</b>."
+  - m_title: Fichier
+    m_text:
+    - "Le chemin d\u2019enregistrement de fichier est <b>Application.persistentDataPath</b>
+      puis le <b>nomFichier.extension</b>."
+    - "Ce chemin peut \xEAtre modifi\xE9 dans <b>TreasureManager</b>."
+    - "Plus d\u2019infos dans la documentation d\u2019Unity."

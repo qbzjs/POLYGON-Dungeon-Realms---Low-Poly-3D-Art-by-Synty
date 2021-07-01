@@ -59,5 +59,13 @@ namespace AlexandreDialogues
 		{
 			ECSVDispatcherInGame.ShowWindow();
 		}
+
+
+
+		[MenuItem("Tools/Reliquia/Treasures/Help file", false, 0)]
+		private static void TreasuresHelp()
+		{
+			Selection.activeObject = AssetDatabase.LoadMainAssetAtPath($"{_root}Treasures/HelpFile.asset"); ;
+		}
 	}
 }
