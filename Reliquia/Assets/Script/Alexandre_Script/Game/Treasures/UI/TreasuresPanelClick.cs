@@ -12,19 +12,19 @@ namespace AlexandreTreasures
 	{
 		#region Fields
 
-		[SerializeField] private GameObject _thisGameObject;
+		[SerializeField] private GameObject _thisGameObject = default;
 
-		[SerializeField] private Image _image;
-		[SerializeField] private Sprite _imagePlaceholderSprite;
+		[SerializeField] private Image _image = default;
+		[SerializeField] private Sprite _imagePlaceholderSprite = default;
 		private Color _imagePlaceholderColor;
 
-		[SerializeField] private RectTransform _content;
+		[SerializeField] private RectTransform _content = default;
 
-		[SerializeField] private TreasuresData _treasuresData;
+		[SerializeField] private TreasuresData _treasuresData = default;
 
-		[SerializeField] private RectTransform _btnReference;
+		[SerializeField] private RectTransform _btnReference = default;
 		//private TextMeshProUGUI _btnReferenceText;
-		private Color _defaultBtnReferenceTextColor;
+		private Color _defaultBtnReferenceTextColor = default;
 
 		private List<TreasureBtn> m_treasureBtnList = new List<TreasureBtn>(); // liste des composants de bouton
 

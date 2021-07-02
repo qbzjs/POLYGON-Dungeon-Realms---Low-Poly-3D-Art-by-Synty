@@ -11,14 +11,11 @@ namespace AlexandreTreasures
 
 		#region Fields
 
-		private Transform _tr;
-		private GameObject _parent;
+		private Transform _tr = default;
+		private GameObject _parent = default;
 
 		[Tooltip("Un fichier ScriptableObject de trésor.")]
-		[SerializeField] private TreasureInfo _treasure;
-
-		//[Tooltip("Le fichier ScriptableObject de la liste des trésors.")]
-		//[SerializeField] private TreasuresData _treasuresData;
+		[SerializeField] private TreasureInfo _treasure = default;
 
 		#endregion
 

@@ -10,17 +10,17 @@ namespace AlexandreTreasures
 	{
 		#region Fields
 
-		[SerializeField] private RectTransform _viewport;
-		[SerializeField] private RectTransform _content;
-		[SerializeField] private GameObject _slider;
-		[SerializeField] private Slider _sliderUI;
+		[SerializeField] private RectTransform _viewport = default;
+		[SerializeField] private RectTransform _content = default;
+		[SerializeField] private GameObject _slider = default;
+		[SerializeField] private Slider _sliderUI = default;
 
-		[SerializeField] private VerticalLayoutGroup _verticalLayoutGroup;
+		[SerializeField] private VerticalLayoutGroup _verticalLayoutGroup = default;
 
 		[Tooltip("La hauteur d'un bouton calculée au Runtime selon son RectTransform et le Spacing du VerticalLayoutGroup.")]
 		[SerializeField] private float _btnHeight; // 57.2 actuellement
 
-		[SerializeField] private RectTransform _btnReference;
+		[SerializeField] private RectTransform _btnReference = default;
 
 		private bool _hasCheckedValue;
 

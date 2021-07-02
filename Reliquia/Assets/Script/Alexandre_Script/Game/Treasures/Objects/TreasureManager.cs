@@ -31,10 +31,12 @@ namespace AlexandreTreasures
 
 		#region Fields
 
-		[SerializeField] private string _fileName;
+		[SerializeField] private string _fileName = default;
 		private string _filePath;
 
-		[SerializeField] private TreasuresData _treasuresData;
+		[SerializeField] private TreasuresData _treasuresData = default;
+
+		private static bool _isInitialized;
 
 		#endregion
 
@@ -53,13 +55,19 @@ namespace AlexandreTreasures
 
 		private void Start()
 		{
-			if (File.Exists(_filePath))
+			if(!_isInitialized)
 			{
-				ReadBonusData();
-			}
-			else
-			{
-				SaveBonusData();
+				if (File.Exists(_filePath))
+				{
+					ReadBonusData();
+				}
+				else
+				{
+					SaveBonusData();
+				}
+
+				_isInitialized = true;
+				Debug.Log($"<color = green>TreasureManager</color> > Initialisé.");
 			}
 		}
 

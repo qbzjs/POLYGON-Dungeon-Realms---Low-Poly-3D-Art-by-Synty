@@ -6,7 +6,9 @@ namespace AlexandreTreasures
 {
 	public class UITreasuresFunctions : MonoBehaviour
 	{
-		[SerializeField] private Treasure _supercube, _capsuleMetal, _molecule = default;
+		[SerializeField] private Treasure _supercube = default;
+		[SerializeField] private Treasure _capsuleMetal = default;
+		[SerializeField] private Treasure _molecule = default;
 		[SerializeField] private GameObject _treasuresPanel = default;
 		[SerializeField] private GameObject _canvas = default;
 

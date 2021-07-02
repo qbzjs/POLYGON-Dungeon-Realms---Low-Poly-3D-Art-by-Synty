@@ -44,7 +44,9 @@ MonoBehaviour:
   - m_title: "Gestionnaire de tr\xE9sors"
     m_text:
     - "Si une sc\xE8ne doit contenir un ou plusieurs tr\xE9sors, lui ajouter un <b>TreasureManager</b>."
-    - "Par d\xE9faut, <b>ses champs sont d\xE9j\xE0 renseign\xE9s</b>."
+    - "Par d\xE9faut, <b>ses champs sont d\xE9j\xE0 renseign\xE9s</b>. S'il est n\xE9cessaire
+      de changer les valeurs, \xE9diter le <i>prefab</i> (et non une instance dans
+      la sc\xE8ne)."
     - "<b>File name</b> est le nom du fichier o\xF9 seront enregistr\xE9es les d\xE9couvertes,
       avec l\u2019extension de son choix."
     - "<b>Treasures Data</b> r\xE9f\xE8re au fichier <i>ScriptableObject</i> des

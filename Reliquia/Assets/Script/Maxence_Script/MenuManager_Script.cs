@@ -27,6 +27,8 @@ public class MenuManager_Script : MonoBehaviour
 
     SaveManager saveManager;
 
+    [SerializeField] private GameObject _treasurePanel;
+
     private void Awake()
     {
         if (instance == null)
@@ -49,6 +51,8 @@ public class MenuManager_Script : MonoBehaviour
         pagesMenuPrincipal[2].transform.GetChild(1).GetComponent<Options_Script>().valeurAuLancement();
 
         pagesMenuPrincipal[2].SetActive(false);
+
+        pagesMenuPrincipal[3].SetActive(false);
 
         backgroundImageMenu.sprite = ImagesBackground[0];
     }
@@ -91,8 +95,19 @@ public class MenuManager_Script : MonoBehaviour
 
     public void ecranBonus()
     {
-        fondTransition.DOFade(1, 0.5f);
+        // OLD CODE
+        //fondTransition.DOFade(1, 0.5f);
+        //pageMenuActive = 3;
+
+        MenuManager_Script.instance.pagesMenuPrincipal[pageMenuActive].SetActive(false);
+        MenuManager_Script.instance.pagesMenuPrincipal[3].SetActive(true);
         pageMenuActive = 3;
+
+        // Activer le TreasuresPanel au démarrage
+        _treasurePanel.SetActive(true);
+
+        // Masquer les autres panneaux au démarrage
+        // A FAIRE...
     }
 
     public void retourMenu()
