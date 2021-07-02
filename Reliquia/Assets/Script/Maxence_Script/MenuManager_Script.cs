@@ -110,6 +110,13 @@ public class MenuManager_Script : MonoBehaviour
         // A FAIRE...
     }
 
+    public void BonusRetour()
+	{
+        MenuManager_Script.instance.pagesMenuPrincipal[pageMenuActive].SetActive(false);
+        MenuManager_Script.instance.pagesMenuPrincipal[0].SetActive(true);
+        pageMenuActive = 0;
+    }
+
     public void retourMenu()
     {
         if (pageMenuActive != 2) fondTransition.DOFade(1, 0.5f).OnComplete(() => afficherMenuPrincipal());
