@@ -14,10 +14,13 @@ public class Interactable : MonoBehaviour
 
     //public keyParameter keyParam;
 
+    public bool needKey;
+
     public GameObject axisObject;
     public Axis axis;
     [Header("Pour l'axe Y uniquement")]
     public rotationDirection direction;
+
 
     [HideInInspector]
     
@@ -126,6 +129,11 @@ public class Interactable : MonoBehaviour
     public bool ExecuteActions()
     {
         bool isOnlyOnce = false;
+
+        if (needKey)
+        {
+            checkHasKey();
+        }
        
         if (InteractOutline.enabled && !itemActive) // ouvrir, jouer l'anim (E)
         {
@@ -145,6 +153,12 @@ public class Interactable : MonoBehaviour
 
     }
 
+    private void checkHasKey()
+    {
+        throw new NotImplementedException();
+    }
+
+    // Active les collider uniquement pour les items à l'interieur d'objets interactables
     private bool InOnlyOnce()
     {
         childrenInteractable = goContour.GetComponentsInChildren<Interactable>();// Object interactable 1 seule fois
