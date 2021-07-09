@@ -97,16 +97,23 @@ public class William_Script : MonoBehaviour
             }
         }
         RaycastHit hit;
-        Vector3 rayDirection = Vector3.forward - Vector3.up;
+        //Vector3 rayDirection = (Vector3.forward - Vector3.up) - (transform.position + Vector3.up);
+        //Vector3 rayDirection = Vector3.forward - Vector3.right;
+
+        var angle = transform.rotation; //* startingAngle
+        var rayDirection = angle * Vector3.forward;
+
+        rayDirection.Normalize();
+        Debug.Log("RayDirection : " + rayDirection);
         float rayDistance = 2f;
 
-        if (Physics.Raycast(transform.position + Vector3.up , rayDirection, out hit, rayDistance))
+        if (Physics.Raycast(transform.position, rayDirection, out hit, rayDistance))
         {
-            //Debug.DrawRay(transform.position + Vector3.up, rayDirection, Color.red);
+            Debug.DrawRay(transform.position, rayDirection, Color.red);
             var target = hit.transform;
             if (target != null && target.CompareTag("ItemInteractable"))
             {
-            //Debug.DrawRay(transform.position, rayDirection, Color.green);
+            Debug.DrawRay(transform.position, rayDirection, Color.cyan);
             // Set Inventaire
             physicaltemInventaire = target.gameObject.GetComponent<PhysicaltemInventaire>();
             item = physicaltemInventaire.thisItem;
@@ -115,7 +122,13 @@ public class William_Script : MonoBehaviour
             interactableItem = target.gameObject.GetComponent<Interactable>();
             interactableItem.applyOutline(true);
             }
+        }else if (interactableItem != null)
+        {
+            interactableItem.applyOutline(false);
+            gameManager.FermerMessageInteraction();
         }
 
         }
-    }
+    
+
+}
