@@ -109,11 +109,11 @@ public class William_Script : MonoBehaviour
 
         if (Physics.Raycast(transform.position, rayDirection, out hit, rayDistance))
         {
-            Debug.DrawRay(transform.position, rayDirection, Color.red);
+            //Debug.DrawRay(transform.position, rayDirection, Color.red);
             var target = hit.transform;
             if (target != null && target.CompareTag("ItemInteractable"))
             {
-            Debug.DrawRay(transform.position, rayDirection, Color.cyan);
+            //Debug.DrawRay(transform.position, rayDirection, Color.cyan);
             // Set Inventaire
             physicaltemInventaire = target.gameObject.GetComponent<PhysicaltemInventaire>();
             item = physicaltemInventaire.thisItem;
