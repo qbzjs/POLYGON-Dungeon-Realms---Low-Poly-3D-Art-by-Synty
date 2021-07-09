@@ -31,9 +31,6 @@ public class RockFallZoneScript : MonoBehaviour
         {
             runAnim = false;
             animPlayer.SetBool("Esquive", false);
-            animPlayer.SetBool("Dead", false);
-            timerAnim = 10000f;
-            
             animPlayer.SetBool("QTEEboulement", false);
         }
 
@@ -71,9 +68,30 @@ public class RockFallZoneScript : MonoBehaviour
         if (player != null && animPlayer != null)
         {
             animPlayer.SetBool("Dead", true);
-            timerAnim = -10f;
+            timerAnim = -2f;
             runAnim = true;
+            StartCoroutine(ReLoad());
         }
+    }
+
+    private IEnumerator ReLoad()
+    {
+        float countWait = 6f;
+        yield return new WaitForSeconds(countWait);
+        animPlayer.SetBool("Dead", false);
+        animPlayer.SetBool("QTEEboulement", false);
+        ReLoadCheckpoint();
+    }
+
+    private void ReLoadCheckpoint()
+    {
+        string nom = GameManager.instance.nomSauvegarde;
+        if (nom != null && SaveManager.instance != null)
+        {
+            bool retrunToCheckPoint = true;
+            SaveManager.instance.LoadInGame(nom, retrunToCheckPoint);
+        }
+
     }
 
 }

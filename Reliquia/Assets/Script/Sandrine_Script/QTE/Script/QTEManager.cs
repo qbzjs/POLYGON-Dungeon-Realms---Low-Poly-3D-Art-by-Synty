@@ -144,6 +144,12 @@ public class QTEManager : MonoBehaviour
         if (Event.current.isKey && Event.current.type == EventType.KeyDown && eventData.failOnWrongKey && !Event.current.keyCode.ToString().Equals("None"))
         {
             wrongKeyPressed = true;
+            string keyPressed = Event.current.keyCode.ToString();
+            if (keyPressed == "")
+            {
+                wrongKeyPressed = true;
+            }
+
             if (isGamePadConnected())
             {
                 eventData.keys.ForEach(key => wrongKeyPressed = wrongKeyPressed && (!key.gamepadDualShockKey.ToString().Equals(Event.current.keyCode.ToString()) || !key.gamepadDualShockKey.ToString().Equals(Event.current.keyCode.ToString())));

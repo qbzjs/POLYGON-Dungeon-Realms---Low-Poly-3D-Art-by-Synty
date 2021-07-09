@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class PhysicaltemInventaire : MonoBehaviour
 {
     [SerializeField] private PlayerInventory playerInventory;
@@ -24,6 +25,7 @@ public class PhysicaltemInventaire : MonoBehaviour
     {
         itemImage = gameObject.GetComponent<Image>();
         itemImage.sprite = thisItem.itemImage;
+        
     }
 
     public void AddItem(ItemInventaire item)

@@ -34,8 +34,9 @@ public class DeathZoneController : MonoBehaviour
 
     private IEnumerator ReLoad()
     {
-        
-        yield return new WaitForSeconds(3f);
+
+        float countWait = 3f;
+        yield return new WaitForSeconds(countWait);
         playerAnim.SetBool("Trappe", false);
         ReLoadCheckpoint();
     }
