@@ -212,7 +212,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void LoadInGame(string nomSave)
+    public void LoadInGame(string nomSave, bool backPoint = false)
     {
         try
         {
@@ -228,10 +228,17 @@ public class SaveManager : MonoBehaviour
             LoadPlayer(data);
             LoadMap(nomSave);
 
-            if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data));
+            // TODO : fondTransition.DOFade() ne fonctionne pas, je l'enlève pour l'instant
+            //if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data));
+            if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) LoadScene(data);
             else if (data.MySceneData.IdScene == SceneManager.GetActiveScene().buildIndex) HUD_Script.instance.setInfoWilliam();
 
-            GameManager.instance.menuPause();
+
+            if (!backPoint)
+            {
+                GameManager.instance.menuPause();
+            }
+            
         }
         catch (Exception)
         {

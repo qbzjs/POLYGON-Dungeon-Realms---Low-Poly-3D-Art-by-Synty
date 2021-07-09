@@ -35,7 +35,7 @@ public class DeathZoneController : MonoBehaviour
     private IEnumerator ReLoad()
     {
         
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(3f);
         playerAnim.SetBool("Trappe", false);
         ReLoadCheckpoint();
     }
@@ -45,7 +45,8 @@ public class DeathZoneController : MonoBehaviour
         string nom = GameManager.instance.nomSauvegarde;
         if (nom != null && SaveManager.instance != null)
         {
-            SaveManager.instance.LoadInGame(nom);
+            bool retrunToCheckPoint = true;
+            SaveManager.instance.LoadInGame(nom, retrunToCheckPoint);
         }
         
     }

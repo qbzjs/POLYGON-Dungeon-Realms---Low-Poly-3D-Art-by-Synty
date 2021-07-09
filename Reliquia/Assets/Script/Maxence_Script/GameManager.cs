@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
         //MenuPause.SetActive(voirMenu);
     }
 
+
     public void menuInventaire()
     {
         voirMenu = !voirMenu;
