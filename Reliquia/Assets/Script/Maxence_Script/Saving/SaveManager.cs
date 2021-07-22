@@ -229,7 +229,9 @@ public class SaveManager : MonoBehaviour
             LoadMap(nomSave);
 
             // TODO : fondTransition.DOFade() ne fonctionne pas, je l'enlève pour l'instant
-            //if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data));
+            // fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data)); => NOK
+            // fondTransition.DOFade(1, 0.5f).OnComplete(() => SceneManager.LoadScene("Alexis_LD_Catacombes")); => OK
+            //Lance la scène data lorsque le fondu au noir est fini
             if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) LoadScene(data);
             else if (data.MySceneData.IdScene == SceneManager.GetActiveScene().buildIndex) HUD_Script.instance.setInfoWilliam();
 
