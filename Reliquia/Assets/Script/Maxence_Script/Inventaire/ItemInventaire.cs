@@ -24,7 +24,7 @@ public class ItemInventaire : ScriptableObject
 
     public void Use()
     {
-        Debug.Log("test item");
+        Debug.Log("test item : " + itemNom);
         thisEvent.Invoke();
     }
 

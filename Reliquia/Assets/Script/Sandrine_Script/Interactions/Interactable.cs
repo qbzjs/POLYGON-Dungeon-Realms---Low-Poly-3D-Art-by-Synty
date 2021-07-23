@@ -30,6 +30,10 @@ public class Interactable : MonoBehaviour
     static public event Actions UNDO_ACTIONS;
 
     //public eActionState actionState;
+    // public
+    
+
+    // private
 
     private Outline InteractOutline;
     private bool isOutline;
@@ -45,10 +49,12 @@ public class Interactable : MonoBehaviour
     private Quaternion delta;
     private Quaternion deltaInit;
 
+    private LockedDoor lockedDoor;
 
     // Start is called before the first frame update
     void Start()
     {
+        lockedDoor = GetComponent<LockedDoor>();
         //isOutline = contour;
         if (goContour != null)
         {
@@ -64,7 +70,7 @@ public class Interactable : MonoBehaviour
         // InteractOutline = GetComponent<Outline>();
         if (isOutline)
         {
-            INTERACT_ACTIONS += showOutline;
+            INTERACT_ACTIONS += ShowOutline;
             UNDO_ACTIONS += hideOutline;
         }
         if (axisObject == null)
@@ -108,7 +114,7 @@ public class Interactable : MonoBehaviour
         
     }
 
-    public void applyOutline(bool show)
+    public void ApplyOutline(bool show)
     {
         if (InteractOutline == null)
         {
@@ -117,7 +123,7 @@ public class Interactable : MonoBehaviour
         // INTERACT_ACTIONS();
         if (show) // !InteractOutline.enabled // afficher le contour (OnTriggerExit)
         {
-            showOutline();
+            ShowOutline();
 
         } else
         {
@@ -129,11 +135,6 @@ public class Interactable : MonoBehaviour
     public bool ExecuteActions()
     {
         bool isOnlyOnce = false;
-
-        if (needKey)
-        {
-            checkHasKey();
-        }
        
         if (InteractOutline.enabled && !itemActive) // ouvrir, jouer l'anim (E)
         {
@@ -153,9 +154,34 @@ public class Interactable : MonoBehaviour
 
     }
 
-    private void checkHasKey()
+    public void ExecuteUndo() 
     {
-        throw new NotImplementedException();
+        // UNDO_ACTIONS(); OnTriggerExit()
+        hideOutline();
+        // PlayAnim(false); 
+    }
+
+    public void ShowOutline()
+    {
+        if (InteractOutline == null)
+        {
+            return;
+        }
+        InteractOutline.OutlineMode = Outline.Mode.OutlineVisible;
+        InteractOutline.enabled = true;
+    }
+
+    public ItemInventaire GetKey()
+    {
+        if (lockedDoor != null)
+        {
+            return lockedDoor.Item;
+        }
+        return null;
+    }
+    public bool IsLocked()
+    {
+        return lockedDoor != null;
     }
 
     // Active les collider uniquement pour les items à l'interieur d'objets interactables
@@ -181,23 +207,6 @@ public class Interactable : MonoBehaviour
             return true;
         }
         return false;
-    }
-    
-    public void ExecuteUndo() 
-    {
-        // UNDO_ACTIONS(); OnTriggerExit()
-        hideOutline();
-        // PlayAnim(false); 
-    }
-
-    public void showOutline()
-    {
-        if (InteractOutline == null)
-        {
-            return;
-        }
-        InteractOutline.OutlineMode = Outline.Mode.OutlineVisible;
-        InteractOutline.enabled = true;
     }
 
     private void hideOutline()

@@ -1,4 +1,5 @@
-﻿using clavier;
+﻿using Boo.Lang;
+using clavier;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +55,7 @@ public class William_Script : MonoBehaviour
         {
 
             interactableObject = other.gameObject.GetComponent<Interactable>();
-            interactableObject.applyOutline(true);
+            interactableObject.ApplyOutline(true);
 
         }
     }
@@ -69,7 +70,7 @@ public class William_Script : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             interactableObject = null;
-            other.gameObject.GetComponent<Interactable>().applyOutline(false);
+            other.gameObject.GetComponent<Interactable>().ApplyOutline(false);
         }
 
     }
@@ -88,11 +89,40 @@ public class William_Script : MonoBehaviour
         }
         if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && interactableObject != null)
         {
-            bool isOnlyOnceInteract = interactableObject.ExecuteActions();
+            bool needKey = interactableObject.IsLocked();
+            bool isLockedDoor = false;
+            if (needKey)
+            {
+                ItemInventaire key = interactableObject.GetKey();
+
+                if (key != null)
+                {
+                    // ToDo : Est-ce que l'item est bein dans la sacoche ?
+                    // Utiliser l'Item
+                    // PB : playerInventory en private dans physicaltemInventaire, pourquoi ? => Maxence
+                    //physicaltemInventaire.playerInventory.GetItemByTypeFromSacoche(typeItem, itemNom);
+                    //physicaltemInventaire.playerInventory.UseItem(typeItem, itemNom);
+                    // En lever Key Use => sera appeler directement via le player Inventory;
+                    key.Use();
+                } else
+                {
+                    isLockedDoor = true;
+                    gameManager.AfficherMessageInteraction("Missing Key");
+                }
+                
+            }
+
+            bool isOnlyOnceInteract = false;
+
+            if (!isLockedDoor)
+            {
+                isOnlyOnceInteract = interactableObject.ExecuteActions();
+            }
+             
 
             if (isOnlyOnceInteract)
             {
-                interactableObject.applyOutline(false);
+                interactableObject.ApplyOutline(false);
                 interactableObject = null;                
             }
         }
@@ -120,11 +150,11 @@ public class William_Script : MonoBehaviour
             gameManager.AfficherMessageInteraction("");
             // Add Contour Blanc
             interactableItem = target.gameObject.GetComponent<Interactable>();
-            interactableItem.applyOutline(true);
+            interactableItem.ApplyOutline(true);
             }
         }else if (interactableItem != null)
         {
-            interactableItem.applyOutline(false);
+            interactableItem.ApplyOutline(false);
             gameManager.FermerMessageInteraction();
         }
 
