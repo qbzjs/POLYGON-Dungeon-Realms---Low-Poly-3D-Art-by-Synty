@@ -175,7 +175,7 @@ public class Interactable : MonoBehaviour
     {
         if (lockedDoor != null)
         {
-            return lockedDoor.Item;
+            return lockedDoor.GetComponent<LockedDoor>().GetKey();
         }
         return null;
     }

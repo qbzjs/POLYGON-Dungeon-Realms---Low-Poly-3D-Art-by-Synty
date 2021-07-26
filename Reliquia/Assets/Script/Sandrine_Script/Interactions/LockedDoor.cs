@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class LockedDoor : MonoBehaviour
 {
-    public ItemInventaire Item;
+    public ItemInventaire item;
+
+
+    public ItemInventaire GetKey()
+    {
+        return item;
+    }
 
 }

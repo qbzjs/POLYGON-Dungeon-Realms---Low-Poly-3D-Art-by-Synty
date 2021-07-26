@@ -12,20 +12,19 @@ public class PlayerInventory : ScriptableObject
     public List<ItemInventaire> objetsQuetesInventory = new List<ItemInventaire>();
     public List<ItemInventaire> puzzlesInventory = new List<ItemInventaire>();
 
-    public ItemInventaire GetItemByTypeFromSacoche(PhysicaltemInventaire.TypeItem typeItem, string name)
+    public ItemInventaire GetItemByTypeFromSacoche(ItemInventaire item)
     {
         ItemInventaire itemResult = null;
-        switch (typeItem)
+        switch (item.typeItem)
         {
-            case PhysicaltemInventaire.TypeItem.None:
+            case "Consommable":
                 break;
-            case PhysicaltemInventaire.TypeItem.Quetes:
+            case "ObjetQuete":
 
-                itemResult = (ItemInventaire)objetsQuetesInventory.Where( s=> s.itemNom == name);
-                break;
-            case PhysicaltemInventaire.TypeItem.Consommable:
-                break;
-            case PhysicaltemInventaire.TypeItem.Puzzle:
+                if (objetsQuetesInventory.Contains(item))
+                {
+                    itemResult = item;
+                }
                 break;
             default:
                 break;
@@ -34,7 +33,7 @@ public class PlayerInventory : ScriptableObject
         return itemResult;
     }
 
-    public bool UseItem(PhysicaltemInventaire.TypeItem typeItem, ItemInventaire item)
+    public bool UseItem(ItemInventaire item)
     {
         bool response = false;
 
@@ -43,17 +42,18 @@ public class PlayerInventory : ScriptableObject
             return response;
         }
         item.Use();
-        switch (typeItem)
+        if (item.typeItem == "Consommable" || item.typeItem == "ObjetQuete")
         {
-            case PhysicaltemInventaire.TypeItem.None:
+            item.DecreaseAmount(1);
+        }
+        
+        switch (item.typeItem)
+        {
+            case "Consommable":
                 break;
-            case PhysicaltemInventaire.TypeItem.Quetes:
+            case "ObjetQuete":
                 objetsQuetesInventory.Remove(item);
                 response = true;
-                break;
-            case PhysicaltemInventaire.TypeItem.Consommable:
-                break;
-            case PhysicaltemInventaire.TypeItem.Puzzle:
                 break;
             default:
                 break;

@@ -137,7 +137,15 @@ public class GameManager : MonoBehaviour
     public void AfficherMessageInteraction(string text)
     {
         MessageInteraction.SetActive(true);
-        TexteMessageInteraction.text = "Appuyer sur " + raccourciClavier.toucheClavier["Action"].ToString() + " pour intéragir";
+        if (text.Length > 0)
+        {
+            TexteMessageInteraction.text = text;
+        }
+        else
+        {
+            TexteMessageInteraction.text = "Appuyer sur " + raccourciClavier.toucheClavier["Action"].ToString() + " pour intéragir";
+        }
+        
     }
 
     public void FermerMessageInteraction()

@@ -12,6 +12,7 @@ public class William_Script : MonoBehaviour
     Compas_Script compas_Script;
     PhysicaltemInventaire physicaltemInventaire;
 
+    public PlayerInventory playerInventory;
     public Inventaire_Script inventaire;
 
     private CharacterController characterController;
@@ -97,13 +98,15 @@ public class William_Script : MonoBehaviour
 
                 if (key != null)
                 {
-                    // ToDo : Est-ce que l'item est bein dans la sacoche ?
-                    // Utiliser l'Item
-                    // PB : playerInventory en private dans physicaltemInventaire, pourquoi ? => Maxence
-                    //physicaltemInventaire.playerInventory.GetItemByTypeFromSacoche(typeItem, itemNom);
-                    //physicaltemInventaire.playerInventory.UseItem(typeItem, itemNom);
-                    // En lever Key Use => sera appeler directement via le player Inventory;
-                    key.Use();
+
+                    bool hasKey = playerInventory.GetItemByTypeFromSacoche(key);
+                    bool useKey = playerInventory.UseItem(key);
+
+                    if (!hasKey)
+                    {
+                        isLockedDoor = true;
+                        gameManager.AfficherMessageInteraction("Missing Key");
+                    }
                 } else
                 {
                     isLockedDoor = true;

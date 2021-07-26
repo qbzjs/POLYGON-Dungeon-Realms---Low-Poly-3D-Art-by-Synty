@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class PhysicaltemInventaire : MonoBehaviour
 {
-    [SerializeField] private PlayerInventory playerInventory;
+    [SerializeField] private PlayerInventory playerInventory; // private ? 
     public ItemInventaire thisItem;
     public Image itemImage;
     [SerializeField] private InventaireManager thisManager;
@@ -130,4 +130,6 @@ public class PhysicaltemInventaire : MonoBehaviour
             thisManager.MakePuzzlesSlot();
         }
     }
+
+    
 }
