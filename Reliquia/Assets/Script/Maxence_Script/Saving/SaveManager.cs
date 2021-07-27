@@ -214,6 +214,10 @@ public class SaveManager : MonoBehaviour
 
     public void LoadInGame(string nomSave, bool backPoint = false)
     {
+        if (fondTransition == null)
+        {
+            fondTransition = GameObject.FindGameObjectWithTag("FondNoir").GetComponent<Image>();
+        }
         try
         {
             UnityEngine.Debug.Log(Application.persistentDataPath + "/" + nomSave + "/" + nomSave + ".dat");
@@ -232,7 +236,7 @@ public class SaveManager : MonoBehaviour
             // fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data)); => NOK
             // fondTransition.DOFade(1, 0.5f).OnComplete(() => SceneManager.LoadScene("Alexis_LD_Catacombes")); => OK
             //Lance la scène data lorsque le fondu au noir est fini
-            if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) LoadScene(data);
+            if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) fondTransition.DOFade(1, 0.5f).OnComplete(() => LoadScene(data));
             else if (data.MySceneData.IdScene == SceneManager.GetActiveScene().buildIndex) HUD_Script.instance.setInfoWilliam();
 
 

@@ -42,10 +42,11 @@ public class PlayerInventory : ScriptableObject
             return response;
         }
         item.Use();
-        if (item.typeItem == "Consommable" || item.typeItem == "ObjetQuete")
-        {
-            item.DecreaseAmount(1);
-        }
+        // Faut-il décrémenter le nb d'Item après l'avoir utilisé ?
+        //if (item.typeItem == "Consommable" || item.typeItem == "ObjetQuete")
+        //{
+        //    item.DecreaseAmount(1);
+        //}
         
         switch (item.typeItem)
         {
