@@ -83,10 +83,10 @@ public class William_Script : MonoBehaviour
             if (physicaltemInventaire != null && item != null)
             {
                 physicaltemInventaire.AddItem(item);
-                gameManager.FermerMessageInteraction();
+                //gameManager.FermerMessageInteraction();
                 interactableItem = null;
             }
-            
+            gameManager.FermerMessageInteraction();
         }
         if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && interactableObject != null)
         {
@@ -128,6 +128,7 @@ public class William_Script : MonoBehaviour
                 interactableObject.ApplyOutline(false);
                 interactableObject = null;                
             }
+            gameManager.FermerMessageInteraction();
         }
         RaycastHit hit;
         //Vector3 rayDirection = (Vector3.forward - Vector3.up) - (transform.position + Vector3.up);
@@ -142,6 +143,7 @@ public class William_Script : MonoBehaviour
 
         if (Physics.Raycast(transform.position, rayDirection, out hit, rayDistance))
         {
+            
             //Debug.DrawRay(transform.position, rayDirection, Color.red);
             var target = hit.transform;
             if (target != null && target.CompareTag("ItemInteractable"))
@@ -154,6 +156,10 @@ public class William_Script : MonoBehaviour
             // Add Contour Blanc
             interactableItem = target.gameObject.GetComponent<Interactable>();
             interactableItem.ApplyOutline(true);
+            }
+            else
+            {
+                gameManager.FermerMessageInteraction();
             }
         }else if (interactableItem != null)
         {
