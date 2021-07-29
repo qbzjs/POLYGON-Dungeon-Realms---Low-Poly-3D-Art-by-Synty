@@ -47,6 +47,7 @@ public class DeathZoneController : MonoBehaviour
         if (nom != null && SaveManager.instance != null)
         {
             bool retrunToCheckPoint = true;
+            InventaireSauvegarde.instance.ResetSessionInventaire();
             SaveManager.instance.LoadInGame(nom, retrunToCheckPoint);
         }
         

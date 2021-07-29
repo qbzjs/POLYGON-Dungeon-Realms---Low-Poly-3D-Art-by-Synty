@@ -107,7 +107,8 @@ public class PhysicaltemInventaire : MonoBehaviour
                 item.numberHeld++;
             }
 
-            playerInventory.objetsQuetesInventory.Add(item);
+            //playerInventory.objetsQuetesInventory.Add(item);
+            playerInventory.AddItem("ObjetQuete", item);
 
             thisManager.MakeObjetQueteSlot();
         }

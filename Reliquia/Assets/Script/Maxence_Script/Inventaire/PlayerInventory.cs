@@ -11,6 +11,7 @@ public class PlayerInventory : ScriptableObject
     public List<ItemInventaire> consommablesInventory = new List<ItemInventaire>();
     public List<ItemInventaire> objetsQuetesInventory = new List<ItemInventaire>();
     public List<ItemInventaire> puzzlesInventory = new List<ItemInventaire>();
+    public List<ItemInventaire> sessionAddedItem = new List<ItemInventaire>();
 
     public ItemInventaire GetItemByTypeFromSacoche(ItemInventaire item)
     {
@@ -42,12 +43,12 @@ public class PlayerInventory : ScriptableObject
             return response;
         }
         item.Use();
-        // Faut-il décrémenter le nb d'Item après l'avoir utilisé ?
-        //if (item.typeItem == "Consommable" || item.typeItem == "ObjetQuete")
-        //{
-        //    item.DecreaseAmount(1);
-        //}
-        
+        //Faut-il  décrémenter après avoir utiliser la clé ?
+        if (item.typeItem == "Consommable" || item.typeItem == "ObjetQuete")
+        {
+            item.DecreaseAmount(1);
+        }
+
         switch (item.typeItem)
         {
             case "Consommable":
@@ -62,4 +63,41 @@ public class PlayerInventory : ScriptableObject
         return response;
 
     }
+
+    // Lorsque j'ajoute un item à l'inventaire (DropSlots.cs) je remlace List.Add(item) par cette fonction
+    // pour enregistrer les items de la session et pouvoir les supprimer si le player meurt
+    public void AddItem(string typeItem, ItemInventaire item)
+    {
+        switch (typeItem)
+        {
+            case "ObjetQuete":
+                SaveItemSession(item);
+                objetsQuetesInventory.Add(item);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Si le player meurt, je supprime tous les items de la session.
+    // Appelé par InventaireSauvegarde.RemoveItemSession()au moment de DeathZoneController.ReLoadCheckpoint()
+    public void RemoveItemSession()
+    {
+        foreach (var itemInventaire in sessionAddedItem)
+        {
+            itemInventaire.DecreaseAmount(1);
+            if (objetsQuetesInventory.Contains(itemInventaire) && itemInventaire.numberHeld == 0) objetsQuetesInventory.Remove(itemInventaire);
+
+        }
+        sessionAddedItem.Clear();
+    }
+
+    // J'enregistre les items récupérée pdt le level sur la session
+    // TODO : à la fin du level vider la liste sessionAddedItem
+    private void SaveItemSession(ItemInventaire item)
+    {
+        sessionAddedItem.Add(item);
+    }
+
+    
 }

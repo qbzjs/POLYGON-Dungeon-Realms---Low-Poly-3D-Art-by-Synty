@@ -96,7 +96,8 @@ public class DropSlots : MonoBehaviour, IDropHandler
                     eventData.pointerDrag.transform.SetParent(objetQuetePanel.transform);
                     if (typeItem.TypeItem == "Sacoche") playerInventory.sacochesInventory.Remove(item);
 
-                    playerInventory.objetsQuetesInventory.Add(item);
+                    //playerInventory.objetsQuetesInventory.Add(item);
+                    playerInventory.AddItem("ObjetQuete", item);
                     typeItem.TypeItem = "ObjetQuete";
                     item.typeItem = "ObjetQuete";
                 }

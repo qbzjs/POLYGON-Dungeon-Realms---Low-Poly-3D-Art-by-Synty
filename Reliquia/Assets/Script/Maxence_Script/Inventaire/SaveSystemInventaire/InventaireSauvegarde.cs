@@ -90,6 +90,13 @@ public class InventaireSauvegarde : MonoBehaviour
     }
     #endregion
 
+    #region resetSessionInventaire
+    public void ResetSessionInventaire()
+    {
+        playerInventory.RemoveItemSession();
+    }
+    #endregion
+
     #region saveInventaires
 
     public void SaveSacoche()
@@ -237,7 +244,8 @@ public class InventaireSauvegarde : MonoBehaviour
                     item.typeItem = temp.typeItem;
                     item.thisEvent = temp.thisEvent;
 
-                    playerInventory.objetsQuetesInventory.Add(item);
+                    //playerInventory.objetsQuetesInventory.Add(item);
+                    playerInventory.AddItem("ObjetQuete", item);
                     i++;
                 }
             }
