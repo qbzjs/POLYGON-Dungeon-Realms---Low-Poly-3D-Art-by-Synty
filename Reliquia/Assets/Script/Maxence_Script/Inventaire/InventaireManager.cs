@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InventaireManager : MonoBehaviour
 {
+    public static InventaireManager instance;
 
     [Header("Inventaire informations")]
     public PlayerInventory playerInventory;
@@ -29,6 +30,15 @@ public class InventaireManager : MonoBehaviour
     private void Awake()
     {
         //InventaireSauvegarde.instance.LoadInventory();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     void Start()
     {
@@ -165,4 +175,21 @@ public class InventaireManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void RemoveItemFromSacoche(ItemInventaire item)
+    {
+        if (item != null)
+        {
+            int count = sacochePanel.transform.GetChildCount();
+            for (int i = 0; i < count; i++)
+            {
+                GameObject tempItem = sacochePanel.transform.GetChild(i).gameObject;
+                if (tempItem.GetComponent<InventaireSlot>().thisItem == item )
+                {
+                    item.typeItem = item.typeItemBase;
+                    Destroy(tempItem);
+                }
+            }
+        }
+    }
 }

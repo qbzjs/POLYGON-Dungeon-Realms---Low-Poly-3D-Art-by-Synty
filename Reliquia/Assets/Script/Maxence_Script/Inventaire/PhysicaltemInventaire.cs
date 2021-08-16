@@ -104,7 +104,8 @@ public class PhysicaltemInventaire : MonoBehaviour
             thisManager.ClearObjetQuetesSlots();
             if (!playerInventory.objetsQuetesInventory.Contains(item))
             {
-                item.numberHeld++;
+                //item.numberHeld++;
+                item.numberHeld = 1;
             }
 
             //playerInventory.objetsQuetesInventory.Add(item);

@@ -11,30 +11,21 @@ public class PlayerInventory : ScriptableObject
     public List<ItemInventaire> consommablesInventory = new List<ItemInventaire>();
     public List<ItemInventaire> objetsQuetesInventory = new List<ItemInventaire>();
     public List<ItemInventaire> puzzlesInventory = new List<ItemInventaire>();
-    public List<ItemInventaire> sessionAddedItem = new List<ItemInventaire>();
+    private List<ItemInventaire> sessionAddedItem = new List<ItemInventaire>();
 
-    public ItemInventaire GetItemByTypeFromSacoche(ItemInventaire item)
+    public bool GetItemFromSacoche(ItemInventaire item)
     {
-        ItemInventaire itemResult = null;
-        switch (item.typeItem)
-        {
-            case "Consommable":
-                break;
-            case "ObjetQuete":
+        bool itemResult = false;
 
-                if (objetsQuetesInventory.Contains(item))
-                {
-                    itemResult = item;
-                }
-                break;
-            default:
-                break;
+        if (sacochesInventory.Contains(item))
+        {
+            itemResult = true;
         }
 
         return itemResult;
     }
 
-    public bool UseItem(ItemInventaire item)
+    public bool UseItemFromSacoche(ItemInventaire item)
     {
         bool response = false;
 
@@ -42,24 +33,19 @@ public class PlayerInventory : ScriptableObject
         {
             return response;
         }
-        item.Use();
-        //Faut-il  décrémenter après avoir utiliser la clé ?
-        if (item.typeItem == "Consommable" || item.typeItem == "ObjetQuete")
+        if (sacochesInventory.Contains(item))
         {
+            item.Use();
+            // A tester : Inutile, déjà fait dans le item.Use() : 
             item.DecreaseAmount(1);
+            sacochesInventory.Remove(item);
+            sessionAddedItem.Remove(item);
+            response = true;
         }
+        
 
-        switch (item.typeItem)
-        {
-            case "Consommable":
-                break;
-            case "ObjetQuete":
-                objetsQuetesInventory.Remove(item);
-                response = true;
-                break;
-            default:
-                break;
-        }
+        
+
         return response;
 
     }
@@ -71,7 +57,7 @@ public class PlayerInventory : ScriptableObject
         switch (typeItem)
         {
             case "ObjetQuete":
-                SaveItemSession(item);
+                //SaveItemSession(item);
                 objetsQuetesInventory.Add(item);
                 break;
             default:
@@ -96,6 +82,10 @@ public class PlayerInventory : ScriptableObject
     // TODO : à la fin du level vider la liste sessionAddedItem
     private void SaveItemSession(ItemInventaire item)
     {
+        if (item.typeItem == "ObjetQuete" && sessionAddedItem.Contains(item))
+        {
+            return;
+        }
         sessionAddedItem.Add(item);
     }
 

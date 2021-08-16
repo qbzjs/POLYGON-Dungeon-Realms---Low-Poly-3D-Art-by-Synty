@@ -92,6 +92,7 @@ public class William_Script : MonoBehaviour
         {
             bool needKey = interactableObject.IsLocked();
             bool isLockedDoor = false;
+
             if (needKey)
             {
                 ItemInventaire key = interactableObject.GetKey();
@@ -99,14 +100,19 @@ public class William_Script : MonoBehaviour
                 if (key != null)
                 {
 
-                    bool hasKey = playerInventory.GetItemByTypeFromSacoche(key);
-                    bool useKey = playerInventory.UseItem(key);
-
+                    bool hasKey = playerInventory.GetItemFromSacoche(key);
+                    
                     if (!hasKey)
                     {
                         isLockedDoor = true;
                         gameManager.AfficherMessageInteraction("Missing Key");
+                    } else
+                    {
+                        bool useKey = playerInventory.UseItemFromSacoche(key);
+                        InventaireManager.instance.RemoveItemFromSacoche(key);
+                        isLockedDoor = !useKey;
                     }
+                    
                 } else
                 {
                     isLockedDoor = true;
@@ -121,7 +127,7 @@ public class William_Script : MonoBehaviour
             {
                 isOnlyOnceInteract = interactableObject.ExecuteActions();
             }
-             
+
 
             if (isOnlyOnceInteract)
             {

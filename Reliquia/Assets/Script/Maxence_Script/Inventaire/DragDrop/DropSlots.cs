@@ -80,13 +80,14 @@ public class DropSlots : MonoBehaviour, IDropHandler
         else if (gameObject.name == "FondObjetQuetes") 
         {
             if (typeItem.TypeItem == "ObjetQuete") eventData.pointerDrag.transform.SetParent(objetQuetePanel.transform);
+            //else if (typeItem.TypeItemBase == "ObjetQuete") eventData.pointerDrag.transform.SetParent(objetQuetePanel.transform);
             else if(typeItem.TypeItem == "Consommable") eventData.pointerDrag.transform.SetParent(consommablePanel.transform);
-            else if (typeItem.TypeItem == "Sacoche" && typeItem.TypeItemBase != "ObjetQuete") eventData.pointerDrag.transform.SetParent(sacochePanel.transform);
+            else if (typeItem.TypeItem == "Sacoche" && typeItem.TypeItemBase != "ObjetQuete") eventData.pointerDrag.transform.SetParent(sacochePanel.transform); 
             else
             {
                 if (playerInventory.objetsQuetesInventory.Contains(item))
                 {
-                    item.numberHeld++;
+                    //item.numberHeld++;
                     Destroy(eventData.pointerDrag.gameObject);
                     thisManager.ClearObjetQuetesSlots();
                     thisManager.MakeObjetQueteSlot();
