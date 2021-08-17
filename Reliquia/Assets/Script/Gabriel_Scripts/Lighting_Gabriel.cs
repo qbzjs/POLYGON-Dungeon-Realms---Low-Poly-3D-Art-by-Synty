@@ -104,7 +104,6 @@ public class Lighting_Gabriel : MonoBehaviour
         { //KeyCode.E
 
             MoveCamera();
-            SwitchLight(true);
 
             // To Remove
             //targetImage.gameObject.SetActive(true);
@@ -113,13 +112,13 @@ public class Lighting_Gabriel : MonoBehaviour
             //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
             //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
 
-            //if (!isCreated) {
+            if (!isCreated) {
             //    //_animator.SetBool("Lighting", true);
             //    //g.SetActive(true);
             //    //isCreated = true;
             //    //isLighting = true;
-            //    SwitchLight(true);
-            //}
+                SwitchLight(true);
+            }
         }
         
 
