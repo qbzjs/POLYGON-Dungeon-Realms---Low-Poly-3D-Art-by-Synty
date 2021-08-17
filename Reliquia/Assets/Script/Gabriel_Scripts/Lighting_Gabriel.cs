@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using clavier;
 
 public class Lighting_Gabriel : MonoBehaviour
 {
@@ -49,10 +50,13 @@ public class Lighting_Gabriel : MonoBehaviour
     public bool aim = false;
     private Transform position_test;
 
+    RaccourciClavier_Script raccourciClavier;
 
 
-    void Start() {
-        
+    void Start() 
+    {
+
+        raccourciClavier = FindObjectOfType<RaccourciClavier_Script>();
         manaPool = ybot.GetComponent<RessourcesVitalesWilliam_Script>().manaWilliam;
         isCreated = false;
         isLighting = false;
@@ -95,23 +99,27 @@ public class Lighting_Gabriel : MonoBehaviour
             SwitchAimCamera();
         }
     
-        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) {
+        //else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) 
+        else if (Input.GetKey(raccourciClavier.toucheClavier["Pouvoir1"]))
+        { //KeyCode.E
 
+            MoveCamera();
+            SwitchLight(true);
+
+            // To Remove
             //targetImage.gameObject.SetActive(true);
             // gameCamera.transform.position = cameraAimingAngle.transform.position;
 
-            float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
-            gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
+            //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
+            //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
 
-
-
-
-            if(!isCreated) {
-                _animator.SetBool("Lighting", true);
-                g.SetActive(true);
-                isCreated = true;
-                isLighting = true;
-            }
+            //if (!isCreated) {
+            //    //_animator.SetBool("Lighting", true);
+            //    //g.SetActive(true);
+            //    //isCreated = true;
+            //    //isLighting = true;
+            //    SwitchLight(true);
+            //}
         }
         
 
@@ -120,14 +128,17 @@ public class Lighting_Gabriel : MonoBehaviour
             targetImage.gameObject.SetActive(false);
             //gameCamera.GetComponent<Transform>().transform.position = new Vector3(cameraStandardAngle.x, cameraStandardAngle.y, cameraStandardAngle.z);
 
-            float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
-            gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraStandardAngle.position, step);
+            //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
+            //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraStandardAngle.position, step);
 
-            if(isCreated) {
-                _animator.SetBool("Lighting", false);
-                g.SetActive(false);
-                isCreated = false;
-                isLighting = false;
+            MoveCamera();
+
+            if (isCreated) {
+                //_animator.SetBool("Lighting", false);
+                //g.SetActive(false);
+                //isCreated = false;
+                //isLighting = false;
+                SwitchLight(false);
             }
         }
 
@@ -219,6 +230,31 @@ public class Lighting_Gabriel : MonoBehaviour
         }
 
     }
+
+    public void SwitchLight(bool on)
+    {
+        if (on)
+        {
+            _animator.SetBool("Lighting", true);
+            g.SetActive(true);
+            isCreated = true;
+            isLighting = true;
+        }
+        else
+        {
+            _animator.SetBool("Lighting", false);
+            g.SetActive(false);
+            isCreated = false;
+            isLighting = false;
+        }
+    }
+
+    private void MoveCamera()
+    {
+        float step = cameraSpeed * Time.deltaTime; // calculate distance to move
+        gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
+    }
+    
 
     
 }

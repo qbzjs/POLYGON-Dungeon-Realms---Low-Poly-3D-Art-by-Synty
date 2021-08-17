@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiasGames.ThirdPersonSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,17 @@ public class Interactable : MonoBehaviour
     public Axis axis;
     [Header("Pour l'axe Y uniquement")]
     public rotationDirection direction;
+    public eInteractableType type;
+
+    public enum eInteractableType
+    {
+        Door,
+        Brasier,
+        DoorLock, 
+        Bandage,
+        Clef
+
+    }
 
 
     [HideInInspector]
@@ -28,10 +40,6 @@ public class Interactable : MonoBehaviour
     public delegate void Actions();
     static public event Actions INTERACT_ACTIONS;
     static public event Actions UNDO_ACTIONS;
-
-    //public eActionState actionState;
-    // public
-    
 
     // private
 
@@ -50,11 +58,14 @@ public class Interactable : MonoBehaviour
     private Quaternion deltaInit;
 
     private LockedDoor lockedDoor;
+    private BrasierParticles brasier;
+    private float delay;
 
     // Start is called before the first frame update
     void Start()
     {
         lockedDoor = GetComponent<LockedDoor>();
+        brasier = GetComponent<BrasierParticles>();
         //isOutline = contour;
         if (goContour != null)
         {
@@ -132,9 +143,35 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    public IEnumerator StartLight(ParticleSystem[] areaLights)
+    {
+        delay = 0.4f;
+        for (int i = 0; i < areaLights.Length; i++)
+        {           
+            yield return new WaitForSeconds(delay);
+            areaLights[i].Play();
+            delay -= 0.2f;
+        }
+    }
+    
     public bool ExecuteActions()
     {
         bool isOnlyOnce = false;
+
+        if (type == eInteractableType.Brasier)
+        {
+            // light brasero
+            
+            GameObject areaLight = brasier.GetBrasierParticles();
+            ParticleSystem[] areaLights = areaLight.GetComponentsInChildren<ParticleSystem>();
+
+            areaLight.SetActive(true);
+
+            StartCoroutine(StartLight(areaLights));
+            GetComponent<Outline>().OutlineWidth = 0;
+
+            return !isOnlyOnce;
+        }
        
         if (InteractOutline.enabled && !itemActive) // ouvrir, jouer l'anim (E)
         {
@@ -173,17 +210,15 @@ public class Interactable : MonoBehaviour
 
     public ItemInventaire GetKey()
     {
-        if (lockedDoor != null)
+        //if (lockedDoor != null)
+        if (type == eInteractableType.DoorLock)
         {
             return lockedDoor.GetComponent<LockedDoor>().GetKey();
         }
         return null;
     }
-    public bool IsLocked()
-    {
-        return lockedDoor != null;
-    }
 
+ 
     // Active les collider uniquement pour les items à l'interieur d'objets interactables
     private bool InOnlyOnce()
     {
