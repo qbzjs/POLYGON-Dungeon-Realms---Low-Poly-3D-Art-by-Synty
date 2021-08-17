@@ -246,30 +246,35 @@ public class William_Script : MonoBehaviour
         bool isBrasier = interactableObject.type == Interactable.eInteractableType.Brasier ? !flagBrasierAlreadyOn : false;
         bool isLightPowerCreated = false;
 
+        bool isOnlyOnceInteract = false;
+
         if (isBrasier)
         {
             isLightPowerCreated = lightGab.isCreated;
-            if (isLightPowerCreated)
+            if (!isLightPowerCreated)
             {
                 lightGab.SwitchLight(true);
                 flagBrasierAlreadyOn = true;
+                isOnlyOnceInteract = interactableObject.ExecuteActions();
             }
             else
             {
+
                 Msg = "Active Light";
+                gameManager.AfficherMessageInteraction(Msg);
             }
 
         }
-        bool isOnlyOnceInteract = false;
+        
 
-        if (!isLightPowerCreated && interactableObject.type == Interactable.eInteractableType.Brasier)
-        {
-            gameManager.AfficherMessageInteraction(Msg);
-        }
-        else if (interactableObject.type == Interactable.eInteractableType.Brasier)
-        {
-            isOnlyOnceInteract = interactableObject.ExecuteActions();
-        }
+        //if (!isLightPowerCreated && interactableObject.type == Interactable.eInteractableType.Brasier)
+        //{
+        //    gameManager.AfficherMessageInteraction(Msg);
+        //}
+        //else if (interactableObject.type == Interactable.eInteractableType.Brasier)
+        //{
+        //    isOnlyOnceInteract = interactableObject.ExecuteActions();
+        //}
 
 
         if (isOnlyOnceInteract)
