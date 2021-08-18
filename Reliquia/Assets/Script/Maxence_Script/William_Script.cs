@@ -26,6 +26,11 @@ public class William_Script : MonoBehaviour
     private bool flagBrasierAlreadyOn;
     private string Msg;
 
+    // Delegate Interaction
+    public delegate void Actions();
+    static public event Actions INTERACT_ACTIONS;
+    static public event Actions UNDO_ACTIONS;
+
     private void Awake()
     {
         if (instance == null)
@@ -51,7 +56,7 @@ public class William_Script : MonoBehaviour
     ItemInventaire item;
     Interactable interactableObject;
     Interactable interactableItem;
-    
+    private bool isLightPowerCreated;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -66,6 +71,7 @@ public class William_Script : MonoBehaviour
 
             interactableObject = other.gameObject.GetComponent<Interactable>();
             interactableObject.ApplyOutline(true);
+            
 
             switch (interactableObject.type)
             {
@@ -100,7 +106,9 @@ public class William_Script : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
+        ManageItemInteractable();
+
+        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
         {
             if (physicaltemInventaire != null && item != null)
             {
@@ -112,13 +120,6 @@ public class William_Script : MonoBehaviour
             //gameManager.FermerMessageInteraction();
         }
 
-
-        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Pouvoir1"]) && interactableObject != null)
-        {
-            ManageBrasierLight();
-
-        }
-
         if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && interactableObject != null)
         {
             if (interactableObject.type == Interactable.eInteractableType.Brasier)
@@ -126,12 +127,29 @@ public class William_Script : MonoBehaviour
                 gameManager.AfficherMessageInteraction("Use Light");
                 return;
             }
-
-            ManageInteraction();
+            // Open Door and Chest
+            INTERACT_ACTIONS?.Invoke();
         }
 
-        ManageItemInteractable();
+        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Pouvoir1"]) && interactableObject != null)
+        {
+            lightGab.SwitchLight(true);
+            isLightPowerCreated = lightGab.isCreated;
+            if (isLightPowerCreated)
+            {
+                // Light Brasier 
+                INTERACT_ACTIONS?.Invoke();
+            }
 
+        }
+
+        if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.R))
+        {
+
+            lightGab.targetImage.gameObject.SetActive(false);
+            lightGab.SwitchLight(false);
+        }
+            
         }
 
     private void ManageItemInteractable()
@@ -178,109 +196,22 @@ public class William_Script : MonoBehaviour
         }
     }
 
-    // Gère les interactions d'ouverture de porte
-    private void ManageInteraction()
+
+    public bool HasKey(ItemInventaire key)
     {
-        //bool needKey = interactableObject.IsLocked();
-        bool needKey = interactableObject.type == Interactable.eInteractableType.DoorLock;
-        bool isLockedDoor = false;
-
-        if (needKey)
-        {
-            ItemInventaire key = interactableObject.GetKey();
-
-            if (key != null)
-            {
-
-                bool hasKey = playerInventory.GetItemFromSacoche(key);
-
-                if (!hasKey)
-                {
-                    isLockedDoor = true;
-                    //gameManager.AfficherMessageInteraction("Missing Key");
-                    Msg = "Missing Key";
-                }
-                else
-                {
-                    bool useKey = playerInventory.UseItemFromSacoche(key);
-                    InventaireManager.instance.RemoveItemFromSacoche(key);
-                    isLockedDoor = !useKey;
-                }
-
-            }
-            else
-            {
-                isLockedDoor = true;
-                //gameManager.AfficherMessageInteraction("Missing Key");
-                Msg = "Missing Key";
-            }
-
-        }
-
-        bool isOnlyOnceInteract = false;
-
-        if (isLockedDoor && interactableObject.type == Interactable.eInteractableType.DoorLock)
-        {
-            gameManager.AfficherMessageInteraction(Msg);
-        }
-        else if (interactableObject.type != Interactable.eInteractableType.Brasier)
-        {
-            isOnlyOnceInteract = interactableObject.ExecuteActions();
-        }
-
-
-        if (isOnlyOnceInteract)
-        {
-            interactableObject.ApplyOutline(false);
-            interactableObject = null;
-        }
-
-        //gameManager.FermerMessageInteraction();
+        return playerInventory.GetItemFromSacoche(key);
     }
 
-    // Gère l'interaction avec le brasier.
-    private void ManageBrasierLight()
+    public bool UseKey(ItemInventaire key)
     {
-        //bool isBrasero = interactableObject.IsBrasier();
-        // Si  interactable object = brasier et que le brasier n'est pas déjà allumé alors isBrasier = true;
-        bool isBrasier = interactableObject.type == Interactable.eInteractableType.Brasier ? !flagBrasierAlreadyOn : false;
-        bool isLightPowerCreated = false;
+        bool useKey = playerInventory.UseItemFromSacoche(key);
+        InventaireManager.instance.RemoveItemFromSacoche(key);
+        return useKey;
+    }
 
-        bool isOnlyOnceInteract = false;
-
-        if (isBrasier)
-        {
-            isLightPowerCreated = lightGab.isCreated;
-            if (!isLightPowerCreated)
-            {
-                lightGab.SwitchLight(true);
-                flagBrasierAlreadyOn = true;
-                isOnlyOnceInteract = interactableObject.ExecuteActions();
-            }
-            else
-            {
-
-                Msg = "Active Light";
-                gameManager.AfficherMessageInteraction(Msg);
-            }
-
-        }
-        
-
-        //if (!isLightPowerCreated && interactableObject.type == Interactable.eInteractableType.Brasier)
-        //{
-        //    gameManager.AfficherMessageInteraction(Msg);
-        //}
-        //else if (interactableObject.type == Interactable.eInteractableType.Brasier)
-        //{
-        //    isOnlyOnceInteract = interactableObject.ExecuteActions();
-        //}
-
-
-        if (isOnlyOnceInteract)
-        {
-            interactableObject.ApplyOutline(false);
-            interactableObject = null;
-        }
+    public void DisableInteractableObject()
+    {
+        interactableObject.ApplyOutline(false);
+        interactableObject = null;
     }
 }

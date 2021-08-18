@@ -180,7 +180,7 @@ public class InventaireManager : MonoBehaviour
     {
         if (item != null)
         {
-            int count = sacochePanel.transform.GetChildCount();
+            int count = sacochePanel.transform.childCount;
             for (int i = 0; i < count; i++)
             {
                 GameObject tempItem = sacochePanel.transform.GetChild(i).gameObject;

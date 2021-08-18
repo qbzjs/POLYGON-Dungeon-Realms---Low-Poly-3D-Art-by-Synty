@@ -29,6 +29,8 @@ public class RessourcesVitalesWilliam_Script : MonoBehaviour
     [SerializeField] private Image barreVie;
 
     public static RessourcesVitalesWilliam_Script instance;
+
+    private Lighting_Gabriel lightPower;
     private void Awake()
     {
         if (instance == null)
@@ -39,6 +41,8 @@ public class RessourcesVitalesWilliam_Script : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        lightPower = GetComponent<Lighting_Gabriel>();
     }
 
     // Start is called before the first frame update
@@ -62,6 +66,9 @@ public class RessourcesVitalesWilliam_Script : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.V)) RajouterVie(10);
         if (Input.GetKeyUp(KeyCode.C)) RajouterMana(10);
+
+        if (manaWilliam <= 0) lightPower.ResetLighting();
+
     }
 
     public void EnleverVie(int valeurEnMoins)

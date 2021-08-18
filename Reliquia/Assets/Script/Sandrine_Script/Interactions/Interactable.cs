@@ -11,21 +11,12 @@ public class Interactable : MonoBehaviour
     //public bool contour;
     public GameObject goContour;
 
-
-
-    //public keyParameter keyParam;
-
-    public bool needKey;
-
-    public GameObject axisObject;
-    public Axis axis;
-    [Header("Pour l'axe Y uniquement")]
-    public rotationDirection direction;
     public eInteractableType type;
 
     public enum eInteractableType
     {
         Door,
+        Chest,
         Brasier,
         DoorLock, 
         Bandage,
@@ -37,92 +28,31 @@ public class Interactable : MonoBehaviour
     [HideInInspector]
     
 
-    public delegate void Actions();
-    static public event Actions INTERACT_ACTIONS;
-    static public event Actions UNDO_ACTIONS;
+    
 
     // private
 
-    private Outline InteractOutline;
-    private bool isOutline;
+    public Outline InteractOutline;
 
-    private bool rotate;
-    private bool rotateDirection;
-
-    private bool itemActive; // si l'objet a déjà interagit
+    public bool itemActive; // si l'objet a déjà interagit
 
     private Interactable[] childrenInteractable;
 
 
-    private Quaternion delta;
-    private Quaternion deltaInit;
-
-    private LockedDoor lockedDoor;
-    private BrasierParticles brasier;
-    private float delay;
-
     // Start is called before the first frame update
     void Start()
     {
-        lockedDoor = GetComponent<LockedDoor>();
-        brasier = GetComponent<BrasierParticles>();
+        
         //isOutline = contour;
         if (goContour != null)
         {
-            isOutline = true;
             InteractOutline = goContour.GetComponent<Outline>();
         }
         else if (GetComponent<Outline>() != null)
         {
             InteractOutline = GetComponent<Outline>();
         }
-            
 
-        // InteractOutline = GetComponent<Outline>();
-        if (isOutline)
-        {
-            INTERACT_ACTIONS += ShowOutline;
-            UNDO_ACTIONS += hideOutline;
-        }
-        if (axisObject == null)
-        {
-            return;
-        }
-        deltaInit = axisObject.transform.rotation;
-        if (axis == Axis.X)
-        {
-            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f); //  + 178.094f corrige rotation en z
-        }
-        if (axis == Axis.Y && direction == rotationDirection.Forward)
-        {
-
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, 90, 0);
-        }
-        if (axis == Axis.Y && direction == rotationDirection.Backward)
-        {
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, -90, 0);
-        }
-
-    }
-
-   
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (rotate && rotateDirection && axisObject.transform.rotation != delta)
-        {
-
-            axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime);
-
-        }
-        if (rotate && !rotateDirection && axisObject.transform.rotation != deltaInit)
-        {
-
-            axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, deltaInit, 5f * Time.deltaTime);
-
-        }
-        
     }
 
     public void ApplyOutline(bool show)
@@ -135,92 +65,46 @@ public class Interactable : MonoBehaviour
         if (show) // !InteractOutline.enabled // afficher le contour (OnTriggerExit)
         {
             ShowOutline();
+            ActiveInteraction(true);
 
         } else
         {
             hideOutline();
-
+            ActiveInteraction(false);
         }
     }
 
-    public IEnumerator StartLight(ParticleSystem[] areaLights)
+    public void ActiveInteraction(bool On)
     {
-        delay = 0.4f;
-        for (int i = 0; i < areaLights.Length; i++)
-        {           
-            yield return new WaitForSeconds(delay);
-            areaLights[i].Play();
-            delay -= 0.2f;
+        switch (type)
+        {
+            case eInteractableType.Door:
+                InteractionDoor iDoor = GetComponent<InteractionDoor>();
+                iDoor.enabled = On;
+                break;
+            case eInteractableType.Chest:
+                InteractionChest iChest = GetComponent<InteractionChest>();
+                iChest.enabled = On;
+                break;
+            case eInteractableType.Brasier:
+                InteractionBrasier iBrasier = GetComponent<InteractionBrasier>();
+                iBrasier.enabled = On;
+                break;
+            case eInteractableType.DoorLock:
+                InteractionLockDoor iDoorLock = GetComponent<InteractionLockDoor>();
+                iDoorLock.enabled = On;
+                break;
+            case eInteractableType.Bandage:
+                break;
+            case eInteractableType.Clef:
+                break;
+            default:
+                break;
         }
     }
-    
-    public bool ExecuteActions()
-    {
-        bool isOnlyOnce = false;
 
-        if (type == eInteractableType.Brasier)
-        {
-            // light brasero
-            
-            GameObject areaLight = brasier.GetBrasierParticles();
-            ParticleSystem[] areaLights = areaLight.GetComponentsInChildren<ParticleSystem>();
-
-            areaLight.SetActive(true);
-
-            StartCoroutine(StartLight(areaLights));
-            GetComponent<Outline>().OutlineWidth = 0;
-
-            return !isOnlyOnce;
-        }
-       
-        if (InteractOutline.enabled && !itemActive) // ouvrir, jouer l'anim (E)
-        {
-            itemActive = true;
-            PlayAnim(true);
-            return InOnlyOnce();
-
-        }
-        if (InteractOutline.enabled && itemActive) // ouvrir, jouer l'anim (E)
-        {
-            itemActive = false;
-            PlayAnim(false);
-           
-
-        }
-        return isOnlyOnce;
-
-    }
-
-    public void ExecuteUndo() 
-    {
-        // UNDO_ACTIONS(); OnTriggerExit()
-        hideOutline();
-        // PlayAnim(false); 
-    }
-
-    public void ShowOutline()
-    {
-        if (InteractOutline == null)
-        {
-            return;
-        }
-        InteractOutline.OutlineMode = Outline.Mode.OutlineVisible;
-        InteractOutline.enabled = true;
-    }
-
-    public ItemInventaire GetKey()
-    {
-        //if (lockedDoor != null)
-        if (type == eInteractableType.DoorLock)
-        {
-            return lockedDoor.GetComponent<LockedDoor>().GetKey();
-        }
-        return null;
-    }
-
- 
     // Active les collider uniquement pour les items à l'interieur d'objets interactables
-    private bool InOnlyOnce()
+    public bool InOnlyOnce()
     {
         childrenInteractable = goContour.GetComponentsInChildren<Interactable>();// Object interactable 1 seule fois
         // Debug.Log("childrenInteractable : " + childrenInteractable);
@@ -244,6 +128,17 @@ public class Interactable : MonoBehaviour
         return false;
     }
 
+    public void ShowOutline()
+    {
+        if (InteractOutline == null)
+        {
+            return;
+        }
+        InteractOutline.OutlineMode = Outline.Mode.OutlineVisible;
+        InteractOutline.enabled = true;
+    }
+
+  
     private void hideOutline()
     {
         if (InteractOutline == null )
@@ -251,16 +146,6 @@ public class Interactable : MonoBehaviour
             return;
         }
         InteractOutline.enabled = false;
-    }
-
-    private void PlayAnim(bool open)
-    {
-        //hideOutline();
-        if (axisObject != null)
-        {
-            rotate = true;
-            rotateDirection = open;
-        }
     }
 
 }

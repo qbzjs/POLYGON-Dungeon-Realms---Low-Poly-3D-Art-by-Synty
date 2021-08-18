@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 using clavier;
+using System;
 
 public class Lighting_Gabriel : MonoBehaviour
 {
@@ -87,59 +88,55 @@ public class Lighting_Gabriel : MonoBehaviour
         }
     }
    
-    public void Update() { 
+    public void Update() {
 
-        if (ybot.GetComponent<RessourcesVitalesWilliam_Script>().manaWilliam <= 0) {
+        // Put on RessourcesVitalesWilliam_Script class
+        //if (ybot.GetComponent<RessourcesVitalesWilliam_Script>().manaWilliam <= 0) {
 
-            _animator.SetBool("Lighting", false);
-            g.SetActive(false);
-            isCreated = false;
-            isLighting = false;
-            aim = false;
-            SwitchAimCamera();
-        }
-    
-        //else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) 
-        else if (Input.GetKey(raccourciClavier.toucheClavier["Pouvoir1"]))
-        { //KeyCode.E
 
-            MoveCamera();
+            //    ResetLighting();
 
-            // To Remove
-            //targetImage.gameObject.SetActive(true);
-            // gameCamera.transform.position = cameraAimingAngle.transform.position;
+            //}
 
-            //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
-            //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
+            //else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.E)) 
+        // Move on William_Script class
+        //if (Input.GetKey(raccourciClavier.toucheClavier["Pouvoir1"]))
+        //{ //KeyCode.E
 
-            if (!isCreated) {
-            //    //_animator.SetBool("Lighting", true);
-            //    //g.SetActive(true);
-            //    //isCreated = true;
-            //    //isLighting = true;
-                SwitchLight(true);
-            }
-        }
+        //    // To Remove
+        //    //targetImage.gameObject.SetActive(true);
+        //    // gameCamera.transform.position = cameraAimingAngle.transform.position;
+
+        //    //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
+        //    //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
+
+        //    if (!isCreated) {
+        //    //    //_animator.SetBool("Lighting", true);
+        //    //    //g.SetActive(true);
+        //    //    //isCreated = true;
+        //    //    //isLighting = true;
+        //    }
+        //}
         
+        // Move in William_Script class
+        //if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.R)) {
 
-        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.R)) {
+        //    targetImage.gameObject.SetActive(false);
+        //    //gameCamera.GetComponent<Transform>().transform.position = new Vector3(cameraStandardAngle.x, cameraStandardAngle.y, cameraStandardAngle.z);
 
-            targetImage.gameObject.SetActive(false);
-            //gameCamera.GetComponent<Transform>().transform.position = new Vector3(cameraStandardAngle.x, cameraStandardAngle.y, cameraStandardAngle.z);
+        //    //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
+        //    //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraStandardAngle.position, step);
 
-            //float step =  cameraSpeed * Time.deltaTime; // calculate distance to move
-            //gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraStandardAngle.position, step);
+        //    MoveCamera();
 
-            MoveCamera();
-
-            if (isCreated) {
-                //_animator.SetBool("Lighting", false);
-                //g.SetActive(false);
-                //isCreated = false;
-                //isLighting = false;
-                SwitchLight(false);
-            }
-        }
+        //    if (isCreated) {
+        //        //_animator.SetBool("Lighting", false);
+        //        //g.SetActive(false);
+        //        //isCreated = false;
+        //        //isLighting = false;
+        //        SwitchLight(false);
+        //    }
+        //}
 
         // Comportement Offensif (Alexis)
 
@@ -205,6 +202,7 @@ public class Lighting_Gabriel : MonoBehaviour
     }
 
     
+
     private void SwitchAimCamera()  // script pour placer la camera en position de visée ou non.
     {
         if (aim)
@@ -234,17 +232,25 @@ public class Lighting_Gabriel : MonoBehaviour
     {
         if (on)
         {
-            _animator.SetBool("Lighting", true);
-            g.SetActive(true);
-            isCreated = true;
-            isLighting = true;
+            MoveCamera();
+            if (!isCreated)
+            {
+                _animator.SetBool("Lighting", true);
+                g.SetActive(true);
+                isCreated = true;
+                isLighting = true;
+            }
         }
         else
         {
-            _animator.SetBool("Lighting", false);
-            g.SetActive(false);
-            isCreated = false;
-            isLighting = false;
+            MoveCamera();
+            if (isCreated)
+            {
+                _animator.SetBool("Lighting", false);
+                g.SetActive(false);
+                isCreated = false;
+                isLighting = false;
+            }
         }
     }
 
@@ -253,7 +259,15 @@ public class Lighting_Gabriel : MonoBehaviour
         float step = cameraSpeed * Time.deltaTime; // calculate distance to move
         gameCamera.transform.position = Vector3.MoveTowards(gameCamera.transform.position, cameraAimingAngle.position, step);
     }
-    
 
-    
+    public void ResetLighting()
+    {
+        _animator.SetBool("Lighting", false);
+        g.SetActive(false);
+        isCreated = false;
+        isLighting = false;
+        aim = false;
+        SwitchAimCamera();
+    }
+
 }
