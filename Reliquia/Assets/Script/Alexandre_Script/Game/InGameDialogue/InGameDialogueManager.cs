@@ -109,12 +109,14 @@ namespace AlexandreDialogues
 
 		private IEnumerator DialogueCoroutine(InGameDialogue dialogue)
 		{
+			float delayBetween2Speach = 1f;
 			while (_dialogueCurrentReply < _dialogueReplyLength)
 			{
 				_textTMPro.text = dialogue.m_reply[_dialogueCurrentReply].m_text;
 				_dialogueCurrentTime = dialogue.m_reply[_dialogueCurrentReply].m_displayTime;
 
 				yield return new WaitForSeconds(_dialogueCurrentTime);
+				yield return new WaitForSeconds(delayBetween2Speach);
 
 				_dialogueCurrentReply++;
 			}
