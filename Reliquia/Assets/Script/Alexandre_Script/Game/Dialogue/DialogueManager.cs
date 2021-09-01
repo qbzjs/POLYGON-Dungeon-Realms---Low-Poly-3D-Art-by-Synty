@@ -75,6 +75,9 @@ namespace AlexandreDialogues
 		[SerializeField] private bool _isCoroutineStarted;
 		[SerializeField] private int _hashPosition;
 
+		// Barre Vie Mana
+		private GameObject barresVieMana;
+
 		#endregion
 
 
@@ -98,6 +101,8 @@ namespace AlexandreDialogues
 
 			// Désactiver le Canvas
 			_canvas.SetActive(false);
+
+			barresVieMana = GameObject.FindGameObjectWithTag("BarresVieMana");
 		}
 
 		private void Update()
@@ -290,6 +295,9 @@ namespace AlexandreDialogues
 				_currentCamera = virtualCamera;
 				_currentCamera.SetActive(true);
 
+				// Désactiver la Barre de Vie/Mana
+				barresVieMana.SetActive(false);
+
 				// On veut utiliser IEnableForDialogue ? Alors lancer la méthode afférente pour tous les objets renseignés
 				_useControledScriptsAtStartForFile = useControledScriptsAtStart;
 				if (_useControledScriptsAtStartForFile)
@@ -355,6 +363,9 @@ namespace AlexandreDialogues
 					return;
 				}
 				_currentCamera.SetActive(true);
+
+				// Désactiver la Barre de Vie/Mana
+				barresVieMana.SetActive(false);
 
 				// Si on utilise la liste des IEnableForDialogue, lancer la méthode afférente pour tous les objets renseignés
 				if (entry.m_useControledScriptsAtStart)
@@ -575,6 +586,9 @@ namespace AlexandreDialogues
 			}
 
 			_currentCamera.SetActive(false);
+
+			// Réactiver la Barre de Vie/Mana
+			barresVieMana.SetActive(true);
 
 			_canvas.SetActive(false);
 

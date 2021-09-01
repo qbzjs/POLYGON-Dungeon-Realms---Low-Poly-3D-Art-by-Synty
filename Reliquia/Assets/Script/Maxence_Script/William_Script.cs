@@ -1,4 +1,5 @@
-﻿using Boo.Lang;
+﻿using AlexandreDialogues;
+using Boo.Lang;
 using clavier;
 using System;
 using System.Collections;
@@ -9,6 +10,7 @@ public class William_Script : MonoBehaviour
 {
 
     GameManager gameManager;
+    
     RaccourciClavier_Script raccourciClavier;
     Compas_Script compas_Script;
     PhysicaltemInventaire physicaltemInventaire;
@@ -31,6 +33,12 @@ public class William_Script : MonoBehaviour
     static public event Actions INTERACT_ACTIONS;
     static public event Actions UNDO_ACTIONS;
 
+    // Dialogue Interaction
+    InGameDialogueManager inGameDialogueManager;
+    GameObject dialogue;
+    InGameDialogue inGameDialogueBandage;
+    InGameDialogue inGameDialogueClef;
+
     private void Awake()
     {
         if (instance == null)
@@ -51,6 +59,15 @@ public class William_Script : MonoBehaviour
         compas_Script = FindObjectOfType<Compas_Script>();
         gameManager = FindObjectOfType<GameManager>();
         lightGab = GetComponent<Lighting_Gabriel>();
+
+        inGameDialogueManager = FindObjectOfType<InGameDialogueManager>();
+        dialogue = GameObject.FindGameObjectWithTag("DialogueBandage");
+        inGameDialogueBandage = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
+        dialogue.SetActive(false);
+        
+        dialogue = GameObject.FindGameObjectWithTag("DialogueClef");
+        inGameDialogueClef = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
+        dialogue.SetActive(false);
     }
 
     ItemInventaire item;
@@ -64,6 +81,7 @@ public class William_Script : MonoBehaviour
         {
             physicaltemInventaire = other.gameObject.GetComponent<PhysicaltemInventaire>();
             item = physicaltemInventaire.thisItem;
+
             gameManager.AfficherMessageInteraction("");
         }
         if (other.CompareTag("Interactable")) //&& interactableItem == null
@@ -78,7 +96,7 @@ public class William_Script : MonoBehaviour
                 case Interactable.eInteractableType.Brasier:
                     if (!flagBrasierAlreadyOn) // le brasier n'est pas deja allumé.
                     {
-                        gameManager.AfficherMessageInteraction("Use Light");
+                        //gameManager.AfficherMessageInteraction("Use Light");
                     }
                     break;
                 default:
@@ -108,7 +126,11 @@ public class William_Script : MonoBehaviour
     {
         ManageItemInteractable();
 
-        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) && GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
+        // Si Touche Action && (Message Interaction || Dialogue)
+        if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) &&
+            ((GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
+            || inGameDialogueManager.IsDialogueStarted)
+            )
         {
             if (physicaltemInventaire != null && item != null)
             {
@@ -177,10 +199,26 @@ public class William_Script : MonoBehaviour
                 // Set Inventaire
                 physicaltemInventaire = target.gameObject.GetComponent<PhysicaltemInventaire>();
                 item = physicaltemInventaire.thisItem;
-                gameManager.AfficherMessageInteraction("");
+                
+                
                 // Add Contour Blanc
                 interactableItem = target.gameObject.GetComponent<Interactable>();
                 interactableItem.ApplyOutline(true);
+
+                if (target.GetComponent<Interactable>().type == Interactable.eInteractableType.Bandage)
+                {
+                    gameManager.FermerMessageInteraction();
+                    inGameDialogueManager.StartDialogue(inGameDialogueBandage);
+                }
+                else if (target.GetComponent<Interactable>().type == Interactable.eInteractableType.Clef)
+                {
+                    gameManager.FermerMessageInteraction();
+                    inGameDialogueManager.StartDialogue(inGameDialogueClef);
+                }
+                else
+                {
+                    gameManager.AfficherMessageInteraction("");
+                }
             }
             else
             {

@@ -11,9 +11,14 @@ public class DialogueAttached : MonoBehaviour
     public GameObject virtualCamera;
 
     private bool alreadyRed;
+    public bool showOnSecondThrow;
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player") && showOnSecondThrow)
+        {
+            return;
+        }
         if (other.CompareTag("Player") && !alreadyRed)
         {
             // Lancer un dialogue Dialogue Box 
@@ -28,5 +33,13 @@ public class DialogueAttached : MonoBehaviour
             alreadyRed = true;
         }
         
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && showOnSecondThrow)
+        {
+            showOnSecondThrow = false;
+        }
     }
 }

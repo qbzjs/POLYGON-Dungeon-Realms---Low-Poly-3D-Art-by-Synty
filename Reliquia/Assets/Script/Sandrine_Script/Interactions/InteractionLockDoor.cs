@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AlexandreDialogues;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -24,6 +25,12 @@ public class InteractionLockDoor : MonoBehaviour
     private GameManager gameManager;
     private bool isLockedDoor;
 
+    // Interaction Dialogue
+    private InGameDialogueManager inGameDialogueManager;
+    private GameObject dialogue;
+    private InGameDialogue inGameDialogueClef;
+    private InGameDialogue inGameDialogueSesame;
+
     private void OnEnable()
     {
         
@@ -40,6 +47,14 @@ public class InteractionLockDoor : MonoBehaviour
         interactable = GetComponent<Interactable>();
         wilScript = GameObject.FindGameObjectWithTag("Player").GetComponent<William_Script>();
         gameManager = FindObjectOfType<GameManager>();
+        inGameDialogueManager = FindObjectOfType<InGameDialogueManager>();
+        dialogue = GameObject.FindGameObjectWithTag("DialogueDoorLock");
+        inGameDialogueClef = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
+        dialogue.SetActive(false);
+        dialogue = GameObject.FindGameObjectWithTag("DialogueSesame");
+        inGameDialogueSesame = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
+        dialogue.SetActive(false);
+
 
         if (axisObject == null)
         {
@@ -76,9 +91,12 @@ public class InteractionLockDoor : MonoBehaviour
 
         if (isLockedDoor)
         {
-            gameManager.AfficherMessageInteraction("Missing Key");
+            //gameManager.AfficherMessageInteraction("Missing Key");
+            gameManager.FermerMessageInteraction();
+            inGameDialogueManager.StartDialogue(inGameDialogueClef);
             return;
         }
+        inGameDialogueManager.StartDialogue(inGameDialogueSesame);
         if (interactable.InteractOutline.enabled && !interactable.itemActive) // ouvrir, jouer l'anim (E)
         {
             interactable.itemActive = true;

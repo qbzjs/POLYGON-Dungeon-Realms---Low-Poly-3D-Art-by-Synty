@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Dialogue_Seq4_Sc2_P1_1
+  m_EditorClassIdentifier: 
+  m_test: 
+  m_casting:
+  - m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 0c4c591c7c09f884eb5eac82e32f32c1, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 47596e226035dde4382de8bb7c8a5588, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 7a3eb4ef9a7f9b247b43c98a0c103858, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 788f7c2e85d4e554da85e705569fe327, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 9915cf0b5c1e7b64a8c913ba8c11de7f, type: 2}
+    m_characterView: 0
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: 47596e226035dde4382de8bb7c8a5588, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Quoi ? Un cul de sac ? On a fait tout \xE7a pour rien ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Regarde, le mur est effrit\xE9, tu devrais pouvoir nous frayer un passage
+      avec le pouvoir Pulsate. "
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'Bien, encore une fois. '
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Allez un dernier coup !
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 788f7c2e85d4e554da85e705569fe327, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Cool, je crois qu\u2019on peut y aller maintenant."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []

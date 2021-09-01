@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AlexandreDialogues;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +18,21 @@ public class RockFallZoneScript : MonoBehaviour
     private float timerAnim;
     private float deltaTime = 2f;
 
+    // Dialogue Interaction
+    private InGameDialogueManager inGameDialogueManager;
+    GameObject dialogue;
+    private InGameDialogue inGameDialogueRock;
+
+
     private void Start()
     {
         qteEvent = qte.GetComponentInChildren<QTEEvent>();
         qteManager = qte.GetComponentInChildren<QTEManager>();
+
+        inGameDialogueManager = FindObjectOfType<InGameDialogueManager>();
+        dialogue = GameObject.FindGameObjectWithTag("DialogueRock");
+        inGameDialogueRock = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
+        dialogue.SetActive(false);
     }
 
     private void Update()
@@ -60,8 +72,15 @@ public class RockFallZoneScript : MonoBehaviour
             animPlayer.SetBool("Esquive", true);
             timerAnim = -2f;
             runAnim = true;
+
+            StartCoroutine("WaitEndAnimation");
+            
+
         }
+
     }
+
+
 
     public void OnQTEFailed()
     {
@@ -71,7 +90,20 @@ public class RockFallZoneScript : MonoBehaviour
             timerAnim = -2f;
             runAnim = true;
             StartCoroutine(ReLoad());
+
         }
+    }
+
+    private IEnumerator WaitEndAnimation()
+    {
+        float waitingTime = 1.5f;
+        
+        yield return new WaitForSeconds(waitingTime);
+        animPlayer.SetBool("Esquive", false);
+        animPlayer.SetBool("QTEEboulement", false);
+        yield return new WaitForSeconds(waitingTime);
+        // Affiche Dialogue Interaction
+        inGameDialogueManager.StartDialogue(inGameDialogueRock);
     }
 
     private IEnumerator ReLoad()

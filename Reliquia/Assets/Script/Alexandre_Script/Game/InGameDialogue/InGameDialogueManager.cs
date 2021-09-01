@@ -147,6 +147,7 @@ namespace AlexandreDialogues
 			}
 		}
 
-		#endregion
-	}
+        #endregion
+
+    }
 }

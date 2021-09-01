@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AlexandreDialogues;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_2019_4_OR_NEWER && ENABLE_INPUT_SYSTEM
@@ -126,6 +127,7 @@ public class QTEManager : MonoBehaviour
         if (eventData.onEnd != null)
         {
             eventData.onEnd.Invoke();
+            
         }
         if(eventData.onFail != null && isFail)
         {
@@ -134,6 +136,7 @@ public class QTEManager : MonoBehaviour
         if(eventData.onSuccess != null && isAllButtonsPressed)
         {
             eventData.onSuccess.Invoke();
+            
         }
         eventData = null;
     }
