@@ -1,5 +1,5 @@
 ﻿using AlexandreDialogues;
-using Boo.Lang;
+//using Boo.Lang;
 using clavier;
 using System;
 using System.Collections;
