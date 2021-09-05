@@ -14,7 +14,7 @@ namespace AlexandreDialogues
 		private SerializedProperty _replies;
 
 		private float _displayTimeMin = 0f;
-		private float _displayTimeMax = 5f;
+		private float _displayTimeMax = 10f;
 		private float _displayTimeDefault = 1f;
 
 		private GUIStyle _textareaStyle;
