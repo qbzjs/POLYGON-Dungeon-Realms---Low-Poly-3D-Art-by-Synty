@@ -109,7 +109,7 @@ namespace AlexandreDialogues
 		{
 			if (_isDialogueStarted)
 			{
-				if (Input.GetButtonDown("Fire1"))
+				if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))
 				{
 					UserControl();
 				}
