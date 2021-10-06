@@ -62,7 +62,7 @@ public class Praesidium : MonoBehaviour
             isPraesidium = false;
         }
     
-        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.T)) {
+        else if (Input.GetKey(/*raccourciClavier.toucheClavier["Pouvoir 1"]*/KeyCode.B)) {
 
             if(!isCreated) {
                 StartCoroutine(PraesidiumAnimation());
