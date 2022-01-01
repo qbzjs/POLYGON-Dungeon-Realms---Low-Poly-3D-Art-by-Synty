@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+Reliquia/[Ll]ibrary/
+Reliquia/[Tt]emp/
+Reliquia/[Oo]bj/
+Reliquia/[Bb]uild/
+Reliquia/[Bb]uilds/
+Reliquia/[Ll]ogs/
+Reliquia/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -69,3 +69,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Heavy folder for plugins such as Backery
+Reliquia/[Aa]ssets/Editor/x64/
