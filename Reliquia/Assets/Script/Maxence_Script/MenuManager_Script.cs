@@ -119,8 +119,15 @@ public class MenuManager_Script : MonoBehaviour
 
     public void retourMenu()
     {
-        if (pageMenuActive != 2) fondTransition.DOFade(1, 0.5f).OnComplete(() => afficherMenuPrincipal());
-        else afficherMenuPrincipal();
+		if(pageMenuActive == 2)
+		{
+			afficherMenuPrincipal();
+			return;
+		}
+
+		GameManager.instance.FermerPopup();
+
+		fondTransition.DOFade(1, 0.5f).OnComplete(() => afficherMenuPrincipal());
     }
 
     public void quitterJeu()
