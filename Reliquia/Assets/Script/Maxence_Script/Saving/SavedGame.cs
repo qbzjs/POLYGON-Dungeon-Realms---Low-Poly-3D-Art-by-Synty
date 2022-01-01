@@ -58,6 +58,6 @@ public class SavedGame : MonoBehaviour
         nomSceneActuelle = saveData.MySceneData.NameScene;
         chapitreEnCours.text = nomSceneActuelle;
         NomSauvegarde.text = nameSave;
-
+		pourcentageAvancement.text = saveData.MySceneData.Avancement + "%";
     }
 }

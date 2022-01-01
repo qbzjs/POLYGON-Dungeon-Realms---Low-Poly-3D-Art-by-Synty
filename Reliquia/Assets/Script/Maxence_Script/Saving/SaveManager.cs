@@ -116,7 +116,8 @@ public class SaveManager : MonoBehaviour
 
     private void SaveScene(SaveData data)
     {
-        data.MySceneData = new SceneData(SceneManager.GetActiveScene().buildIndex, SceneManager.GetActiveScene().name);
+		// TODO : Ajouter système de progression par scène
+        data.MySceneData = new SceneData(SceneManager.GetActiveScene().buildIndex, SceneManager.GetActiveScene().name, 0);
     }
 
     private void SaveName(SaveData data)
@@ -169,7 +170,7 @@ public class SaveManager : MonoBehaviour
 
     private void NewSavePlayerData(SaveData data)
     {
-        data.MySceneData = new SceneData(3, "maxence_SceneTestPersonnage");
+        data.MySceneData = new SceneData(3, "On doit finir le système de sauvegarde", 0);
         data.MyPlayerData = new PlayerData(100, 100, 100, 100, new Vector3(0,0,0));
     }
 
