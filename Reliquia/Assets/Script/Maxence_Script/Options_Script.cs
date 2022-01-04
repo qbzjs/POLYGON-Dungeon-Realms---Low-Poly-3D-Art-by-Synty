@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 using clavier;
 
 public class Options_Script : MonoBehaviour
@@ -38,8 +35,6 @@ public class Options_Script : MonoBehaviour
     [SerializeField] private Text ValeurSouris;
     [SerializeField] private Text ValeurResolution;
     [SerializeField] private Text ValeurQualiteEffets;
-
-    [SerializeField] private Slider SensibiliteSouris;
 
     private bool InversionSourisActive;
     private bool SousTitresActive;
@@ -96,9 +91,6 @@ public class Options_Script : MonoBehaviour
         indexResolution = PlayerPrefs.GetInt("EtatResolution", 0);
         ValeurResolution.text = TextesResolution[indexResolution];
 
-        //Set la sensibilité de la souris au lancement du jeu
-        SensibiliteSouris.value = PlayerPrefs.GetFloat("EtatSensibiliteSouris", 0.5f);
-
         AfficherReglages();
     }
 
@@ -136,11 +128,6 @@ public class Options_Script : MonoBehaviour
         }
 
         ImageBoutonOptions[2].DOColor(new Color32(247, 247, 247, 255), 0.2f);
-    }
-
-    public void ChangerSensibiliteSouris()
-    {
-        PlayerPrefs.SetFloat("EtatSensibiliteSouris", SensibiliteSouris.value);
     }
 
     public void ChangerVolumeMusique()
