@@ -73,7 +73,7 @@ namespace clavier
             menuPause.text = toucheClavier["MenuPause"].ToString();
             menuInventaire.text = toucheClavier["MenuInventaire"].ToString();
 
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < 16; i++)
             {
                 switch (texteAssignationTouche[i].text)
                 {

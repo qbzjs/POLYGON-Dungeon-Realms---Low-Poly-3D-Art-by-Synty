@@ -12,6 +12,7 @@ public class PopUp_Script : MonoBehaviour
     [SerializeField] private InputField changerNomSauvegarde;
     [SerializeField] private Text textPopUp;
 
+	RectTransform background;
     bool fHasSpace;
 
     // Start is called before the first frame update
@@ -19,7 +20,15 @@ public class PopUp_Script : MonoBehaviour
     {
         transform.localPosition = new Vector3(1520, 0, 0);
         transform.DOLocalMoveX(0f, 0.5f).SetEase(Ease.OutBack);
+
+		background = transform.GetComponentInChildren<RectTransform>();
     }
+
+	void Update ()
+	{
+		if(Input.GetMouseButtonDown(0) && !background.rect.Contains(Input.mousePosition))
+			fermerPopUp();
+	}
 
     public void quitterJeu()
     {
