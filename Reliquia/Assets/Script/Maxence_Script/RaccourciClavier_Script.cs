@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utils;
 
 namespace clavier
 {
-    public class RaccourciClavier_Script : MonoBehaviour
+	public class RaccourciClavier_Script : MonoBehaviour
     {
 
         public Dictionary<string, KeyCode> toucheClavier = new Dictionary<string, KeyCode>();
 
-        public Text avancer, gauche, reculer, droite, action, saut, pouvoirSpecial, pouvoir1, pouvoir2, pouvoir3, pouvoir4, courir, accroupir, attaque, garde, menuPause, menuInventaire;
+        public Text avancer, gauche, reculer, droite, action, saut, pouvoir1, pouvoir2, pouvoir3, pouvoir4, courir, accroupir, attaque, garde, menuPause, menuInventaire;
         [SerializeField] private Text[] texteAssignationTouche;
 
         int Alpha;
@@ -63,7 +60,6 @@ namespace clavier
             action.text = toucheClavier["Action"].ToString();
             saut.text = toucheClavier["Saut"].ToString();
 
-            pouvoirSpecial.text = toucheClavier["PouvoirSpecial"].ToString();
             pouvoir1.text = toucheClavier["Pouvoir1"].ToString();
             pouvoir2.text = toucheClavier["Pouvoir2"].ToString();
             pouvoir3.text = toucheClavier["Pouvoir3"].ToString();
@@ -77,7 +73,7 @@ namespace clavier
             menuPause.text = toucheClavier["MenuPause"].ToString();
             menuInventaire.text = toucheClavier["MenuInventaire"].ToString();
 
-            for (int i = 0; i < 17; i++)
+            for (int i = 0; i < 16; i++)
             {
                 switch (texteAssignationTouche[i].text)
                 {

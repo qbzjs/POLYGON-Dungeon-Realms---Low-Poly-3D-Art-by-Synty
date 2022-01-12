@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using Cinemachine;
 using UnityEngine;
 
 public class ThirdPersonMovements : MonoBehaviour
 {
-    
     public CharacterController controller;
     public float speed = 6f;
     public float speedAim = 3f;
@@ -12,11 +11,19 @@ public class ThirdPersonMovements : MonoBehaviour
     float turnSmoothVelocity;
     public Transform cam;
 
+	CinemachineFreeLook[] m_profilsCamera;
+	bool m_sourisInversée;
+
+	void Awake ()
+	{
+		m_profilsCamera = FindObjectsOfType<CinemachineFreeLook>();
+	}
+
     private void Update()
     {
-
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
 
@@ -34,6 +41,14 @@ public class ThirdPersonMovements : MonoBehaviour
             controller.Move(move * speedAim * Time.deltaTime);
         }
 
-
+		ConfigurerCamera();
     }
+
+	void ConfigurerCamera()
+	{
+		m_sourisInversée = Convert.ToBoolean(PlayerPrefs.GetInt("InversionSourisEtat"));
+
+		foreach (CinemachineFreeLook profil in m_profilsCamera)
+			profil.m_YAxis.m_InvertInput = !m_sourisInversée;
+	}
 }
