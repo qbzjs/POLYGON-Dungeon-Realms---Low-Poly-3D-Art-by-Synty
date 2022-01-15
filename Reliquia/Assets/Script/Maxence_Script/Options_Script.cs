@@ -21,12 +21,9 @@ public class Options_Script : MonoBehaviour
     /// Gameobjet menu réglages
     /// </summary>
     [SerializeField] private Text ValeurMusique;
-    [SerializeField] private Text ValeurDialogues;
 
     [SerializeField] private Slider VolumeMusiques;
-    [SerializeField] private Slider VolumeDialogues;
 
-    [SerializeField] private Text ValeurSousTitres;
     [SerializeField] private Text ValeurAffichage;
 
     /// <summary>
@@ -63,18 +60,15 @@ public class Options_Script : MonoBehaviour
         boutonRetour.onClick.AddListener(MenuManager_Script.instance.afficherMenuPrincipal);
 
         //Set l'état des sous-titres au lancement du jeu
-        SousTitresActive = Convert.ToBoolean(PlayerPrefs.GetInt("SousTitreEtat", 1)); ;
-        ValeurSousTitres.text = SousTitresActive ? "OUI" : "NON";
+        SousTitresActive = Convert.ToBoolean(PlayerPrefs.GetInt("SousTitreEtat", 1));
 
         //Set l'état d'inversion de la souris au lancement du jeu
         InversionSourisActive = Convert.ToBoolean(PlayerPrefs.GetInt("InversionSourisEtat", 0));
         ValeurSouris.text = !InversionSourisActive ? "NON" : "OUI";
         
-        //Set le volume des dialogues et de la musique au lancement du jeu
-        VolumeDialogues.value = PlayerPrefs.GetFloat("EtatVolumeDialogues", 1f);
+        //Set le volume de la musique au lancement du jeu
         VolumeMusiques.value = PlayerPrefs.GetFloat("EtatVolumeMusique", 1f);
 
-        ValeurDialogues.text = (VolumeDialogues.value * 100).ToString("N0");
         ValeurMusique.text = (VolumeMusiques.value * 100).ToString("N0");
 
         //Set l'affichage de l'écran au lancement du jeu
@@ -134,19 +128,6 @@ public class Options_Script : MonoBehaviour
     {
         ValeurMusique.text = (VolumeMusiques.value * 100).ToString("N0");
         PlayerPrefs.SetFloat("EtatVolumeMusique", VolumeMusiques.value);
-    }
-
-    public void ChangerVolumeDialogues()
-    {
-        ValeurDialogues.text = (VolumeDialogues.value * 100).ToString("N0");
-        PlayerPrefs.SetFloat("EtatVolumeDialogues", VolumeDialogues.value);
-    }
-
-    public void ChangerValeurSousTitre()
-    {
-        SousTitresActive = !SousTitresActive;
-        ValeurSousTitres.text = SousTitresActive ? "OUI" : "NON";
-        PlayerPrefs.SetInt("SousTitreEtat", Convert.ToInt32(SousTitresActive));
     }
 
     public void ChangerValeurAffichages()
