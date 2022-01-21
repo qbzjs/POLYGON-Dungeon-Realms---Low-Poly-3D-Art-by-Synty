@@ -3,110 +3,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using DG.Tweening;
 
 public class InteractionDoor : MonoBehaviour
 {
+    [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
+    private Interactable _interactable;
+    private Quaternion _angleOriginal;
+    private Quaternion _angleCible;
     [Header("Pour l'axe Y uniquement")]
     public rotationDirection direction;
+    [SerializeField]
+    private float _angleRotation = 90.0f;
+    [SerializeField]
+    private float _vitesseRotation = 1.0f;
+    private bool _estOuvert;
 
+    
 
-    private bool rotate;
-    private bool rotateDirection;
-
-    private Quaternion delta;
-    private Quaternion deltaInit;
-
-    private Interactable interactable;
+    
     private void OnEnable()
     {
-        William_Script.INTERACT_ACTIONS += OpenDoor;
+        William_Script.INTERACT_ACTIONS += OuvrirPorte;
     }
 
     private void OnDisable()
     {
-        William_Script.INTERACT_ACTIONS -= OpenDoor;
+        William_Script.INTERACT_ACTIONS -= OuvrirPorte;
     }
 
     private void Awake()
     {
-        interactable = GetComponent<Interactable>();
+        _interactable = GetComponent<Interactable>();
 
-        if (axisObject == null)
+        if (axisObject != null)
         {
-            return;
+            InitialiserVariables();
         }
-        deltaInit = axisObject.transform.rotation;
-        if (axis == Axis.X)
-        {
-            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f); //  + 178.094f corrige rotation en z
-        }
+
+    }
+
+    // Pour récupérer l'angle cible et orginal.
+    private void InitialiserVariables()
+    {
+        _angleOriginal = axisObject.transform.rotation;
+
         if (axis == Axis.Y && direction == rotationDirection.Forward)
         {
-
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, 90, 0);
+            _angleCible = axisObject.transform.rotation * Quaternion.Euler(0, _angleRotation, 0);
         }
         if (axis == Axis.Y && direction == rotationDirection.Backward)
         {
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, -90, 0);
+            _angleCible = axisObject.transform.rotation * Quaternion.Euler(0, -_angleRotation, 0);
         }
     }
 
-    private void OpenDoor()
+    // Action d'ouverture.
+    private void OuvrirPorte()
     {
-        if (interactable.InteractOutline.enabled && !interactable.itemActive) // ouvrir, jouer l'anim (E)
-        {
-            interactable.itemActive = true;
-            PlayAnim(true);
-            return;
-
-        }
-        if (interactable.InteractOutline.enabled && interactable.itemActive) // ouvrir, jouer l'anim (E)
-        {
-            interactable.itemActive = false;
-            PlayAnim(false);
-
-
-        }
-    }
-
-    private void PlayAnim(bool open)
-    {
-        //hideOutline();
         if (axisObject != null)
         {
-            rotate = true;
-            rotateDirection = open;
-            StartCoroutine(RotateAnim());
+            if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
+            {
+                _estOuvert = true;
+                AnimerRotation();
+                return;
+            }
+            if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
+            {
+                _estOuvert = false;
+                AnimerRotation();
+            }
         }
     }
 
-    private IEnumerator RotateAnim()
+    // Animation d'ouverture.
+    private void AnimerRotation()
     {
-        if (rotate && rotateDirection && axisObject.transform.rotation != delta)
+        if (_estOuvert && axisObject.transform.rotation != _angleCible)
         {
-            int i = 50;
-            do
-            {
-                i--;
-                axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            } while (i > 0);
-            
-            
-
+            transform.DORotate(_angleCible.eulerAngles, _vitesseRotation);
         }
-        if (rotate && !rotateDirection && axisObject.transform.rotation != deltaInit)
+        if (!_estOuvert && axisObject.transform.rotation != _angleOriginal)
         {
-            int i = 50;
-            do
-            {
-                i--;
-                axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, deltaInit, 5f * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            } while (i > 0);
-
+            transform.DORotate(_angleOriginal.eulerAngles, _vitesseRotation);
         }
     }
 

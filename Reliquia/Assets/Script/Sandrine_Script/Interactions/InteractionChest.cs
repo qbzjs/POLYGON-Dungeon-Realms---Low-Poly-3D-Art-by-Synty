@@ -1,124 +1,133 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
 public class InteractionChest : MonoBehaviour
 {
+    [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
+    private Interactable _interactable;
+    private List<Interactable> _interactables;
+    private Quaternion _angleOriginal;
+    private Quaternion _angleCible;
     [Header("Pour l'axe Y uniquement")]
     public rotationDirection direction;
+    [SerializeField]
+    private float _angleRotation = 90.0f;
+    [SerializeField]
+    private float _vitesseRotation = 0.5f;
+    private bool _estOuvert = false;
+    
 
-
-    private bool rotate;
-    private bool rotateDirection;
-
-    private Quaternion delta;
-    private Quaternion deltaInit;
-
-    private Interactable interactable;
-    private William_Script wilScript;
+    
 
     private void OnEnable()
     {
-        William_Script.INTERACT_ACTIONS += OpenDoor;
+        William_Script.INTERACT_ACTIONS += OpenChest;
     }
 
     private void OnDisable()
     {
-        William_Script.INTERACT_ACTIONS -= OpenDoor;
+        William_Script.INTERACT_ACTIONS -= OpenChest;
     }
 
     private void Awake()
     {
-        interactable = GetComponent<Interactable>();
-        wilScript = GameObject.FindGameObjectWithTag("Player").GetComponent<William_Script>();
+        _interactable = GetComponent<Interactable>();
+        _interactables = new List<Interactable>();
 
-        if (axisObject == null)
-        {
-            return;
-        }
-        deltaInit = axisObject.transform.rotation;
-        if (axis == Axis.X)
-        {
-            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f); //  + 178.094f corrige rotation en z
-        }
-        if (axis == Axis.Y && direction == rotationDirection.Forward)
-        {
-
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, 90, 0);
-        }
-        if (axis == Axis.Y && direction == rotationDirection.Backward)
-        {
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, -90, 0);
-        }
-    }
-
-    private void OpenDoor()
-    {
-        bool isOnlyOnce = false;
-
-        if (interactable.InteractOutline.enabled && !interactable.itemActive) // ouvrir, jouer l'anim (E)
-        {
-            interactable.itemActive = true;
-            PlayAnim(true);
-            isOnlyOnce = interactable.InOnlyOnce();
-
-        }
-        if (interactable.InteractOutline.enabled && interactable.itemActive) // ouvrir, jouer l'anim (E)
-        {
-            interactable.itemActive = false;
-            PlayAnim(false);
-
-
-        }
-
-        if (isOnlyOnce)
-        {
-            wilScript.DisableInteractableObject();
-        }
-    }
-
-    private void PlayAnim(bool open)
-    {
-        //hideOutline();
         if (axisObject != null)
         {
-            rotate = true;
-            rotateDirection = open;
-            StartCoroutine(RotateAnim());
+            _angleCible = axisObject.transform.rotation;
+            if (axis == Axis.X)
+            {
+                _angleOriginal = axisObject.transform.rotation * Quaternion.Euler(-_angleRotation, 0, 0);
+            }
+            if (axis == Axis.Y && direction == rotationDirection.Forward)
+            {
+                _angleOriginal = axisObject.transform.rotation * Quaternion.Euler(0, 90, 0);
+            }
+            if (axis == Axis.Y && direction == rotationDirection.Backward)
+            {
+                _angleOriginal = axisObject.transform.rotation * Quaternion.Euler(0, -90, 0);
+            }
         }
-    }
 
-    private IEnumerator RotateAnim()
+    }
+    // Action d'ouverture du coffre.
+    private void OpenChest()
     {
-        if (rotate && rotateDirection && axisObject.transform.rotation != delta)
+
+        if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
         {
-            int i = 50;
-            do
-            {
-                i--;
-                axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            } while (i > 0);
-
-
-
+            _estOuvert = true;
+            StartCoroutine(VerifierContenuCoffre());
+            AnimerRotation();
         }
-        if (rotate && !rotateDirection && axisObject.transform.rotation != deltaInit)
+        if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
         {
-            int i = 50;
-            do
-            {
-                i--;
-                axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, deltaInit, 5f * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            } while (i > 0);
+            _estOuvert = false;
+            //StartCoroutine(VerifierContenuCoffre());
+            AnimerRotation();
+        }
 
+
+    }
+
+    // Animation d'ouverture du coffre.
+    private void AnimerRotation()
+    {
+        if (_estOuvert && axisObject.transform.rotation != _angleOriginal)
+        {
+            axisObject.transform.DORotateQuaternion(_angleOriginal, _vitesseRotation);
+        }
+
+        if (!_estOuvert && axisObject.transform.rotation != _angleCible)
+        {
+            axisObject.transform.DORotateQuaternion(_angleCible, _vitesseRotation);
+        }
+    }
+    // Boucle qui continue tant que le coffre a des objets Interactable.
+    private IEnumerator VerifierContenuCoffre()
+    {
+        RecupererObjetsInteractables();
+
+        if (_interactables.Count > 0 && _estOuvert)
+        {
+            _interactable.ApplyOutline(false);
+            for (int i = 0; i < _interactables.Count; i++)
+            {
+                if (_interactables[i].gameObject.CompareTag("ItemInteractable"))
+                {
+                    _interactables[i].gameObject.GetComponent<Collider>().enabled = true;
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(VerifierContenuCoffre());
+        }
+        else
+        {
+            _interactable.ApplyOutline(true);
+        }
+    }
+    // Récupération des objets Interactable contenu dans le coffre.
+    private void RecupererObjetsInteractables()
+    {
+        _interactables.Clear();
+        foreach (Transform child in transform)
+        {
+            Interactable localInteractble = child.GetComponent<Interactable>();
+            if (localInteractble != null)
+            {
+                _interactables.Add(localInteractble);
+            }
         }
     }
 
-    
+
+
 
 }
