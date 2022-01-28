@@ -17,6 +17,7 @@ public class Interactable : MonoBehaviour
     {
         Door,
         Chest,
+        Destructible,
         Brasier,
         DoorLock, 
         Bandage,
@@ -85,6 +86,10 @@ public class Interactable : MonoBehaviour
             case eInteractableType.Chest:
                 InteractionChest iChest = GetComponent<InteractionChest>();
                 iChest.enabled = On;
+                break;
+            case eInteractableType.Destructible:
+                InteractionDestructible iDestructible = GetComponent<InteractionDestructible>();
+                iDestructible.enabled = On;
                 break;
             case eInteractableType.Brasier:
                 InteractionBrasier iBrasier = GetComponent<InteractionBrasier>();
