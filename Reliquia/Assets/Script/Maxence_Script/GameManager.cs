@@ -85,27 +85,28 @@ public class GameManager : MonoBehaviour
     {
         menuSlots = !menuSlots;
         menuOptionOuvert = !menuOptionOuvert;
-        if (menuSlots == true) ParentBoutonMenu.DOMoveX(-780f, 0.25f).OnComplete(() => ParentOptions.gameObject.GetComponent<CanvasGroup>().DOFade(1, 0.5f));
-        else ParentOptions.gameObject.GetComponent<CanvasGroup>().DOFade(0, 0.5f).OnComplete(() => ParentBoutonMenu.DOMoveX(0f, 0.25f));
+        if (menuSlots == true) ParentBoutonMenu.DOMoveX(-780f, 0.25f).SetUpdate(true).OnComplete(() => ParentOptions.gameObject.GetComponent<CanvasGroup>().DOFade(1, 0.5f).SetUpdate(true));
+        else ParentOptions.gameObject.GetComponent<CanvasGroup>().DOFade(0, 0.5f).SetUpdate(true).OnComplete(() => ParentBoutonMenu.DOMoveX(0f, 0.25f).SetUpdate(true));
     }
 
     public void menuSauvegarde()
     {
         menuSlots = !menuSlots;
-        ParentSlotSave.DOLocalMoveX((menuSlots == true ? 0f : 2000f), 0.25f);
-        ParentBoutonMenu.DOMoveX((menuSlots == true ? -780f : 0f), 0.25f);
+        ParentSlotSave.DOLocalMoveX((menuSlots == true ? 0f : 2000f), 0.25f).SetUpdate(true);
+        ParentBoutonMenu.DOMoveX((menuSlots == true ? -780f : 0f), 0.25f).SetUpdate(true);
     }
 
     public void menuCharger()
     {
         menuSlots = !menuSlots;
-        ParentSlotLoad.DOLocalMoveX((menuSlots == true ? 0f : 2000f), 0.25f);
-        ParentBoutonMenu.DOMoveX((menuSlots == true ? -780f : 0f), 0.25f);
+        ParentSlotLoad.DOLocalMoveX((menuSlots == true ? 0f : 2000f), 0.25f).SetUpdate(true);
+        ParentBoutonMenu.DOMoveX((menuSlots == true ? -780f : 0f), 0.25f).SetUpdate(true);
     }
 
     public void menuPause()
     {
         voirMenu = !voirMenu;
+        Time.timeScale = voirMenu ? 0f : 1f;
         //if(voirMenu == true) MenuPause.SetActive(voirMenu);
         HUD_Script.instance.fondPause.SetActive(voirMenu);
         DeplacerUIMenu();
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
         //ParentBoutonPause.localPosition = new Vector3(53, -170, 0);
         ParentSlotLoad.localPosition = new Vector3(2000f, 0, 0);
         ParentSlotSave.localPosition = new Vector3(2000f, 0, 0);
-        ParentBoutonMenu.DOMoveX((voirMenu == true ? 0f : -780f), 0.25f);
+        ParentBoutonMenu.DOMoveX((voirMenu == true ? 0f : -780f), 0.25f).SetUpdate(true);
 
         //MenuPause.SetActive(voirMenu);
     }
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void DeplacerUIMenu()
     {
-        ParentBarresVieMana.DOMoveX((voirMenu == true ? - 632f : 0f), 0.25f);
+        ParentBarresVieMana.DOMoveX((voirMenu == true ? - 632f : 0f), 0.25f).SetUpdate(true);
         ParentCompas.SetActive(!voirMenu);
     }
 
