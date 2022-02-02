@@ -12,6 +12,7 @@ public class PopUp_Script : MonoBehaviour
     [SerializeField] private InputField changerNomSauvegarde;
     [SerializeField] private Text textPopUp;
 
+	RectTransform arrierePlan;
     bool fHasSpace;
 
     // Start is called before the first frame update
@@ -19,9 +20,28 @@ public class PopUp_Script : MonoBehaviour
     {
         transform.localPosition = new Vector3(1520, 0, 0);
         transform.DOLocalMoveX(0f, 0.5f).SetUpdate(true).SetEase(Ease.OutBack);
+        
+		    arrierePlan = transform.GetChild(0).GetComponent<RectTransform>();
     }
 
-    public void quitterJeu()
+	void Update ()
+	{
+		if(Input.GetMouseButtonDown(0) && !SourisSurLePopup())
+			fermerPopUp();
+	}
+
+	bool SourisSurLePopup ()
+	{
+		float minX = arrierePlan.transform.position.x - arrierePlan.sizeDelta.x / 2;
+		float minY = arrierePlan.transform.position.y - arrierePlan.sizeDelta.y / 2;
+		float maxX = arrierePlan.transform.position.x + arrierePlan.sizeDelta.x / 2;
+		float maxY = arrierePlan.transform.position.y + arrierePlan.sizeDelta.y / 2;
+
+		Vector2 mousePos = (Vector2)Input.mousePosition - new Vector2(Screen.width / 2, Screen.height / 2);
+		return mousePos.x >= minX && mousePos.x <= maxX && mousePos.y >= minY && mousePos.y <= maxY;
+	}
+
+	public void quitterJeu()
     {
         Application.Quit();
     }

@@ -15,7 +15,7 @@ public class William_Script : MonoBehaviour
     Compas_Script compas_Script;
     PhysicaltemInventaire physicaltemInventaire;
     Lighting_Gabriel lightGab;
-
+    Pulsate_Vincent_Test pulsate;
     public PlayerInventory playerInventory;
     public Inventaire_Script inventaire;
 
@@ -31,6 +31,7 @@ public class William_Script : MonoBehaviour
     // Delegate Interaction
     public delegate void Actions();
     static public event Actions INTERACT_ACTIONS;
+    static public event Actions INTERACT_ACTIONS2;
     static public event Actions UNDO_ACTIONS;
 
     // Dialogue Interaction
@@ -59,7 +60,7 @@ public class William_Script : MonoBehaviour
         compas_Script = FindObjectOfType<Compas_Script>();
         gameManager = FindObjectOfType<GameManager>();
         lightGab = GetComponent<Lighting_Gabriel>();
-
+        pulsate = GetComponent<Pulsate_Vincent_Test>();
         inGameDialogueManager = FindObjectOfType<InGameDialogueManager>();
         dialogue = GameObject.FindGameObjectWithTag("DialogueBandage");
         inGameDialogueBandage = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
@@ -162,6 +163,15 @@ public class William_Script : MonoBehaviour
                 // Light Brasier 
                 INTERACT_ACTIONS?.Invoke();
             }
+
+        }
+        if (Input.GetKeyDown(/*raccourciClavier.toucheClavier["Pouvoir 2"]*/KeyCode.Alpha2) && !pulsate.isCooldown)
+        {
+
+
+            
+            INTERACT_ACTIONS2?.Invoke();
+
 
         }
 

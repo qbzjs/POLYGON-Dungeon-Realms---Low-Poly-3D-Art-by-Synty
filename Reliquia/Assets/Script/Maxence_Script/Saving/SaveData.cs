@@ -69,10 +69,12 @@ public class SceneData
 {
     public int IdScene { get; set; }
     public string NameScene { get; set; }
+	public int Avancement { get; set;}
 
-    public SceneData(int sceneId, string sceneName)
+    public SceneData(int sceneId, string sceneName, int avancement)
     {
         IdScene = sceneId;
         NameScene = sceneName;
+		Avancement = avancement;
     }
 }

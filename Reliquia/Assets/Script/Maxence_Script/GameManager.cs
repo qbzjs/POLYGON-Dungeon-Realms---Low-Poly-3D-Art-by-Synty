@@ -157,4 +157,13 @@ public class GameManager : MonoBehaviour
         }
         
     }
+
+	public void FermerPopup ()
+	{
+		if(popUpActif)
+		{
+			popUp.GetComponent<PopUp_Script>().fermerPopUp();
+			popUpActif = false;
+		}
+	}
 }
