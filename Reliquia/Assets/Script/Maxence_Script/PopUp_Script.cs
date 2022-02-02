@@ -19,9 +19,9 @@ public class PopUp_Script : MonoBehaviour
     void Awake()
     {
         transform.localPosition = new Vector3(1520, 0, 0);
-        transform.DOLocalMoveX(0f, 0.5f).SetEase(Ease.OutBack);
-
-		arrierePlan = transform.GetChild(0).GetComponent<RectTransform>();
+        transform.DOLocalMoveX(0f, 0.5f).SetUpdate(true).SetEase(Ease.OutBack);
+        
+		    arrierePlan = transform.GetChild(0).GetComponent<RectTransform>();
     }
 
 	void Update ()
@@ -48,7 +48,7 @@ public class PopUp_Script : MonoBehaviour
 
     public void fermerPopUp()
     {
-        transform.DOMoveX(-1630f, 0.5f).SetEase(Ease.InBack).OnComplete(() => Destroy(gameObject));
+        transform.DOMoveX(-1630f, 0.5f).SetUpdate(true).SetEase(Ease.InBack).OnComplete(() => Destroy(gameObject));
         if(SceneManager.GetActiveScene().name != "Menu_00") GameManager.instance.popUpActif = false;
     }
 
@@ -60,7 +60,7 @@ public class PopUp_Script : MonoBehaviour
 
     public void retourMenuPrincipal()
     {
-        transform.parent.transform.parent.GetComponent<HUD_Script>().imageTransition.DOFade(1, 1.5f).OnComplete(() => SceneManager.LoadScene("Menu_01"));
+        transform.parent.transform.parent.GetComponent<HUD_Script>().imageTransition.DOFade(1, 1.5f).SetUpdate(true).OnComplete(() => SceneManager.LoadScene("Menu_01"));
     }
 
     public void nouveauNomSauvegarde()

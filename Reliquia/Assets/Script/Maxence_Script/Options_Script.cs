@@ -91,37 +91,37 @@ public class Options_Script : MonoBehaviour
     public void AfficherReglages()
     {
         TitreMenuActif.text = "Réglages";
-        ContenuOptions.DOLocalMoveX(0, 0.35f).SetEase(Ease.OutQuint);
+        ContenuOptions.DOLocalMoveX(0, 0.35f).SetEase(Ease.OutQuint).SetUpdate(true);
         for(int i = 0; i < 3; i++)
         {
-            ImageBoutonOptions[i].DOColor(new Color32(115, 115, 155, 255), 0.2f);
+            ImageBoutonOptions[i].DOColor(new Color32(115, 115, 155, 255), 0.2f).SetUpdate(true);
         }
 
-        ImageBoutonOptions[0].DOColor(new Color32(247, 247, 247, 255), 0.2f);
+        ImageBoutonOptions[0].DOColor(new Color32(247, 247, 247, 255), 0.2f).SetUpdate(true);
     }
 
     public void AfficherParamGeneraux()
     {
         TitreMenuActif.text = "Paramètres Généraux";
-        ContenuOptions.DOLocalMoveX(-2000, 0.35f).SetEase(Ease.OutQuint);
+        ContenuOptions.DOLocalMoveX(-2000, 0.35f).SetEase(Ease.OutQuint).SetUpdate(true);
         for (int i = 0; i < 3; i++)
         {
-            ImageBoutonOptions[i].DOColor(new Color32(115, 115, 155, 255), 0.2f);
+            ImageBoutonOptions[i].DOColor(new Color32(115, 115, 155, 255), 0.2f).SetUpdate(true);
         }
 
-        ImageBoutonOptions[1].DOColor(new Color32(247, 247, 247, 255), 0.2f);
+        ImageBoutonOptions[1].DOColor(new Color32(247, 247, 247, 255), 0.2f).SetUpdate(true);
     }
 
     public void AfficherControles()
     {
         TitreMenuActif.text = "Contrôles";
-        ContenuOptions.DOLocalMoveX(-4000, 0.35f).SetEase(Ease.OutQuint);
+        ContenuOptions.DOLocalMoveX(-4000, 0.35f).SetEase(Ease.OutQuint).SetUpdate(true);
         for (int i = 0; i < 3; i++)
         {
-            ImageBoutonOptions[i].DOColor(new Color32(115, 115, 155, 255), 0.2f);
+            ImageBoutonOptions[i].DOColor(new Color32(115, 115, 155, 255), 0.2f).SetUpdate(true);
         }
 
-        ImageBoutonOptions[2].DOColor(new Color32(247, 247, 247, 255), 0.2f);
+        ImageBoutonOptions[2].DOColor(new Color32(247, 247, 247, 255), 0.2f).SetUpdate(true);
     }
 
     public void ChangerVolumeMusique()

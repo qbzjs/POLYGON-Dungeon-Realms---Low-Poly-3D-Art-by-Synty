@@ -65,7 +65,7 @@ public class InventaireManager : MonoBehaviour
 
                     InventaireSlot newSlot = temp.GetComponent<InventaireSlot>();
 
-                    if (newSlot) newSlot.Setup(playerInventory.sacochesInventory[i], this);
+                    if (newSlot) newSlot.Setup("Sacoche", playerInventory.sacochesInventory[i], this);
                 }
             }
         }
@@ -75,9 +75,11 @@ public class InventaireManager : MonoBehaviour
     {
         if (playerInventory)
         {
-            for (int i = 0; i < playerInventory.consommablesInventory.Count; i++)
+            Debug.Log("NB Consommable : " + playerInventory.consommablesInventory.Count);
+            foreach (ItemInventaire Consommable in playerInventory.consommablesInventory)
             {
-                if (playerInventory.consommablesInventory[i].numberHeld > 0 || playerInventory.consommablesInventory[i].itemNom == "Bottle")
+                Debug.Log("Consommable : " + Consommable.name);
+                if (Consommable.numberHeld > 0 || Consommable.itemNom == "Bottle")
                 {
                     GameObject temp = Instantiate(blankInventtaireSlot, consommablePanel.transform.localPosition, Quaternion.identity);
                     temp.transform.SetParent(consommablePanel.transform);
@@ -85,7 +87,7 @@ public class InventaireManager : MonoBehaviour
 
                     InventaireSlot newSlot = temp.GetComponent<InventaireSlot>();
 
-                    if (newSlot) newSlot.Setup(playerInventory.consommablesInventory[i], this);
+                    if (newSlot) newSlot.Setup("Consommable", Consommable, this);
                 }
             }
         }
@@ -103,8 +105,9 @@ public class InventaireManager : MonoBehaviour
                     temp.transform.localScale = new Vector3(scaleItemValeur, scaleItemValeur, scaleItemValeur);
 
                     InventaireSlot newSlot = temp.GetComponent<InventaireSlot>();
+                    
 
-                    if (newSlot) newSlot.Setup(playerInventory.objetsQuetesInventory[i], this);
+                    if (newSlot) newSlot.Setup("ObjetQuete", playerInventory.objetsQuetesInventory[i], this);
                 }
             }
         }
@@ -125,7 +128,7 @@ public class InventaireManager : MonoBehaviour
 
                     InventaireSlot newSlot = temp.GetComponent<InventaireSlot>();
 
-                    if (newSlot) newSlot.Setup(playerInventory.puzzlesInventory[i], this);
+                    if (newSlot) newSlot.Setup("Puzzle", playerInventory.puzzlesInventory[i], this);
                 }
             }
         }
@@ -137,11 +140,6 @@ public class InventaireManager : MonoBehaviour
     {
         currentItem = newItem;
         descriptionText.text = newDescription;
-    }
-
-    public void SetTextAndButton(string description, bool buttonActive)
-    {
-        descriptionText.text = description;
     }
     #endregion
 
