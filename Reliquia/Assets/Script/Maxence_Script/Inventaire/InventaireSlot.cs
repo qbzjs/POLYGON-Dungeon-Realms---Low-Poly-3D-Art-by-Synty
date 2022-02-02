@@ -19,7 +19,7 @@ public class InventaireSlot : MonoBehaviour
     public string TypeItemBase;
     public string TypeItem;
 
-    public void Setup(ItemInventaire newItem, InventaireManager newManager)
+    public void Setup(string typeBase, ItemInventaire newItem, InventaireManager newManager)
     {
         thisItem = newItem;
         thisManager = newManager;
@@ -27,28 +27,7 @@ public class InventaireSlot : MonoBehaviour
         {
             itemImage.sprite = thisItem.itemImage;
             itemNumberText.text = thisItem.numberHeld.ToString();
-            TypeItemBase = thisItem.typeItemBase;
-            TypeItem = thisItem.typeItem;
-        }
-    }
-
-    public void ClickedOn() //Quand on clique sur le slot d'inventaire
-    {
-        if (thisItem)
-        {
-            if (thisItem.usable && TypeItem == "Sacoche")
-            {
-                thisManager.SetupDescriptionAndButton(thisItem.itemDescription, thisItem.usable, thisItem);
-                thisItem.Use();
-                thisManager.ClearInventorySlots();
-                thisManager.MakeSacocheSlots();
-                thisManager.SetTextAndButton("", false);
-
-                if (thisItem.numberHeld <= 0)
-                {
-                    thisManager.playerInventory.sacochesInventory.Remove(thisItem);
-                }
-            }
+            TypeItemBase = TypeItem = typeBase;
         }
     }
 }

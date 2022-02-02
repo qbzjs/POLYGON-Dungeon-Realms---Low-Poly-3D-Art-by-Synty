@@ -15,6 +15,7 @@ public class ItemInventaire : ScriptableObject
     public int numberHeld;
     public bool usable;
     public bool unique;
+    public bool isDropped = true;
 
     public string typeItemBase;
     public string typeItem;
