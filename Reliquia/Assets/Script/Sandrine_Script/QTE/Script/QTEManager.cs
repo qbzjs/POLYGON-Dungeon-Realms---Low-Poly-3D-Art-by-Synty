@@ -13,6 +13,7 @@ using UnityEngine.Experimental.Input.Plugins.PS4;
 
 public class QTEManager : MonoBehaviour
 {
+    private SoundManager _SoundManager;
     [Header("Configuration")]
     public float slowMotionTimeScale = 0.1f;
 
@@ -29,6 +30,10 @@ public class QTEManager : MonoBehaviour
     private float rememberTimeScale;
     private List<QTEKey> keys = new List<QTEKey>();
 
+    void Awake()
+    {
+        _SoundManager = GameObject.FindObjectOfType<SoundManager>();
+    }
     protected void Update()
     {
         if (!isEventStarted || eventData == null || isPaused) return;
@@ -112,6 +117,7 @@ public class QTEManager : MonoBehaviour
 
     protected void doFinally()
     {
+        _SoundManager.Play("dropping_rock");
         if (keys.Count == 0)
         {
             isAllButtonsPressed = true;

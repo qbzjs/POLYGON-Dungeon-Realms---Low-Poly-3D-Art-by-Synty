@@ -8,13 +8,12 @@ using System;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-
     public Sound[] musique;
     public Sound[] sfx;
 
     void Start()
     {
-        Play("Main_Theme");
+        Play("william_theme");
     }
 
     void Awake()
@@ -51,7 +50,7 @@ public class SoundManager : MonoBehaviour
             y.source.Play();
         }
     }
-
+/*
     public void PlaySfx(string name)
     {
         Sound y = Array.Find(sfx, sound => sound.name == name);
@@ -61,5 +60,46 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    //FindObjectOfType<SoundManager>().Play("");
+*/
+
+    public void Stop(string name)
+    {
+        Sound x = Array.Find(musique, sound => sound.name == name);
+        Sound y = Array.Find(sfx, sound => sound.name == name);
+        if (x != null)
+        {
+            x.source.Stop();
+        }
+        else if(y != null)
+        {
+            y.source.Stop();
+        }
+    }
+    public void Pause(string name)
+    {
+        Sound x = Array.Find(musique, sound => sound.name == name);
+        Sound y = Array.Find(sfx, sound => sound.name == name);
+        if (x != null)
+        {
+            x.source.Pause();
+        }
+        else if(y != null)
+        {
+            y.source.Pause();
+        }
+    }
+    public void UnPause(string name)
+    {
+        Sound x = Array.Find(musique, sound => sound.name == name);
+        Sound y = Array.Find(sfx, sound => sound.name == name);
+        if (x != null)
+        {
+            x.source.UnPause();
+        }
+        else if(y != null)
+        {
+            y.source.UnPause();
+        }
+    }
+
 }

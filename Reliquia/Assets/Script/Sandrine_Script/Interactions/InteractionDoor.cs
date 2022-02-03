@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class InteractionDoor : MonoBehaviour
 {
+    private SoundManager _SoundManager;
     [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
@@ -36,6 +37,7 @@ public class InteractionDoor : MonoBehaviour
 
     private void Awake()
     {
+        _SoundManager = GameObject.FindObjectOfType<SoundManager>();
         _interactable = GetComponent<Interactable>();
 
         if (axisObject != null)
@@ -67,12 +69,14 @@ public class InteractionDoor : MonoBehaviour
         {
             if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
             {
+                _SoundManager.Play("wooden_door_open");
                 _estOuvert = true;
                 AnimerRotation();
                 return;
             }
             if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
             {
+                _SoundManager.Play("wooden_door_open");
                 _estOuvert = false;
                 AnimerRotation();
             }

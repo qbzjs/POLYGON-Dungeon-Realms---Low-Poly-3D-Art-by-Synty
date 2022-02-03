@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 
 public class InteractionChest : MonoBehaviour
 {
+    private SoundManager _SoundManager;
     [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
@@ -36,6 +37,7 @@ public class InteractionChest : MonoBehaviour
 
     private void Awake()
     {
+        _SoundManager = GameObject.FindObjectOfType<SoundManager>();
         _interactable = GetComponent<Interactable>();
         _interactables = new List<Interactable>();
 
@@ -63,12 +65,14 @@ public class InteractionChest : MonoBehaviour
 
         if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
         {
+            _SoundManager.Play("coffre_ouvert");
             _estOuvert = true;
             StartCoroutine(VerifierContenuCoffre());
             AnimerRotation();
         }
         if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
         {
+            _SoundManager.Play("coffre_fermer");
             _estOuvert = false;
             //StartCoroutine(VerifierContenuCoffre());
             AnimerRotation();

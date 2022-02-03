@@ -8,37 +8,29 @@ public class MouvementWilliam_Script : MonoBehaviour
 {
     RaccourciClavier_Script raccourciClavier;
     GameManager gameManager;
-
+    private SoundManager _SoundManager;
     private Animator _animator;
     private CharacterController _characterController;
-
     public float vitesse = 5.0f;
     public float vitesseRotation = 240.0f;
     private float gravite = 20.0f;
-
     private Vector3 _mouvementDir = Vector3.zero;
-
     private Transform relativeTransform;
-
     public bool enMouvement;
     public bool enCourse;
     public bool accroupi;
-
     public bool auSol;
-
-    // Start is called before the first frame update
     void Start()
     {
         raccourciClavier = FindObjectOfType<RaccourciClavier_Script>();
         gameManager = FindObjectOfType<GameManager>();
-
         auSol = true;
-
+        _SoundManager = GameObject.FindObjectOfType<SoundManager>();
+        _SoundManager.Play("pas_tunnel");
+        _SoundManager.Play("course_terre");
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (GameManager.instance.voirMenu == false)
@@ -62,6 +54,24 @@ public class MouvementWilliam_Script : MonoBehaviour
         {
             GameManager.instance.menuInventaire();
         }
+        
+        if(enMouvement)
+        {
+            _SoundManager.UnPause("pas_tunnel");
+        }
+        else
+        {
+            _SoundManager.Pause("pas_tunnel");
+        }
+        if(enCourse)
+        {
+            _SoundManager.UnPause("course_terre");
+        }
+        else
+        {
+            _SoundManager.Pause("course_terre");
+        }
+        
     }
 
     public void Avancer()
@@ -176,6 +186,7 @@ public class MouvementWilliam_Script : MonoBehaviour
         {
             enMouvement = false;
             accroupi = false;
+            _SoundManager.Play("punch");
 
             _animator.SetBool("Avancer", enMouvement);
             _animator.SetBool("Reculer", enMouvement);

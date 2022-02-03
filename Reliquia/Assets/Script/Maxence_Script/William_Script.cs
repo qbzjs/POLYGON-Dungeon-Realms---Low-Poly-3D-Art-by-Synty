@@ -195,7 +195,7 @@ public class William_Script : MonoBehaviour
         var rayDirection = angle * Vector3.forward;
 
         rayDirection.Normalize();
-        Debug.Log("RayDirection : " + rayDirection);
+        //Debug.Log("RayDirection : " + rayDirection);
         float rayDistance = 2f;
 
         if (Physics.Raycast(transform.position, rayDirection, out hit, rayDistance))
