@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Dialogue_Seq6_Sc1_P1
+  m_EditorClassIdentifier: 
+  m_test: 
+  m_casting:
+  - m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+    m_characterView: 1
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Cette carte est dat\xE9e du 18e si\xE8cle. C\u2019est vrai que les fronti\xE8res
+      de la France de cette \r\n\xE9poque \xE9taient assez similaires \xE0 la France
+      d\u2019aujourd\u2019hui."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: "P\xE9dagogue"
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "C\u2019est exact. Mais tu as oubli\xE9 de prendre en compte la pr\xE9sence
+      de l\u2019empire colonial fran\xE7ais sur le continent Am\xE9ricain."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+      m_characterView: 0
+    m_stageDirections: "Intrigu\xE9e"
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Regardez les tenues de ces squelettes, ils appartenaient \xE0 l\u2019arm\xE9e."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Yes, et vu leurs tenues, ils devaient \xEAtre des hauts grad\xE9s."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
