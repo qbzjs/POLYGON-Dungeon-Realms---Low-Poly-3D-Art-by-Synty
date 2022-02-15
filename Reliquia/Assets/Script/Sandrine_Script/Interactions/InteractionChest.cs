@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using AlexandreDialogues;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class InteractionChest : MonoBehaviour
     [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
+    public GameObject inGameDialogueObject = null;
+    private InGameDialogue inGameDialogue;
     private Interactable _interactable;
     private List<Interactable> _interactables;
     private Quaternion _angleOriginal;
@@ -40,7 +43,10 @@ public class InteractionChest : MonoBehaviour
         _SoundManager = GameObject.FindObjectOfType<SoundManager>();
         _interactable = GetComponent<Interactable>();
         _interactables = new List<Interactable>();
-
+        if (inGameDialogueObject != null)
+        {
+            inGameDialogue = inGameDialogueObject.GetComponent<DialogueAttached>().inGameDialogue;
+        }
         if (axisObject != null)
         {
             _angleCible = axisObject.transform.rotation;
@@ -62,7 +68,11 @@ public class InteractionChest : MonoBehaviour
     // Action d'ouverture du coffre.
     private void OpenChest()
     {
-
+        if (inGameDialogue != null)
+        {
+            InGameDialogueManager.Instance.StartDialogue(inGameDialogue);
+            inGameDialogue = null;
+        }
         if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
         {
             _SoundManager.Play("coffre_ouvert");
