@@ -9,18 +9,14 @@ using UnityEngine.UI;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-    public Sound[] musique;
+    //public Sound[] musique;
     public Sound[] sfx;
-
-    void Start()
-    {
-        Play("william_theme");
-    }
 
     void Awake()
     {
         instance = this;
 
+        /*
         foreach(Sound x in musique)
         {
             x.source = gameObject.AddComponent<AudioSource>();
@@ -28,6 +24,7 @@ public class SoundManager : MonoBehaviour
             x.source.volume = x.volume;
             x.source.loop = x.loop;
         }
+        */
 
         foreach (Sound y in sfx)
         {
@@ -40,13 +37,15 @@ public class SoundManager : MonoBehaviour
 
     public void Play(string name)
     {
-        Sound x = Array.Find(musique, sound => sound.name == name);
+        //Sound x = Array.Find(musique, sound => sound.name == name);
         Sound y = Array.Find(sfx, sound => sound.name == name);
+        /*
         if (x != null)
         {
             x.source.Play();
         }
-        else if(y != null)
+        */
+        if(y != null)
         {
             y.source.Play();
         }
@@ -65,39 +64,45 @@ public class SoundManager : MonoBehaviour
 
     public void Stop(string name)
     {
-        Sound x = Array.Find(musique, sound => sound.name == name);
+        //Sound x = Array.Find(musique, sound => sound.name == name);
         Sound y = Array.Find(sfx, sound => sound.name == name);
+        /*
         if (x != null)
         {
             x.source.Stop();
         }
-        else if(y != null)
+        */
+        if(y != null)
         {
             y.source.Stop();
         }
     }
     public void Pause(string name)
     {
-        Sound x = Array.Find(musique, sound => sound.name == name);
+        //Sound x = Array.Find(musique, sound => sound.name == name);
         Sound y = Array.Find(sfx, sound => sound.name == name);
+        /*
         if (x != null)
         {
             x.source.Pause();
         }
-        else if(y != null)
+        */
+        if(y != null)
         {
             y.source.Pause();
         }
     }
     public void UnPause(string name)
     {
-        Sound x = Array.Find(musique, sound => sound.name == name);
+        //Sound x = Array.Find(musique, sound => sound.name == name);
         Sound y = Array.Find(sfx, sound => sound.name == name);
+        /*
         if (x != null)
         {
             x.source.UnPause();
         }
-        else if(y != null)
+        */
+        if(y != null)
         {
             y.source.UnPause();
         }

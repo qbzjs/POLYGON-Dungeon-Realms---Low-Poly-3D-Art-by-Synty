@@ -353,6 +353,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3723548539194287258, guid: 85612382366484f4eaebe82a2e518aac,
         type: 3}
+    - target: {fileID: 5233079315130134057, guid: 294eae1c41823504a924c8ecebb4a76e,
+        type: 3}
+      propertyPath: musique.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6954937260148690552, guid: 294eae1c41823504a924c8ecebb4a76e,
         type: 3}
       propertyPath: PagesMenuPrincipal.Array.data[0]
@@ -968,7 +973,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4bdfc4a90f8104181ad9037f6cba8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musique: []
   sfx: []
 --- !u!1 &333929429
 GameObject:
