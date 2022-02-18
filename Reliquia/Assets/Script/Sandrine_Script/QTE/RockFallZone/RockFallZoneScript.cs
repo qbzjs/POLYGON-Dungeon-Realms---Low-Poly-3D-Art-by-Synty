@@ -1,4 +1,5 @@
 ﻿using AlexandreDialogues;
+using DiasGames.ThirdPersonSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,11 +87,11 @@ public class RockFallZoneScript : MonoBehaviour
     {
         if (player != null && animPlayer != null)
         {
-            animPlayer.SetBool("Dead", true);
-            timerAnim = -2f;
-            runAnim = true;
-            StartCoroutine(ReLoad());
-
+            //animPlayer.SetBool("Dead", true);
+            //timerAnim = -2f;
+            //runAnim = true;
+            //StartCoroutine(ReLoad());
+            player.GetComponent<Health>().Die();
         }
     }
 

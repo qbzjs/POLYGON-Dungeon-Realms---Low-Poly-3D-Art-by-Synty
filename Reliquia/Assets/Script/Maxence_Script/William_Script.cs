@@ -127,6 +127,15 @@ public class William_Script : MonoBehaviour
     {
         ManageItemInteractable();
 
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.instance.menuInventaireOuvert == false && GameManager.instance.menuOptionOuvert == false)
+        {
+            GameManager.instance.menuPause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I) && GameManager.instance.menuPauseOuvert == false)
+        {
+            GameManager.instance.menuInventaire();
+        }
         // Si Touche Action && (Message Interaction || Dialogue)
         if (Input.GetKeyDown(raccourciClavier.toucheClavier["Action"]) &&
             ((GameManager.instance.MessageInteraction != null && GameManager.instance.MessageInteraction.activeSelf == true)
