@@ -431,8 +431,17 @@ namespace AlexandreDialogues
 			}
 
 			// Afficher le nom
-			_currentUIObject.m_name.text = currentReply.m_role.m_character.m_name;
+			//_currentUIObject.m_name.text = currentReply.m_role.m_character.m_name;
+			int index = currentReply.m_role.m_character.m_name.IndexOf("_");
+			if (index >= 0)
+			{
+				_currentUIObject.m_name.text = currentReply.m_role.m_character.m_name.Substring(0, index);
 
+			}
+			else
+			{
+				_currentUIObject.m_name.text = currentReply.m_role.m_character.m_name;
+			}
 			// Didascalies : récupérer la couleur et paramétrer le texte avec les balises et des parenthèses.
 			// Ajouter cela au texte de réplique.
 			// Avec un caractère arbitraire de terminaison qui signifie la fin du texte.

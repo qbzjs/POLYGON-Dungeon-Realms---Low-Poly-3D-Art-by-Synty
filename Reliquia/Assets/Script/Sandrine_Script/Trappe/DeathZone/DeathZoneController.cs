@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DiasGames.ThirdPersonSystem;
 using UnityEngine;
 
 public class DeathZoneController : MonoBehaviour
 {
     private Animator playerAnim;
+    private Health _thirdPersonSystem;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && other.GetComponent<Animator>() != null)
         {
-            playerAnim = other.GetComponent<Animator>();
+            //playerAnim = other.GetComponent<Animator>();
 
-            PlayerDeath();
-
+            //PlayerDeath();
+            _thirdPersonSystem = other.GetComponent<Health>();
+            _thirdPersonSystem.Die();
 
 
         }

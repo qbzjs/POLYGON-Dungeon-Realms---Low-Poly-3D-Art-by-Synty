@@ -55,9 +55,9 @@ namespace DiasGames.ThirdPersonSystem
     }
 
     public class UnityInputManager : MonoBehaviour
-    {        
+    {
         // Camera reference
-        [Tooltip("Camera used in the scene")][SerializeField] private Transform m_Camera;
+        [Tooltip("Camera used in the scene")] [SerializeField] private Transform m_Camera;
 
         // --------------------- INPUT BUTTONS --------------------- //
 
@@ -123,8 +123,8 @@ namespace DiasGames.ThirdPersonSystem
         private Vector2 m_ScrollView;
         private Vector3 m_RelativeInput;
 
-        public Vector3 Move { get { return m_Move; }  set { m_Move = value; } }
-        public Vector2 ScrollView { get { return m_ScrollView; }  set { m_ScrollView = value; } }
+        public Vector3 Move { get { return m_Move; } set { m_Move = value; } }
+        public Vector2 ScrollView { get { return m_ScrollView; } set { m_ScrollView = value; } }
         public Vector3 RelativeInput { get { return m_RelativeInput; } }
 
         [HideInInspector] public bool manualUpdate = false;
@@ -214,7 +214,7 @@ namespace DiasGames.ThirdPersonSystem
                 m_HideCursor = true;
                 waitTimeToHide = 0.1f;
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Escape))
                 m_HideCursor = false;
 

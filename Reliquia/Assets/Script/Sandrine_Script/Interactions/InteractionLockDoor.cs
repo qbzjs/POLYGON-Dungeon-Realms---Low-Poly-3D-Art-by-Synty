@@ -78,15 +78,18 @@ public class InteractionLockDoor : MonoBehaviour
 
     private void OpenDoor()
     {
-        bool hasKey = wilScript.HasKey(item);
+        bool hasKey = InventaireManager.instance.playerInventory.sacochesInventory.Contains(item);
+        //bool hasKey = wilScript.HasKey(item);
         if (!hasKey)
         {
             isLockedDoor = true;
         }
         else
         {
-            bool useKey = wilScript.UseKey(item);
-            isLockedDoor = !useKey;
+            //bool useKey = wilScript.UseKey(item);
+            //isLockedDoor = !useKey;
+            InventaireManager.instance.playerInventory.sacochesInventory.Remove(item);
+            isLockedDoor = false;
         }
 
         if (isLockedDoor)
