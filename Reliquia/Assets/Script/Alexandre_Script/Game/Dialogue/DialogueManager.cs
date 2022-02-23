@@ -514,7 +514,8 @@ namespace AlexandreDialogues
 
 				// Incrémenter le pas pour la boucle
 				currentChar++;
-
+				// Jouer son pour dialogue.
+				SoundManager.instance.Play("bip_dialogue");
 				// Attendre le temps défini précédemment
 				yield return new WaitForSeconds(timeToWait);
 

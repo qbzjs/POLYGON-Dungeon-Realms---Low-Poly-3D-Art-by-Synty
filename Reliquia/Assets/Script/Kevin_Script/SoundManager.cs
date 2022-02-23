@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-
+using DiasGames.ThirdPersonSystem;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     //public Sound[] musique;
     public Sound[] sfx;
-
+    public SfxPas[] sfxPasArray;
+    private ThirdPersonSystem _thirdPersonSystem = null;
     void Awake()
     {
         instance = this;
@@ -32,6 +33,18 @@ public class SoundManager : MonoBehaviour
             y.source.clip = y.clip;
             y.source.volume = y.volume;
             y.source.loop = y.loop;
+        }
+        // Première boucle pour le type de sol.
+        for (int sfxPasLoop = 0; sfxPasLoop < sfxPasArray.Length; sfxPasLoop++)
+        {
+            // Deuxième boucle pour les différents sons.
+            for (int soundLoop = 0; soundLoop < sfxPasArray[sfxPasLoop].sounds.Length; soundLoop++)
+            {
+                sfxPasArray[sfxPasLoop].sounds[soundLoop].source = gameObject.AddComponent<AudioSource>();
+                sfxPasArray[sfxPasLoop].sounds[soundLoop].source.clip = sfxPasArray[sfxPasLoop].sounds[soundLoop].clip;
+                sfxPasArray[sfxPasLoop].sounds[soundLoop].source.volume = sfxPasArray[sfxPasLoop].sounds[soundLoop].volume;
+                sfxPasArray[sfxPasLoop].sounds[soundLoop].source.loop = sfxPasArray[sfxPasLoop].sounds[soundLoop].loop;
+            }
         }
     }
 
@@ -107,5 +120,36 @@ public class SoundManager : MonoBehaviour
             y.source.UnPause();
         }
     }
+    // Lancer le bruit de pas suivant le type de sol grâce au tag.
+    public void JouerSfxPas()
+    {
+        // Afin de récupérer le RaycastHit générer par ThirdPersonSystem.
+        if (_thirdPersonSystem == null)
+        {
+            _thirdPersonSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonSystem>();
+        }
+        // Jouer un son aléatoire suivant le type de sol.
+        if (_thirdPersonSystem.GroundHitInfo.collider.tag == "Sand")
+        {
+            SfxPas x = Array.Find(sfxPasArray, SoName => SoName.name == "pas_terre_sable");
+            int rand = UnityEngine.Random.Range(0, x.sounds.Length);
+            x.sounds[rand].source.Play();
+        }
+        if (_thirdPersonSystem.GroundHitInfo.collider.tag == "Stone")
+        {
+            SfxPas x = Array.Find(sfxPasArray, SoName => SoName.name == "pas_eglise");
+            int rand = UnityEngine.Random.Range(0, x.sounds.Length);
+            x.sounds[rand].source.Play();
+        }
+        //Debug.Log(_thirdPersonSystem.GroundHitInfo.collider.tag);
+    }
+
+}
+
+[CreateAssetMenu(fileName = "pas_", menuName = "ScriptableObjects/SfxPas")]
+public class SfxPas : ScriptableObject
+{
+
+    public Sound[] sounds;
 
 }
