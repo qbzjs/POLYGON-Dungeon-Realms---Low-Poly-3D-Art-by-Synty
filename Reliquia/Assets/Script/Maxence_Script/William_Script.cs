@@ -39,7 +39,9 @@ public class William_Script : MonoBehaviour
     GameObject dialogue;
     InGameDialogue inGameDialogueBandage;
     InGameDialogue inGameDialogueClef;
-
+    // Variable bruit de pas
+    private float _derniereFoisBruitPas;
+    private float _delaiBruitPas = 0.1f;
     private void Awake()
     {
         if (instance == null)
@@ -270,5 +272,13 @@ public class William_Script : MonoBehaviour
     {
         interactableObject.ApplyOutline(false);
         interactableObject = null;
+    }
+    public void LancerBruitPas()
+    {
+        if (Time.time - _derniereFoisBruitPas >= _delaiBruitPas)
+        {
+            _derniereFoisBruitPas = Time.time;
+            SoundManager.instance.JouerSfxPas();
+        }
     }
 }
