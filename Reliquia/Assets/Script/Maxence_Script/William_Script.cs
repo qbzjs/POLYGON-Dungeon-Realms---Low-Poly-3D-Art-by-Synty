@@ -42,6 +42,8 @@ public class William_Script : MonoBehaviour
     // Variable bruit de pas
     private float _derniereFoisBruitPas;
     private float _delaiBruitPas = 0.1f;
+
+    public GameObject ObjetPoussable;
     private void Awake()
     {
         if (instance == null)
@@ -108,6 +110,12 @@ public class William_Script : MonoBehaviour
             }
 
         }
+        if (other.CompareTag("Poussable"))
+        {
+            ObjetPoussable = other.gameObject;
+            ObjetPoussable.GetComponent<Outline>().enabled = true;
+            GameManager.instance.AfficherMessageInteraction("Maintenir " + "F" + " pour pousser.");
+        }
     }
 
 
@@ -122,19 +130,24 @@ public class William_Script : MonoBehaviour
             interactableObject = null;
             other.gameObject.GetComponent<Interactable>().ApplyOutline(false);
         }
-
+        if (other.CompareTag("Poussable"))
+        {
+            ObjetPoussable.GetComponent<Outline>().enabled = false;
+            ObjetPoussable = null;
+        }
+            
     }
 
     private void Update()
     {
         ManageItemInteractable();
 
-        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.instance.menuInventaireOuvert == false && GameManager.instance.menuOptionOuvert == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.instance.menuInventaireOuvert && !GameManager.instance.menuOptionOuvert && !DialogueManager.Instance.IsDialogueStarted)
         {
             GameManager.instance.menuPause();
         }
 
-        if (Input.GetKeyDown(KeyCode.I) && GameManager.instance.menuPauseOuvert == false)
+        if (Input.GetKeyDown(KeyCode.I) && !GameManager.instance.menuPauseOuvert && !DialogueManager.Instance.IsDialogueStarted)
         {
             GameManager.instance.menuInventaire();
         }

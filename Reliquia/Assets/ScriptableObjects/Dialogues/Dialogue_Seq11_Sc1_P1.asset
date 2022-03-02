@@ -1,0 +1,212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Dialogue_Seq11_Sc1_P1
+  m_EditorClassIdentifier: 
+  m_test: 
+  m_casting:
+  - m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: a49bddc29f2364142bde026864bb069c, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 2d9efc4e5dcd37042873235f40a82263, type: 2}
+    m_characterView: 1
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "\xC7a doit faire des si\xE8cles que personne n\u2019a mis les pieds
+      ici\u2026"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "O\xF9 est-ce qu\u2019on a bien pu atterrir ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Vous avez d\xE9j\xE0 entendu parl\xE9 de Nicolas Flamel ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Qui \xE7a ? Le libraire ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Il \xE9tait copiste, pas libraire !"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "En fait, vous avez tout les deux raisons. Il \xE9tait \xE0 la fois copiste
+      mais aussi libraire-copiste."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: a49bddc29f2364142bde026864bb069c, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Ha ! Tu vois, je n'\xE9tais pas dans le faux."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: " Mouais\u2026 "
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f4419aa1fd1b4ab419cac3db66de0436, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "D'ailleur c\u2019est lui qui \xE0 d\xE9crypt\xE9 les secrets de l\u2019immortalit\xE9."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Oui, selon la l\xE9gende, Flamel aurait r\xE9ussi \xE0 d\xE9crypter
+      le Codex d'Abraham le juif. Ce qui lui aurait permis de r\xE9aliser l'\xE9lixir
+      de jouvence, dont le principal ingr\xE9dient est la pierre de l\u2019immortalit\xE9."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Tu penses que mes parents sont pass\xE9s par ici ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Tout est possible. Il se peut \xE9galement que les inscriptions pr\xE9sentes
+      sur la tablette d\u2019Athanasia les aient men\xE9s sur une autre piste."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 2d9efc4e5dcd37042873235f40a82263, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "La tablette d\u2019Athanasia ? Tu veux dire que ce sont tes parents
+      qui l'ont d\xE9chiffr\xE9 ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Oui en effet. Mais d\u2019o\xF9 tu connais son existence, je croyais
+      que ses informations \xE9taient tenues secr\xE8te."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Les informations ne sont confidentielles que pour les non chercheurs
+      de la Fondation Winchwood. A savoir, tous les membres qui ne poss\xE8dent pas
+      de pierre atlante."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Ah ok, je vois\u2026"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []

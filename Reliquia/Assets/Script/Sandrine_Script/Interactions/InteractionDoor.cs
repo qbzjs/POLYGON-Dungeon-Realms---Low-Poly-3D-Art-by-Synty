@@ -27,12 +27,12 @@ public class InteractionDoor : MonoBehaviour
     
     private void OnEnable()
     {
-        William_Script.INTERACT_ACTIONS += OuvrirPorte;
+        William_Script.INTERACT_ACTIONS += InteractionPorte;
     }
 
     private void OnDisable()
     {
-        William_Script.INTERACT_ACTIONS -= OuvrirPorte;
+        William_Script.INTERACT_ACTIONS -= InteractionPorte;
     }
 
     private void Awake()
@@ -54,16 +54,16 @@ public class InteractionDoor : MonoBehaviour
 
         if (axis == Axis.Y && direction == rotationDirection.Forward)
         {
-            _angleCible = axisObject.transform.rotation * Quaternion.Euler(0, _angleRotation, 0);
+            _angleCible = Quaternion.AngleAxis(_angleRotation, Vector3.up) * axisObject.transform.rotation;
         }
         if (axis == Axis.Y && direction == rotationDirection.Backward)
         {
-            _angleCible = axisObject.transform.rotation * Quaternion.Euler(0, -_angleRotation, 0);
+            _angleCible = Quaternion.AngleAxis(-_angleRotation, Vector3.up) * axisObject.transform.rotation;
         }
     }
 
     // Action d'ouverture.
-    private void OuvrirPorte()
+    private void InteractionPorte()
     {
         if (axisObject != null)
         {
@@ -88,12 +88,20 @@ public class InteractionDoor : MonoBehaviour
     {
         if (_estOuvert && axisObject.transform.rotation != _angleCible)
         {
-            transform.DORotate(_angleCible.eulerAngles, _vitesseRotation);
+            OuvrirPorte();
         }
         if (!_estOuvert && axisObject.transform.rotation != _angleOriginal)
         {
-            transform.DORotate(_angleOriginal.eulerAngles, _vitesseRotation);
+            FermerPorte();
         }
+    }
+    public void OuvrirPorte()
+    {
+        transform.DORotateQuaternion(_angleCible, _vitesseRotation);
+    }
+    public void FermerPorte()
+    {
+        transform.DORotateQuaternion(_angleOriginal, _vitesseRotation);
     }
 
 }
