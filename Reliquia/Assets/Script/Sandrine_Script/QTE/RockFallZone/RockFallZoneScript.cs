@@ -36,30 +36,30 @@ public class RockFallZoneScript : MonoBehaviour
         dialogue.SetActive(false);
     }
 
-    private void Update()
-    {
-        timerAnim += Time.deltaTime;
+    //private void Update()
+    //{
+    //    timerAnim += Time.deltaTime;
 
-        if (runAnim && timerAnim > deltaTime && animPlayer != null)
-        {
-            runAnim = false;
-            animPlayer.SetBool("Esquive", false);
-            animPlayer.SetBool("QTEEboulement", false);
-        }
+    //    if (runAnim && timerAnim > deltaTime && animPlayer != null)
+    //    {
+    //        runAnim = false;
+    //        animPlayer.SetBool("Esquive", false);
+    //        animPlayer.SetBool("QTEEboulement", false);
+    //    }
 
-    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (animPlayer == null)
-            {
+            //if (animPlayer == null)
+            //{
                 player = other.gameObject;
-                animPlayer = player.GetComponent<Animator>();
-                animPlayer.SetBool("QTEEboulement", true);
+                //animPlayer = player.GetComponent<Animator>();
+                //animPlayer.SetBool("QTEEboulement", true);
                 qteManager.startEvent(qteEvent);
-            }
+            //}
             
             
             
@@ -68,16 +68,16 @@ public class RockFallZoneScript : MonoBehaviour
 
     public void OnQTESuccess()
     {
-        if (player != null && animPlayer != null)
-        {
-            animPlayer.SetBool("Esquive", true);
-            timerAnim = -2f;
-            runAnim = true;
-
-            StartCoroutine("WaitEndAnimation");
+        //if (player != null && animPlayer != null)
+        //{
+            //animPlayer.SetBool("Esquive", true);
+            //timerAnim = -2f;
+            //runAnim = true;
+            inGameDialogueManager.StartDialogue(inGameDialogueRock);
+            //StartCoroutine("WaitEndAnimation");
             
 
-        }
+        //}
 
     }
 
@@ -85,14 +85,14 @@ public class RockFallZoneScript : MonoBehaviour
 
     public void OnQTEFailed()
     {
-        if (player != null && animPlayer != null)
-        {
+        //if (player != null && animPlayer != null)
+        //{
             //animPlayer.SetBool("Dead", true);
             //timerAnim = -2f;
             //runAnim = true;
             //StartCoroutine(ReLoad());
             player.GetComponent<Health>().Die();
-        }
+        //}
     }
 
     private IEnumerator WaitEndAnimation()

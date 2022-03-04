@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4677315279493638721}
   - component: {fileID: 4677315279493638751}
-  - component: {fileID: 6954937260148690552}
-  - component: {fileID: 5233079315130134057}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -74,76 +72,3 @@ MonoBehaviour:
   popUpActif: 0
   chapitreEnCours: 0
   nomSauvegarde: 
---- !u!114 &6954937260148690552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4677315279493638722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 949553bcbd522754ea5a7d12e933dae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  popUpQuitter: {fileID: 3723548539194287258, guid: a3a0c08ec2447f844b9208ecb3768528,
-    type: 3}
---- !u!114 &5233079315130134057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4677315279493638722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd4bdfc4a90f8104181ad9037f6cba8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musique:
-  - name: william_theme
-    clip: {fileID: 8300000, guid: dfb8915c6a55afe45a0152c2b88b45e5, type: 3}
-    volume: 0.29
-    loop: 1
-    source: {fileID: 0}
-  sfx:
-  - name: pas_tunnel
-    clip: {fileID: 8300000, guid: f17b09964b0fd7845adec43317f8c9da, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: wooden_door_open
-    clip: {fileID: 8300000, guid: 28987531ce8049d4db4081d5f52743da, type: 3}
-    volume: 0.48
-    loop: 0
-    source: {fileID: 0}
-  - name: course_terre
-    clip: {fileID: 8300000, guid: b9b84ca9f44499b4bbd7506b1fd2a8e9, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: coffre_ouvert
-    clip: {fileID: 8300000, guid: ccb835d1047ab0a43881ac16676263c2, type: 3}
-    volume: 0.64
-    loop: 0
-    source: {fileID: 0}
-  - name: coffre_fermer
-    clip: {fileID: 8300000, guid: 2123eba3c0473aa4aa17ebd61457248d, type: 3}
-    volume: 0.64
-    loop: 0
-    source: {fileID: 0}
-  - name: trappe
-    clip: {fileID: 8300000, guid: 13fc8e430385f1e44977c6cfc3c74195, type: 3}
-    volume: 0.64
-    loop: 0
-    source: {fileID: 0}
-  - name: punch
-    clip: {fileID: 8300000, guid: 3937a3c593c0beb4ca7f41a8e928232d, type: 3}
-    volume: 0.27
-    loop: 0
-    source: {fileID: 0}
-  - name: dropping_rock
-    clip: {fileID: 8300000, guid: 0d14c6622d51bd148b4c507904e1900f, type: 3}
-    volume: 0.36
-    loop: 0
-    source: {fileID: 0}

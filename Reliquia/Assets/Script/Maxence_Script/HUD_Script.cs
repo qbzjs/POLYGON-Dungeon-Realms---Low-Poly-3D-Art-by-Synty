@@ -112,7 +112,7 @@ public class HUD_Script : MonoBehaviour
 
         StartCoroutine(SaveManager.instance.affichageSaveLoad());
 
-        setInfoWilliam();
+        //setInfoWilliam();
 
         //SetPixelMapMask();
     }

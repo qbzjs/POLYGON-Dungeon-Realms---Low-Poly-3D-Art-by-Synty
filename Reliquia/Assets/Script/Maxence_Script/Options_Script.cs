@@ -128,6 +128,7 @@ public class Options_Script : MonoBehaviour
     {
         ValeurMusique.text = (VolumeMusiques.value * 100).ToString("N0");
         PlayerPrefs.SetFloat("EtatVolumeMusique", VolumeMusiques.value);
+        AudioListener.volume = VolumeMusiques.value;
     }
 
     public void ChangerValeurAffichages()

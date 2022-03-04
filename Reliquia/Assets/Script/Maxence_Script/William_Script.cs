@@ -69,7 +69,7 @@ public class William_Script : MonoBehaviour
         dialogue = GameObject.FindGameObjectWithTag("DialogueBandage");
         inGameDialogueBandage = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
         dialogue.SetActive(false);
-        
+
         dialogue = GameObject.FindGameObjectWithTag("DialogueClef");
         inGameDialogueClef = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
         dialogue.SetActive(false);

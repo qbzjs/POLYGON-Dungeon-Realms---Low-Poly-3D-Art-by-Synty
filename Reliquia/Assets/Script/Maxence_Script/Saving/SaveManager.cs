@@ -267,9 +267,10 @@ public class SaveManager : MonoBehaviour
                 
                 idScene = data.MySceneData.IdScene;
 
-                if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data));
+                //if (data.MySceneData.IdScene != SceneManager.GetActiveScene().buildIndex) fondTransition.DOFade(1, 1.5f).OnComplete(() => LoadScene(data));
+                LoadScene(data);
 
-                GameManager.instance.menuPause();
+                //GameManager.instance.menuPause();
             }
         }
         catch (Exception)
@@ -296,8 +297,11 @@ public class SaveManager : MonoBehaviour
         savedGame.idSceneActuelle = data.MySceneData.IdScene;
         savedGame.nomSceneActuelle = data.MySceneData.NameScene;
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
-        asyncLoad.completed += delegate { LoadFondTransition();  };
+        // A modifier quand le système de sauvegarde sera mis en place
+        LevelLoader.instance.LoadScene(2);
+
+        //AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(2);
+        //asyncLoad.completed += delegate { LoadFondTransition();  };
 
     }
 

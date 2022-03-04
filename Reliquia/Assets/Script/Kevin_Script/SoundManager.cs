@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
     private ThirdPersonSystem _thirdPersonSystem = null;
     void Awake()
     {
-        instance = this;
+        
 
         /*
         foreach(Sound x in musique)
@@ -45,6 +45,15 @@ public class SoundManager : MonoBehaviour
                 sfxPasArray[sfxPasLoop].sounds[soundLoop].source.volume = sfxPasArray[sfxPasLoop].sounds[soundLoop].volume;
                 sfxPasArray[sfxPasLoop].sounds[soundLoop].source.loop = sfxPasArray[sfxPasLoop].sounds[soundLoop].loop;
             }
+        }
+        if (instance == null | instance != this)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -146,10 +155,4 @@ public class SoundManager : MonoBehaviour
 
 }
 
-[CreateAssetMenu(fileName = "pas_", menuName = "ScriptableObjects/SfxPas")]
-public class SfxPas : ScriptableObject
-{
 
-    public Sound[] sounds;
-
-}
