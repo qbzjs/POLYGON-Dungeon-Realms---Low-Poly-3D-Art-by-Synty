@@ -4766,7 +4766,6 @@ GameObject:
   - component: {fileID: 5112715964259885402}
   - component: {fileID: 2344232076330340699}
   - component: {fileID: 5912495672283790166}
-  - component: {fileID: 1949807509416516691}
   - component: {fileID: 3107569082304130089}
   m_Layer: 0
   m_Name: Katarina_Fire
@@ -4850,20 +4849,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1949807509416516691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8247921388446649781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb29a1746439914daa25613fd8f2542, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  lifetime: 3
 --- !u!114 &3107569082304130089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4877,4 +4862,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  flamesPrefab: {fileID: 1284412465784686, guid: b99ce17d2a62f164698110549e49b762,
+    type: 3}
+  targetLastPos: {x: 0, y: 0, z: 0}
   lifetime: 2
+  speed: 15
