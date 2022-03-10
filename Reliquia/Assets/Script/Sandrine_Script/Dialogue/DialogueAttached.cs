@@ -16,7 +16,8 @@ public class DialogueAttached : MonoBehaviour
 
     private bool alreadyRed;
     public bool showOnSecondThrow;
-
+    public bool gainRessources;
+    public float montantRestaurer = 5.0f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && showOnSecondThrow)
@@ -37,9 +38,15 @@ public class DialogueAttached : MonoBehaviour
 
                 DialogueManager.Instance.StartDialogueFromFile(dialogue, virtualCamera, true, true);
             }
+            // Sinon lancer un InGameDialogue
             else
             {
                 InGameDialogueManager.Instance.StartDialogue(inGameDialogue);
+            }
+            if (gainRessources)
+            {
+                GlobalEvents.ExecuteEvent("RestoreHealth", other.gameObject, montantRestaurer);
+                GlobalEvents.ExecuteEvent("RestoreMana", other.gameObject, montantRestaurer);
             }
             alreadyRed = true;
         }
@@ -53,10 +60,13 @@ public class DialogueAttached : MonoBehaviour
             showOnSecondThrow = false;
         }
     }
+    /// <summary>
+    /// Couroutine pour forcer le joueur à être immobile.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CheckDialogueFin()
     {
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("Couroutine Runnig");
         if (!DialogueManager.Instance.IsDialogueStarted && alreadyRed)
         {
             if (thirdPersonSystem != null)
@@ -70,6 +80,9 @@ public class DialogueAttached : MonoBehaviour
             StartCoroutine(CheckDialogueFin());
         }
     }
+    /// <summary>
+    /// Forcer l'animation courante à être en position "Idle".
+    /// </summary>
     private void ForceIdleAnimation()
     {
         foreach (AnimatorControllerParameter parameter in thirdPersonSystem.m_Animator.parameters)
@@ -77,6 +90,10 @@ public class DialogueAttached : MonoBehaviour
             thirdPersonSystem.m_Animator.SetFloat(parameter.name, 0);
         }
     }
+    /// <summary>
+    /// Pour activer ou désactiver toutes les abilité ainsi que "ThirdPersonSystem".
+    /// </summary>
+    /// <param name="etat">True = peut bouger, false = immobile</param>
     private void JoueurPeutBouger(bool etat)
     {
 

@@ -9,21 +9,33 @@ public class HabiltePousser : ThirdPersonAbility
     public GameObject[] gameObjectsInGameDialogues;
     private float _derniereFoisDialogue;
     private float _delaiDialogue = 10.0f;
-
+    
+    //Initialisation de l'habilété.
     public override void Initialize(ThirdPersonSystem mainSystem, AnimatorManager animatorManager, UnityInputManager inputManager)
     {
         base.Initialize(mainSystem, animatorManager, inputManager);
     }
+    /// <summary>
+    /// Condition pour lancer l'habilité.
+    /// </summary>
+    /// <returns></returns>
     public override bool TryEnterAbility()
     {
         return (m_System.IsGrounded && William_Script.instance.ObjetPoussable != null);
     }
+    /// <summary>
+    /// Condition pour sortir de l'habilité.
+    /// </summary>
+    /// <returns></returns>
     public override bool TryExitAbility()
     {
         bool inputToLeave = (m_UseInputStateToEnter == InputEnterType.ButtonPressing) ?
                 !m_InputToEnter.IsPressed : m_InputStateSet;
         return inputToLeave | !m_System.IsGrounded | William_Script.instance.ObjetPoussable == null;
     }
+    /// <summary>
+    /// "FixedUpdate" de l'habilité.
+    /// </summary>
     public override void FixedUpdateAbility()
     {
         m_AnimatorManager.SetForwardParameter(Input.GetAxis("Vertical"));
@@ -44,14 +56,16 @@ public class HabiltePousser : ThirdPersonAbility
     {
         base.OnExitAbility();
     }
-    // Lancer un dialogue à partir d'un GameObject.
+    /// <summary>
+    /// Lancer un dialogue à partir d'un GameObject.
+    /// </summary>
     private void LancerDialogue()
     {
         if (gameObjectsInGameDialogues != null && Time.time - _derniereFoisDialogue >= _delaiDialogue && !InGameDialogueManager.Instance.IsDialogueStarted)
         {
-            for (int nbDialogueErreur = 0; nbDialogueErreur < gameObjectsInGameDialogues.Length; nbDialogueErreur++)
+            for (int nbDialogue = 0; nbDialogue < gameObjectsInGameDialogues.Length; nbDialogue++)
             {
-                if (gameObjectsInGameDialogues[nbDialogueErreur].TryGetComponent<DialogueAttached>(out DialogueAttached dialogueAttached))
+                if (gameObjectsInGameDialogues[nbDialogue].TryGetComponent<DialogueAttached>(out DialogueAttached dialogueAttached))
                 {
                     if (dialogueAttached.inGameDialogue != null)
                     {

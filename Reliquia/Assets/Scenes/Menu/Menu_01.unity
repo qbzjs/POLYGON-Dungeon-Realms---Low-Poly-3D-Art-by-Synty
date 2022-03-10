@@ -819,7 +819,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: -1
+  Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -3885,7 +3885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a42faa2f46b0df54391bac96a68c9ce8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6bd2d79d6a4b0f44fa29558d7e9e6e67, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4710,7 +4710,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2074562054}
-        m_MethodName: ecranSauvegarde
+        m_MethodName: AfficherPanelTresor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6496,6 +6496,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5746831912301274215, guid: 677dafaca66dd0d4faef694e46c71ce9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5746831912557864702, guid: 677dafaca66dd0d4faef694e46c71ce9,
         type: 3}
       propertyPath: m_LocalPosition.x

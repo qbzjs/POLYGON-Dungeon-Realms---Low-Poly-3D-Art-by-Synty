@@ -44,20 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfx:
-  - name: pas_tunnel
-    clip: {fileID: 8300000, guid: f17b09964b0fd7845adec43317f8c9da, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
   - name: wooden_door_open
     clip: {fileID: 8300000, guid: 28987531ce8049d4db4081d5f52743da, type: 3}
     volume: 0.48
     loop: 0
-    source: {fileID: 0}
-  - name: course_terre
-    clip: {fileID: 8300000, guid: b9b84ca9f44499b4bbd7506b1fd2a8e9, type: 3}
-    volume: 1
-    loop: 1
     source: {fileID: 0}
   - name: coffre_ouvert
     clip: {fileID: 8300000, guid: ccb835d1047ab0a43881ac16676263c2, type: 3}
@@ -86,6 +76,26 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: bip_dialogue
     clip: {fileID: 8300000, guid: e658a29a716f93748b8684c5b334bccd, type: 3}
+    volume: 0.36
+    loop: 0
+    source: {fileID: 0}
+  - name: door_metal_heavy
+    clip: {fileID: 8300000, guid: 693b8f1101e240c4c9544d55d26800fe, type: 3}
+    volume: 0.36
+    loop: 0
+    source: {fileID: 0}
+  - name: door_metal_bar
+    clip: {fileID: 8300000, guid: aee934a60e7496c49a6e17ddc3f1062d, type: 3}
+    volume: 0.36
+    loop: 0
+    source: {fileID: 0}
+  - name: explosion_barrel
+    clip: {fileID: 8300000, guid: f92b58a5e73b1ab4bb3c15b81e5329fd, type: 3}
+    volume: 0.36
+    loop: 0
+    source: {fileID: 0}
+  - name: explosion_stone
+    clip: {fileID: 8300000, guid: 977b4a9f8f0bd6644b5b0eaa0c0c92d3, type: 3}
     volume: 0.36
     loop: 0
     source: {fileID: 0}
