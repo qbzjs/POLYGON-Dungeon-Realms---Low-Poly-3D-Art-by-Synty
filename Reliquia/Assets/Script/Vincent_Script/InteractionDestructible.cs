@@ -77,6 +77,7 @@ public class InteractionDestructible : MonoBehaviour
     private IEnumerator DetruireObjet(int index)
     {
         _enTransition = true;
+        LancerSon();
         InstancierParticules();
         StartCoroutine(CacherObjetAcfif(index));
         yield return new WaitForSeconds(_dureeTransition);
@@ -89,18 +90,10 @@ public class InteractionDestructible : MonoBehaviour
         GameObject joueur = GameObject.FindGameObjectWithTag("Player");
         foreach (ParticleSystem particle in _particles)
         {
-            //Controler si les objets dans l'array sont des prefabs ou non.
-            //if (PrefabUtility.IsPartOfPrefabAsset(particle))
-            //{
                 // Instancier les particules un peu devant et en haut du joueur.
                 var particleInst = Instantiate(particle, joueur.transform.position + joueur.transform.forward + joueur.transform.up, joueur.transform.rotation);
                 Destroy(particleInst, _dureeTransition);
                 particleInst.Play();
-            //}
-            //else
-            //{
-            //    particle.Play();
-            //}
         }
     }
     //Destruction de l'objet précédent ou cacher le 1er.
@@ -125,38 +118,23 @@ public class InteractionDestructible : MonoBehaviour
         if (_indexEtat > _gameObjects.Length - 1)
         {
             // Dernier objet instancier et retirer l'interaction.
-            // Controler si l'objet dans l'array est un prefab ou non.
-            //if (PrefabUtility.IsPartOfPrefabAsset(_gameObjects[_gameObjects.Length - 1]))
-            //{
-            //    _objetActif = Instantiate(_gameObjects[_gameObjects.Length - 1], transform);
-            //}
-            //else
-            //{
                 _objetActif = _gameObjects[_gameObjects.Length - 1];
                 _objetActif.SetActive(true);
-            //}
+
             foreach (Collider collider in gameObject.GetComponents<Collider>())
             {
                 collider.enabled = false;
             }
-            _gameManager.FermerMessageInteraction();
+            GameManager.instance.FermerMessageInteraction();
             _estDetruit = true;
         }
         else
         {
-            // Controler si les objets dans l'array sont des prefabs ou non.
-            //if (PrefabUtility.IsPartOfPrefabAsset(_gameObjects[_indexEtat - 1]))
-            //{
-            //    _objetActif = Instantiate(_gameObjects[_indexEtat - 1], transform);
-            //}
-            //else
-            //{
                 _objetActif = _gameObjects[_indexEtat - 1];
                 _objetActif.SetActive(true);
-            //}
         }
     }
-    // Afficher l'outline tant que l'objet n'est pas completement detruit.
+    // Afficher l'outline tant que l'objet n'est pas completement été detruit.
     private void AfficherOutline()
     {
         if (!_estDetruit)
@@ -165,5 +143,9 @@ public class InteractionDestructible : MonoBehaviour
             _interactableScript.goContour = _objetActif;
             _interactableScript.ApplyOutline(true);
         }
+    }
+    private void LancerSon()
+    {
+        SoundManager.instance.Play("explosion_barrel");
     }
 }

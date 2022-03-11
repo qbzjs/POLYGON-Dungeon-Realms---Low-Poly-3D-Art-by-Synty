@@ -7,6 +7,14 @@ using DG.Tweening;
 
 public class InteractionDoor : MonoBehaviour
 {
+    public enum TypePorte
+    {
+        Bois,
+        Metal,
+        Bar
+    }
+
+    public TypePorte typePorte;
     private SoundManager _SoundManager;
     [Header("Objet à Animer")]
     public GameObject axisObject;
@@ -14,17 +22,18 @@ public class InteractionDoor : MonoBehaviour
     private Interactable _interactable;
     private Quaternion _angleOriginal;
     private Quaternion _angleCible;
-    [Header("Pour l'axe Y uniquement")]
+    
     public rotationDirection direction;
     [SerializeField]
     private float _angleRotation = 90.0f;
     [SerializeField]
     private float _vitesseRotation = 1.0f;
     private bool _estOuvert;
+    [Header("AudioSource")]
+    public AudioSource audioSource;
 
-    
 
-    
+
     private void OnEnable()
     {
         William_Script.INTERACT_ACTIONS += InteractionPorte;
@@ -37,7 +46,6 @@ public class InteractionDoor : MonoBehaviour
 
     private void Awake()
     {
-        _SoundManager = GameObject.FindObjectOfType<SoundManager>();
         _interactable = GetComponent<Interactable>();
 
         if (axisObject != null)
@@ -69,14 +77,12 @@ public class InteractionDoor : MonoBehaviour
         {
             if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
             {
-                _SoundManager.Play("wooden_door_open");
                 _estOuvert = true;
                 AnimerRotation();
                 return;
             }
             if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
             {
-                _SoundManager.Play("wooden_door_open");
                 _estOuvert = false;
                 AnimerRotation();
             }
@@ -97,11 +103,39 @@ public class InteractionDoor : MonoBehaviour
     }
     public void OuvrirPorte()
     {
+        LancerSon();
         transform.DORotateQuaternion(_angleCible, _vitesseRotation);
     }
     public void FermerPorte()
     {
+        LancerSon();
         transform.DORotateQuaternion(_angleOriginal, _vitesseRotation);
     }
+    private void LancerSon()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+        else
+        {
+            switch (typePorte)
+            {
+                case TypePorte.Bois:
+                    SoundManager.instance.Play("wooden_door_open");
+                    break;
+                case TypePorte.Metal:
+                    SoundManager.instance.Play("door_metal_heavy");
+                    break;
+                case TypePorte.Bar:
+                    SoundManager.instance.Play("door_metal_bar");
+                    break;
+                default:
+                    SoundManager.instance.Play("wooden_door_open");
+                    break;
+            }
+        }
 
+
+    }
 }
