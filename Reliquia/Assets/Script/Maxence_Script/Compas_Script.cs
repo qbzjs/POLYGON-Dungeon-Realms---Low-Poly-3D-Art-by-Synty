@@ -8,7 +8,8 @@ public class Compas_Script : MonoBehaviour
     [SerializeField] List<MarqeurQuete_Script> marqueurQuete = new List<MarqeurQuete_Script>();
 
     public RawImage compasImage;
-    public Transform player;
+    public Sprite marqueurImage;
+    private Transform playerCamera;
 
     public float maxDistance = 50f;
 
@@ -30,18 +31,19 @@ public class Compas_Script : MonoBehaviour
 
     private void Start()
     {
+        playerCamera = GameObject.FindWithTag("MainCamera").transform;
         CompasUnite = compasImage.rectTransform.rect.width / 360f;
     }
 
     void Update()
     {
-        compasImage.uvRect = new Rect(player.localEulerAngles.y / 360f, 0f, 1f, 1f);
+        compasImage.uvRect = new Rect(playerCamera.localEulerAngles.y / 360f, 0f, 1f, 1f);
 
         foreach(MarqeurQuete_Script marqueur in marqueurQuete)
         {
             marqueur.image.rectTransform.anchoredPosition = GetPosOnCompas(marqueur);
             
-            float dist = Vector2.Distance(new Vector2(player.transform.position.x, player.transform.position.z), marqueur.position);
+            float dist = Vector2.Distance(new Vector2(playerCamera.transform.position.x, playerCamera.transform.position.z), marqueur.position);
             float scale = 0f;
 
             if (dist < maxDistance) scale = 1f - (dist / maxDistance);
@@ -56,7 +58,7 @@ public class Compas_Script : MonoBehaviour
         marqueur.iconeCompas = newMarqueur;
 
         marqueur.image = newMarqueur.GetComponent<Image>();
-        marqueur.image.sprite = marqueur.icone;
+        marqueur.image.sprite = marqueurImage;
 
         marqueurQuete.Add(marqueur);
     }
@@ -69,8 +71,8 @@ public class Compas_Script : MonoBehaviour
 
     Vector2 GetPosOnCompas (MarqeurQuete_Script marqueur)
     {
-        Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.z);
-        Vector2 playerFwd = new Vector2(player.transform.forward.x, player.transform.forward.z);
+        Vector2 playerPos = new Vector2(playerCamera.transform.position.x, playerCamera.transform.position.z);
+        Vector2 playerFwd = new Vector2(playerCamera.transform.forward.x, playerCamera.transform.forward.z);
 
         float angle = Vector2.SignedAngle(marqueur.position - playerPos, playerFwd);
 
