@@ -176,7 +176,7 @@ public class WalkState : BaseState
 
         ///// ---- End Positionnement du compagnon à côté du player.
 
-        _destination = new Vector3(_destination.x, y: 1f, _destination.z);
+        //_destination = new Vector3(_destination.x, y: 1f, _destination.z);
 
         // _direction vers laquelle regarde le compagnon en se déplaçant
         _direction = playerPosition - playerLastPosition == Vector3.zero ? _lastDirection : (playerPosition - playerLastPosition );
