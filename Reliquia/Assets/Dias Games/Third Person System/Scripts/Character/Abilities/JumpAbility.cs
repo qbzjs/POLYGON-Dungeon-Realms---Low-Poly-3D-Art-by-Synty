@@ -33,7 +33,12 @@ namespace DiasGames.ThirdPersonSystem
 
         public override bool TryEnterAbility()
         {
-            return m_System.IsGrounded;
+            if (m_System.IsGrounded && William_Script.instance.BoutonSaut)
+            {
+                William_Script.instance.BoutonSaut = false;
+                return true;
+            }
+            return false;
         }
 
         public override void OnEnterAbility()

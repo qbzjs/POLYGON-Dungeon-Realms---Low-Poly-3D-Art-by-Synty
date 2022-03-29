@@ -1,12 +1,15 @@
 ﻿using clavier;
 using System;
+using AlexandreDialogues;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class PhysicaltemInventaire : MonoBehaviour
+public class PhysicaltemInventaire : MonoBehaviour,IInteractable
 {
     [SerializeField] private PlayerInventory playerInventory; // private ? 
+    public GameObject inGameDialogueGameObject;
+    private Outline _outline = null;
     public ItemInventaire thisItem;
     public Image itemImage;
     [SerializeField] private InventaireManager thisManager;
@@ -25,7 +28,11 @@ public class PhysicaltemInventaire : MonoBehaviour
     {
         itemImage = gameObject.GetComponent<Image>();
         itemImage.sprite = thisItem.itemImage;
-        
+        if (_outline == null)
+        {
+            _outline = GetComponent<Outline>();
+        }
+        _outline.enabled = false;
     }
 
     public void AddItem(ItemInventaire item)
@@ -132,6 +139,19 @@ public class PhysicaltemInventaire : MonoBehaviour
             thisManager.MakePuzzlesSlot();
         }
     }
+    public void Interaction()
+    {
+        if (inGameDialogueGameObject != null)
+        {
+            InGameDialogue inGameDialogue = inGameDialogueGameObject.GetComponent<DialogueAttached>().inGameDialogue;
+            InGameDialogueManager.Instance.StartDialogue(inGameDialogue);
+        }
+        AddItem(thisItem);
+    }
 
-    
+    public void MontrerOutline(bool affichage)
+    {
+        _outline.enabled = affichage;
+    }
+
 }

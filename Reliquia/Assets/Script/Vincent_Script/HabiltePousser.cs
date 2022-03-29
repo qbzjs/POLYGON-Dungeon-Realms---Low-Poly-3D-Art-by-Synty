@@ -21,7 +21,7 @@ public class HabiltePousser : ThirdPersonAbility
     /// <returns></returns>
     public override bool TryEnterAbility()
     {
-        return (m_System.IsGrounded && William_Script.instance.ObjetPoussable != null);
+        return (m_System.IsGrounded && William_Script.instance.ObjetPoussable != null && William_Script.instance.BoutonInteraction);
     }
     /// <summary>
     /// Condition pour sortir de l'habilité.
@@ -29,17 +29,15 @@ public class HabiltePousser : ThirdPersonAbility
     /// <returns></returns>
     public override bool TryExitAbility()
     {
-        bool inputToLeave = (m_UseInputStateToEnter == InputEnterType.ButtonPressing) ?
-                !m_InputToEnter.IsPressed : m_InputStateSet;
-        return inputToLeave | !m_System.IsGrounded | William_Script.instance.ObjetPoussable == null;
+        return !William_Script.instance.BoutonInteraction | !m_System.IsGrounded | William_Script.instance.ObjetPoussable == null;
     }
     /// <summary>
     /// "FixedUpdate" de l'habilité.
     /// </summary>
     public override void FixedUpdateAbility()
     {
-        m_AnimatorManager.SetForwardParameter(Input.GetAxis("Vertical"));
-        if (Input.GetAxis("Vertical") > 0)
+        m_AnimatorManager.SetForwardParameter(m_InputManager.Move.y);
+        if (m_InputManager.Move.y > 0)
         {
             if (William_Script.instance.ObjetPoussable != null)
             {

@@ -127,7 +127,7 @@ namespace DiasGames.ThirdPersonSystem
         public Vector2 ScrollView { get { return m_ScrollView; } set { m_ScrollView = value; } }
         public Vector3 RelativeInput { get { return m_RelativeInput; } }
 
-        [HideInInspector] public bool manualUpdate = false;
+        public bool manualUpdate = false;
 
         CinemachineFreeLook[] m_FreeLookCameras;
 
@@ -136,8 +136,8 @@ namespace DiasGames.ThirdPersonSystem
 
         private void Awake()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
 
             // Find main camera if it was not attached in hierarchy
             if (m_Camera == null)
@@ -193,30 +193,30 @@ namespace DiasGames.ThirdPersonSystem
 
         private void Update()
         {
-            if (m_HideCursor)
-            {
-                if (waitTimeToHide <= 0)
-                {
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                }
-                else
-                    waitTimeToHide -= Time.unscaledDeltaTime;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
+            //if (m_HideCursor)
+            //{
+            //    if (waitTimeToHide <= 0)
+            //    {
+            //        Cursor.lockState = CursorLockMode.Locked;
+            //        Cursor.visible = false;
+            //    }
+            //    else
+            //        waitTimeToHide -= Time.unscaledDeltaTime;
+            //}
+            //else
+            //{
+            //    Cursor.lockState = CursorLockMode.None;
+            //    Cursor.visible = true;
+            //}
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                m_HideCursor = true;
-                waitTimeToHide = 0.1f;
-            }
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //    m_HideCursor = true;
+            //    waitTimeToHide = 0.1f;
+            //}
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-                m_HideCursor = false;
+            //if (Input.GetKeyDown(KeyCode.Escape))
+            //    m_HideCursor = false;
 
             foreach (CinemachineFreeLook freeLook in m_FreeLookCameras)
             {

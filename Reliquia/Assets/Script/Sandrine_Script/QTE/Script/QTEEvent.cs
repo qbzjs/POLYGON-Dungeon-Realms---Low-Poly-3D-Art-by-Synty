@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-#if UNITY_2019_4_OR_NEWER && ENABLE_INPUT_SYSTEM
+#if UNITY_2019_3_OR_NEWER && ENABLE_INPUT_SYSTEM
 using KeyCode = UnityEngine.InputSystem.Key;
 using UnityEngine.InputSystem.LowLevel;
 #endif

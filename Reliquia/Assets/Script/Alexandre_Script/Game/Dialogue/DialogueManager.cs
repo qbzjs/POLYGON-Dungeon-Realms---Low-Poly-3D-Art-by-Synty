@@ -109,7 +109,7 @@ namespace AlexandreDialogues
 		{
 			if (_isDialogueStarted)
 			{
-				if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump"))
+				if (William_Script.instance.PlayerInput.actions["Attaquer"].triggered || William_Script.instance.PlayerInput.actions["Saut"].triggered)
 				{
 					UserControl();
 				}

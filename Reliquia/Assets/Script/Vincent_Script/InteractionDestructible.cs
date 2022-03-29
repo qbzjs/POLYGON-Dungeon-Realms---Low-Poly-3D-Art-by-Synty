@@ -29,17 +29,17 @@ public class InteractionDestructible : MonoBehaviour
 
 
     //Ajout des actions aux boutons actions.
-    private void OnEnable()
-    {
-        William_Script.INTERACT_ACTIONS += DetruireObjetLighting;
-        William_Script.INTERACT_ACTIONS2 += DetruireObjetPulsate;
-    }
+    //private void OnEnable()
+    //{
+    //    William_Script.INTERACT_ACTIONS += DetruireObjetLighting;
+    //    William_Script.INTERACT_ACTIONS2 += DetruireObjetPulsate;
+    //}
 
-    private void OnDisable()
-    {
-        William_Script.INTERACT_ACTIONS -= DetruireObjetLighting;
-        William_Script.INTERACT_ACTIONS2 -= DetruireObjetPulsate;
-    }
+    //private void OnDisable()
+    //{
+    //    William_Script.INTERACT_ACTIONS -= DetruireObjetLighting;
+    //    William_Script.INTERACT_ACTIONS2 -= DetruireObjetPulsate;
+    //}
     private void Awake()
     {
         InitialiserVariables();

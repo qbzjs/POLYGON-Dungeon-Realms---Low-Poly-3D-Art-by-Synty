@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using DG.Tweening;
 
-public class InteractionDoor : MonoBehaviour
+public class InteractionDoor : MonoBehaviour, IInteractable
 {
     public enum TypePorte
     {
@@ -15,14 +15,13 @@ public class InteractionDoor : MonoBehaviour
     }
 
     public TypePorte typePorte;
-    private SoundManager _SoundManager;
+    [SerializeField]
+    private Outline _outline = null;
     [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
-    private Interactable _interactable;
     private Quaternion _angleOriginal;
     private Quaternion _angleCible;
-    
     public rotationDirection direction;
     [SerializeField]
     private float _angleRotation = 90.0f;
@@ -33,25 +32,18 @@ public class InteractionDoor : MonoBehaviour
     public AudioSource audioSource;
 
 
-
-    private void OnEnable()
-    {
-        William_Script.INTERACT_ACTIONS += InteractionPorte;
-    }
-
-    private void OnDisable()
-    {
-        William_Script.INTERACT_ACTIONS -= InteractionPorte;
-    }
-
     private void Awake()
     {
-        _interactable = GetComponent<Interactable>();
 
         if (axisObject != null)
         {
             InitialiserVariables();
         }
+        if (_outline == null)
+        {
+            _outline = GetComponent<Outline>();
+        }
+        _outline.enabled = false;
 
     }
 
@@ -75,13 +67,13 @@ public class InteractionDoor : MonoBehaviour
     {
         if (axisObject != null)
         {
-            if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
+            if (!_estOuvert) // ouvrir, jouer l'anim (E)
             {
                 _estOuvert = true;
                 AnimerRotation();
                 return;
             }
-            if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
+            if (_estOuvert) // ouvrir, jouer l'anim (E)
             {
                 _estOuvert = false;
                 AnimerRotation();
@@ -137,5 +129,15 @@ public class InteractionDoor : MonoBehaviour
         }
 
 
+    }
+
+    public void Interaction()
+    {
+        InteractionPorte();
+    }
+
+    public void MontrerOutline(bool affichage)
+    {
+            _outline.enabled = affichage; 
     }
 }

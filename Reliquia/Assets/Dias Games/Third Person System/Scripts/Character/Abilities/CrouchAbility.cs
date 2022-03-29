@@ -15,9 +15,11 @@ namespace DiasGames.ThirdPersonSystem
 
         public override bool TryEnterAbility()
         {
-            if (m_System.IsGrounded && IsHeightEnoughToCrouch && m_System.m_Capsule.height > m_CapsuleHeight)
+            if (m_System.IsGrounded && m_System.m_Capsule.height > m_CapsuleHeight && William_Script.instance.BoutonAccroupir)
+            {
+                William_Script.instance.BoutonAccroupir = false;
                 return true;
-
+            }
             return false;
         }
 
@@ -44,10 +46,15 @@ namespace DiasGames.ThirdPersonSystem
 
         public override bool TryExitAbility()
         {
-            bool inputToLeave = (m_UseInputStateToEnter == InputEnterType.ButtonPressing) ?
-                !m_InputToEnter.IsPressed : m_InputStateSet;
-
-            return (!m_System.IsGrounded || inputToLeave) && IsFreeAbove();
+            //bool inputToLeave = (m_UseInputStateToEnter == InputEnterType.ButtonPressing) ?
+            //    !m_InputToEnter.IsPressed : m_InputStateSet;
+            if ((!m_System.IsGrounded || William_Script.instance.BoutonAccroupir) && IsFreeAbove())
+            {
+                William_Script.instance.BoutonAccroupir = false;
+                return true;
+            }
+            return false;
+            //return (!m_System.IsGrounded || William_Script.instance.PlayerInput.actions["Accroupir"].triggered) && IsFreeAbove();
         }
 
         private bool IsFreeAbove()

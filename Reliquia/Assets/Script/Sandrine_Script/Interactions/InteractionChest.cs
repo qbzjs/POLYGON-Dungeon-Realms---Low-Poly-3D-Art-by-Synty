@@ -5,44 +5,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class InteractionChest : MonoBehaviour
+public class InteractionChest : MonoBehaviour,IInteractable
 {
-    private SoundManager _SoundManager;
+    public Outline _outline = null;
     [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
-    public GameObject inGameDialogueObject = null;
+    private BoxCollider _boxCollider;
     private InGameDialogue inGameDialogue;
-    private Interactable _interactable;
-    private List<Interactable> _interactables;
+    private List<GameObject> _interactables;
     private Quaternion _angleOriginal;
     private Quaternion _angleCible;
-    [Header("Pour l'axe Y uniquement")]
     public rotationDirection direction;
     [SerializeField]
     private float _angleRotation = 90.0f;
     [SerializeField]
     private float _vitesseRotation = 0.5f;
+    [Header("InGame Dialogue GO")]
+    public GameObject inGameDialogueObject = null;
+    
     private bool _estOuvert = false;
     
 
-    
-
-    private void OnEnable()
-    {
-        William_Script.INTERACT_ACTIONS += OpenChest;
-    }
-
-    private void OnDisable()
-    {
-        William_Script.INTERACT_ACTIONS -= OpenChest;
-    }
-
     private void Awake()
     {
-        _SoundManager = GameObject.FindObjectOfType<SoundManager>();
-        _interactable = GetComponent<Interactable>();
-        _interactables = new List<Interactable>();
+        _boxCollider = GetComponent<BoxCollider>();
+        _interactables = new List<GameObject>();
+        if (_outline == null)
+        {
+            _outline = GetComponent<Outline>();
+        }
+        _outline.enabled = false;
         if (inGameDialogueObject != null)
         {
             inGameDialogue = inGameDialogueObject.GetComponent<DialogueAttached>().inGameDialogue;
@@ -73,16 +66,16 @@ public class InteractionChest : MonoBehaviour
             InGameDialogueManager.Instance.StartDialogue(inGameDialogue);
             inGameDialogue = null;
         }
-        if (_interactable.InteractOutline.enabled && !_estOuvert) // ouvrir, jouer l'anim (E)
+        if (!_estOuvert) // ouvrir, jouer l'anim (E)
         {
-            _SoundManager.Play("coffre_ouvert");
+            SoundManager.instance.Play("coffre_ouvert");
             _estOuvert = true;
             StartCoroutine(VerifierContenuCoffre());
             AnimerRotation();
         }
-        if (_interactable.InteractOutline.enabled && _estOuvert) // ouvrir, jouer l'anim (E)
+        else // ouvrir, jouer l'anim (E)
         {
-            _SoundManager.Play("coffre_fermer");
+            SoundManager.instance.Play("coffre_fermer");
             _estOuvert = false;
             //StartCoroutine(VerifierContenuCoffre());
             AnimerRotation();
@@ -108,24 +101,23 @@ public class InteractionChest : MonoBehaviour
     private IEnumerator VerifierContenuCoffre()
     {
         RecupererObjetsInteractables();
-
         if (_interactables.Count > 0 && _estOuvert)
         {
-            _interactable.ApplyOutline(false);
+            _boxCollider.enabled = false;
             for (int i = 0; i < _interactables.Count; i++)
             {
-                if (_interactables[i].gameObject.CompareTag("ItemInteractable"))
-                {
-                    _interactables[i].gameObject.GetComponent<Collider>().enabled = true;
-                }
+                _interactables[i].GetComponent<BoxCollider>().enabled = true;
+
             }
-            yield return new WaitForSeconds(0.1f);
-            StartCoroutine(VerifierContenuCoffre());
         }
-        else
+
+        while (_interactables.Count > 0 && _estOuvert)
         {
-            _interactable.ApplyOutline(true);
+            Debug.Log(_boxCollider);
+            RecupererObjetsInteractables();
+            yield return new WaitForSeconds(0.1f);
         }
+        _boxCollider.enabled = true;
     }
     // Récupération des objets Interactable contenu dans le coffre.
     private void RecupererObjetsInteractables()
@@ -133,15 +125,21 @@ public class InteractionChest : MonoBehaviour
         _interactables.Clear();
         foreach (Transform child in transform)
         {
-            Interactable localInteractble = child.GetComponent<Interactable>();
+            IInteractable localInteractble = child.GetComponent<IInteractable>();
             if (localInteractble != null)
             {
-                _interactables.Add(localInteractble);
+                _interactables.Add(child.gameObject);
             }
         }
     }
 
+    public void Interaction()
+    {
+        OpenChest();
+    }
 
-
-
+    public void MontrerOutline(bool affichage)
+    {
+        _outline.enabled = affichage;
+    }
 }

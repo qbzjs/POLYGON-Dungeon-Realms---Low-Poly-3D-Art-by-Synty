@@ -1,158 +1,179 @@
 ﻿using AlexandreDialogues;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class InteractionLockDoor : MonoBehaviour
+public class InteractionLockDoor : MonoBehaviour,IInteractable
 {
+    public enum TypePorte
+    {
+        Bois,
+        Metal,
+        Bar
+    }
+
+    public TypePorte typePorte;
+    [SerializeField]
+    private Outline _outline = null;
+
+    [Header("Objet à Animer")]
     public GameObject axisObject;
     public Axis axis;
-    [Header("Pour l'axe Y uniquement")]
+    private Quaternion _angleOriginal;
+    private Quaternion _angleCible;
     public rotationDirection direction;
+    [SerializeField]
+    private float _angleRotation = 90.0f;
+    [SerializeField]
+    private float _vitesseRotation = 1.0f;
+    private bool _estOuvert;
 
-    public ItemInventaire item;
-
-    private bool rotate;
-    private bool rotateDirection;
-
-    private Quaternion delta;
-    private Quaternion deltaInit;
-
-    private Interactable interactable;
-
-    private William_Script wilScript;
-    private GameManager gameManager;
-    private bool isLockedDoor;
-
+    [Header("AudioSource")]
+    public AudioSource audioSource;
     // Interaction Dialogue
-    private InGameDialogueManager inGameDialogueManager;
-    private GameObject dialogue;
-    private InGameDialogue inGameDialogueClef;
-    private InGameDialogue inGameDialogueSesame;
-
-    private void OnEnable()
-    {
-        
-        William_Script.INTERACT_ACTIONS += OpenDoor;
-    }
-
-    private void OnDisable()
-    {
-        William_Script.INTERACT_ACTIONS -= OpenDoor;
-    }
+    public GameObject dialogueVerrouilleGameObject;
+    public GameObject dialogueOuvertGameObject;
+    private InGameDialogue _inGameDialogueVerrouille;
+    private InGameDialogue _inGameDialogueOuvert;
+    public ItemInventaire item;
+    private bool _estVerouille = true;
 
     private void Awake()
     {
-        interactable = GetComponent<Interactable>();
-        wilScript = GameObject.FindGameObjectWithTag("Player").GetComponent<William_Script>();
-        gameManager = FindObjectOfType<GameManager>();
-        inGameDialogueManager = FindObjectOfType<InGameDialogueManager>();
-        dialogue = GameObject.FindGameObjectWithTag("DialogueDoorLock");
-        inGameDialogueClef = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
-        dialogue.SetActive(false);
-        dialogue = GameObject.FindGameObjectWithTag("DialogueSesame");
-        inGameDialogueSesame = dialogue.GetComponent<DialogueAttached>().inGameDialogue;
-        dialogue.SetActive(false);
-
-
-        if (axisObject == null)
+        if (axisObject != null)
         {
-            return;
+            InitialiserVariables();
         }
-        deltaInit = axisObject.transform.rotation;
-        if (axis == Axis.X)
+        if (_outline == null)
         {
-            delta = Quaternion.Euler(axisObject.transform.rotation.x - 90, axisObject.transform.rotation.y, axisObject.transform.rotation.z + 178.094f); //  + 178.094f corrige rotation en z
+            _outline = GetComponent<Outline>();
         }
+        _outline.enabled = false;
+    }
+    private void InitialiserVariables()
+    {
+        _angleOriginal = axisObject.transform.rotation;
+
         if (axis == Axis.Y && direction == rotationDirection.Forward)
         {
-
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, 90, 0);
+            _angleCible = Quaternion.AngleAxis(_angleRotation, Vector3.up) * axisObject.transform.rotation;
         }
         if (axis == Axis.Y && direction == rotationDirection.Backward)
         {
-            delta = axisObject.transform.rotation * Quaternion.Euler(0, -90, 0);
+            _angleCible = Quaternion.AngleAxis(-_angleRotation, Vector3.up) * axisObject.transform.rotation;
+        }
+        InitialiserDialogue();
+
+
+    }
+    private void InitialiserDialogue()
+    {
+        if (dialogueVerrouilleGameObject != null)
+        {
+            _inGameDialogueVerrouille = dialogueVerrouilleGameObject.GetComponent<DialogueAttached>().inGameDialogue;
+        }
+        if (dialogueOuvertGameObject != null)
+        {
+            _inGameDialogueOuvert = dialogueOuvertGameObject.GetComponent<DialogueAttached>().inGameDialogue;
         }
     }
-
-    private void OpenDoor()
+    // Action d'ouverture.
+    private void InteractionPorte()
     {
-        bool hasKey = InventaireManager.instance.playerInventory.sacochesInventory.Contains(item);
-        //bool hasKey = wilScript.HasKey(item);
-        if (!hasKey)
+        if (_estVerouille)
         {
-            isLockedDoor = true;
+            if (InventaireManager.instance.playerInventory.sacochesInventory.Contains(item))
+            {
+                InventaireManager.instance.playerInventory.sacochesInventory.Remove(item);
+                InGameDialogueManager.Instance.StartDialogue(_inGameDialogueOuvert);
+                _estVerouille = false;
+            }
+            else
+            {
+                InGameDialogueManager.Instance.StartDialogue(_inGameDialogueVerrouille);
+            }
+            
         }
         else
         {
-            //bool useKey = wilScript.UseKey(item);
-            //isLockedDoor = !useKey;
-            InventaireManager.instance.playerInventory.sacochesInventory.Remove(item);
-            isLockedDoor = false;
+            if (axisObject != null)
+            {
+                if (!_estOuvert) // ouvrir, jouer l'anim (E)
+                {
+                    _estOuvert = true;
+                    AnimerRotation();
+                    return;
+                }
+                if (_estOuvert) // ouvrir, jouer l'anim (E)
+                {
+                    _estOuvert = false;
+                    AnimerRotation();
+                }
+            }
         }
-
-        if (isLockedDoor)
-        {
-            //gameManager.AfficherMessageInteraction("Missing Key");
-            gameManager.FermerMessageInteraction();
-            inGameDialogueManager.StartDialogue(inGameDialogueClef);
-            return;
-        }
-        inGameDialogueManager.StartDialogue(inGameDialogueSesame);
-        if (interactable.InteractOutline.enabled && !interactable.itemActive) // ouvrir, jouer l'anim (E)
-        {
-            interactable.itemActive = true;
-            PlayAnim(true);
-            return;
-
-        }
-        if (interactable.InteractOutline.enabled && interactable.itemActive) // ouvrir, jouer l'anim (E)
-        {
-            interactable.itemActive = false;
-            PlayAnim(false);
-
-
-        }
+        
     }
 
-    private void PlayAnim(bool open)
+    // Animation d'ouverture.
+    private void AnimerRotation()
     {
-        //hideOutline();
-        if (axisObject != null)
+        if (_estOuvert && axisObject.transform.rotation != _angleCible)
         {
-            rotate = true;
-            rotateDirection = open;
-            StartCoroutine(RotateAnim());
+            OuvrirPorte();
+        }
+        if (!_estOuvert && axisObject.transform.rotation != _angleOriginal)
+        {
+            FermerPorte();
         }
     }
-
-    private IEnumerator RotateAnim()
+    public void OuvrirPorte()
     {
-        if (rotate && rotateDirection && axisObject.transform.rotation != delta)
+        LancerSon();
+        transform.DORotateQuaternion(_angleCible, _vitesseRotation);
+    }
+    public void FermerPorte()
+    {
+        LancerSon();
+        transform.DORotateQuaternion(_angleOriginal, _vitesseRotation);
+    }
+    private void LancerSon()
+    {
+        if (audioSource != null)
         {
-            int i = 50;
-            do
-            {
-                i--;
-                axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, delta, 5f * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            } while (i > 0);
-
-
-
+            audioSource.Play();
         }
-        if (rotate && !rotateDirection && axisObject.transform.rotation != deltaInit)
+        else
         {
-            int i = 50;
-            do
+            switch (typePorte)
             {
-                i--;
-                axisObject.transform.rotation = Quaternion.Lerp(axisObject.transform.rotation, deltaInit, 5f * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            } while (i > 0);
-
+                case TypePorte.Bois:
+                    SoundManager.instance.Play("wooden_door_open");
+                    break;
+                case TypePorte.Metal:
+                    SoundManager.instance.Play("door_metal_heavy");
+                    break;
+                case TypePorte.Bar:
+                    SoundManager.instance.Play("door_metal_bar");
+                    break;
+                default:
+                    SoundManager.instance.Play("wooden_door_open");
+                    break;
+            }
         }
+
+
+    }
+
+    public void Interaction()
+    {
+        InteractionPorte();
+    }
+
+    public void MontrerOutline(bool affichage)
+    {
+        _outline.enabled = affichage;
     }
 
 }

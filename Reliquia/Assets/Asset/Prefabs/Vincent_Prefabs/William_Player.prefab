@@ -234,7 +234,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.16871727, y: 0.32003906, z: -0.020529877}
+  m_ConnectedAnchor: {x: 0.16871738, y: 0.32003906, z: -0.020529877}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -837,7 +837,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000070217524, y: 0.10006297, z: -0.00227649}
+  m_ConnectedAnchor: {x: -0.000000048991705, y: 0.10006285, z: -0.0022755363}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -977,7 +977,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.25549904, y: 0.0023780803, z: -0.021962516}
+  m_ConnectedAnchor: {x: 0.2554988, y: 0.0023780803, z: -0.021962505}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -1551,7 +1551,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0024673864, y: -0.4093428, z: 0.02324304}
+  m_ConnectedAnchor: {x: 0.0024675056, y: -0.4093428, z: 0.023242086}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -1813,7 +1813,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.25549862, y: 0.0023754674, z: -0.021959916}
+  m_ConnectedAnchor: {x: -0.25549862, y: 0.0023755867, z: -0.021960393}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2259,8 +2259,9 @@ GameObject:
   - component: {fileID: 8700296112645621086}
   - component: {fileID: 6250489322192563183}
   - component: {fileID: 2074206682083719054}
+  - component: {fileID: 257636600}
   m_Layer: 15
-  m_Name: William_Rig
+  m_Name: William_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2442,7 +2443,7 @@ MonoBehaviour:
   m_ExtraAction01: 
   m_ExtraAction02: 
   m_ExtraAction03: 
-  manualUpdate: 0
+  manualUpdate: 1
 --- !u!114 &2506424486084426688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2552,7 +2553,7 @@ MonoBehaviour:
   OnExitAbilityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_UseInputStateToEnter: 0
+  m_UseInputStateToEnter: 3
   InputButton: 0
   m_MaxJumpHeight: 1.6
   m_MaxHorSpeed: 7
@@ -2659,7 +2660,7 @@ MonoBehaviour:
   OnExitAbilityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_UseInputStateToEnter: 0
+  m_UseInputStateToEnter: 3
   InputButton: 3
   m_ObstacleMask:
     serializedVersion: 2
@@ -3285,10 +3286,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c81808feac422346abcc0d995961713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 0}
-  inventaire: {fileID: 0}
-  ParentMenu: {fileID: 0}
+  PlayerInput: {fileID: 0}
+  ThirdPersonSystem: {fileID: 0}
+  radius: 2.5
+  angle: 100
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 134217728
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  InteractableObject: {fileID: 0}
   ObjetPoussable: {fileID: 0}
+  BoutonInteraction: 0
+  BoutonAccroupir: 0
+  BoutonSaut: 0
+  BoutonCourir: 0
 --- !u!114 &6250489322192563183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3334,9 +3347,268 @@ MonoBehaviour:
   OnExitAbilityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_UseInputStateToEnter: 1
+  m_UseInputStateToEnter: 3
   InputButton: 6
   gameObjectsInGameDialogues: []
+--- !u!114 &257636600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181353110817305307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: c8309f5b02df8f54db9958ddedae8739,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnMouvement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 41e8a4ed-9c62-4432-a86e-7d1af7a56c5a
+    m_ActionName: Gameplay/Mouvement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnRegard
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 545eb639-b1cc-457f-af31-c6f963f93a2f
+    m_ActionName: Gameplay/Regard[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnSaut
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6d5736dc-734e-4649-8f3d-d1885bf802aa
+    m_ActionName: Gameplay/Saut[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1d9d6d9b-7ec9-42e4-b8a9-084f6b2837e8
+    m_ActionName: Gameplay/Menu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnInventaire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f8a64413-0d00-42a3-a2fe-928a477184b5
+    m_ActionName: Gameplay/Inventaire[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnInteraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 61c45d7c-0c2f-457d-abac-f14b8055e36d
+    m_ActionName: Gameplay/Interaction[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnPouvoir1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a13df4c6-ccb0-4657-acd9-dcb9ae9ed50a
+    m_ActionName: Gameplay/Pouvoir1[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnPouvoir2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 527bab28-e127-4bc9-8c7c-6d7ebd33035c
+    m_ActionName: Gameplay/Pouvoir2[/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnPouvoir3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1eb80750-679d-4c6e-a66e-8cd37293a90f
+    m_ActionName: Gameplay/Pouvoir3[/Keyboard/3]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnPouvoir4
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bbd584ba-dc1b-478c-b713-f8b4e43b0362
+    m_ActionName: Gameplay/Pouvoir4[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnCourir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d842f33-a1d8-47f7-bc0e-379acac945f4
+    m_ActionName: Gameplay/Courir[/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8700296112645621086}
+        m_MethodName: OnAccroupir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d4050a00-1c7f-4c29-8a48-c1e2ffdeba3c
+    m_ActionName: Gameplay/Accroupir[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a051f986-111a-4c8f-89f5-4662b58c356a
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 875e6b4b-88c2-49e4-a052-99e730ba87aa
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8f388857-90bc-4b28-a927-844cd49ac138
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b4fd81bb-6cc7-4818-ac65-3ae70f88d99f
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aefa22a3-35aa-4dbf-9fbe-0a254e2021a5
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 122f3f91-6367-46c8-b456-93c67e6034bd
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9b1d0f18-afaa-4ef3-a573-508929dbb962
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 68fe1758-43ad-4be2-ada6-572bc8f11e6a
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 81da8493-b6e0-49a8-b3f9-8bb8a00901c9
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a6bbb33d-5f83-47f7-b2c1-73401c86d050
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f9365a6e-4eb6-4c98-aa2c-5f0b833344ce
+    m_ActionName: Gameplay/Attaquer[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a0db9c9-9f0c-4b0a-a7f8-0fa652c878bf
+    m_ActionName: Gameplay/Garde[/Mouse/rightButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &6476534841710280914
 GameObject:
   m_ObjectHideFlags: 0
@@ -3541,7 +3813,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000000117868275, y: 0.53210086, z: -0.02311413}
+  m_ConnectedAnchor: {x: -0.00000010742242, y: 0.53210074, z: -0.023114368}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -3776,7 +4048,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0024674311, y: -0.40934277, z: 0.023243085}
+  m_ConnectedAnchor: {x: -0.0024674311, y: -0.40934277, z: 0.0232438}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -3885,7 +4157,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.09200612, y: -0.06711967, z: -0.010036034}
+  m_ConnectedAnchor: {x: 0.092006, y: -0.06711979, z: -0.01003651}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -4122,7 +4394,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.09200665, y: -0.067119524, z: -0.010036034}
+  m_ConnectedAnchor: {x: -0.09200665, y: -0.067119405, z: -0.01003651}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -4292,7 +4564,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.16871893, y: 0.32003936, z: -0.020530116}
+  m_ConnectedAnchor: {x: -0.16871905, y: 0.32003936, z: -0.020529877}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
