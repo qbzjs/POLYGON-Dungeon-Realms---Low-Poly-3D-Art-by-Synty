@@ -15,7 +15,7 @@
                 },
                 {
                     "name": "Regard",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "545eb639-b1cc-457f-af31-c6f963f93a2f",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -39,7 +39,7 @@
                 },
                 {
                     "name": "Garde",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "3a0db9c9-9f0c-4b0a-a7f8-0fa652c878bf",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -57,6 +57,14 @@
                     "name": "Accroupir",
                     "type": "Button",
                     "id": "d4050a00-1c7f-4c29-8a48-c1e2ffdeba3c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Roulade",
+                    "type": "Button",
+                    "id": "94e5f8b7-1cbc-446d-a972-62eff9f033a4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -190,7 +198,7 @@
                     "id": "2a04812b-e911-4868-96b3-e77e1fb30f0e",
                     "path": "<Pointer>/delta",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false,invertY=false),ScaleVector2(x=15,y=15),NormalizeVector2",
+                    "processors": "InvertVector2(invertX=false,invertY=false)",
                     "groups": "",
                     "action": "Regard",
                     "isComposite": false,
@@ -201,7 +209,7 @@
                     "id": "9e985d94-9545-4e0a-8d07-62c2e5c65033",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(x=300,y=300),InvertVector2,NormalizeVector2",
+                    "processors": "InvertVector2",
                     "groups": "",
                     "action": "Regard",
                     "isComposite": false,
@@ -358,6 +366,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Garde",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e3becd0-eb84-496d-9e4b-07f58e8ea75a",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roulade",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

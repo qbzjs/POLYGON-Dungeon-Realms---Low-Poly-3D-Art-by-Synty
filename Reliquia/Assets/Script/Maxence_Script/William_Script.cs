@@ -13,7 +13,9 @@ public class William_Script : MonoBehaviour
     public PlayerInput PlayerInput;
     [HideInInspector]
     public ThirdPersonSystem ThirdPersonSystem;
-
+    [HideInInspector]
+    public Mana Mana;
+    public List<IPouvoir> ListePouvoirs = new List<IPouvoir>();
     [Header("Champ Vision Interactable")]
     public float radius;
     [Range(0, 360)]
@@ -26,9 +28,11 @@ public class William_Script : MonoBehaviour
     [Header("Inputs Bool")]
     public bool BoutonInteraction;
     public bool BoutonAccroupir;
+    public bool BoutonRoulade;
     public bool BoutonSaut;
     public bool BoutonCourir;
-
+    public bool BoutonAttaquer;
+    public bool BoutonGarde;
     // Variable bruit de pas
     private float _derniereFoisBruitPas;
     private float _delaiBruitPas = 0.1f;
@@ -43,6 +47,9 @@ public class William_Script : MonoBehaviour
     {
         PlayerInput = GetComponent<PlayerInput>();
         ThirdPersonSystem = GetComponent<ThirdPersonSystem>();
+        Mana = GetComponent<Mana>();
+        ChargerListePouvoirs();
+        //ListePouvoirs.AddRange(GetComponents<IPouvoir>());
         if (instance == null)
         {
             instance = this;
@@ -60,6 +67,17 @@ public class William_Script : MonoBehaviour
         string binds = PlayerInput.actions.ToJson();
         string rebinds = PlayerPrefs.GetString("rebinds", binds);
         PlayerInput.actions.LoadFromJson(rebinds);
+    }
+    /// <summary>
+    /// Récupérer les pouvoirs avec un ordre précis.
+    /// </summary>
+    private void ChargerListePouvoirs()
+    {
+        ListePouvoirs.Add(GetComponent<PouvoirLighting>());
+        ListePouvoirs.Add(GetComponent<PouvoirPulsate>());
+        ListePouvoirs.Add(GetComponent<PouvoirAbsob>());
+        ListePouvoirs.Add(GetComponent<PouvoirPraesidium>());
+
     }
     void OnEnable()
     {
@@ -102,6 +120,31 @@ public class William_Script : MonoBehaviour
     private void Update()
     {
         ChampVisionInteractableCheck();
+        DebugTouches();
+
+
+    }
+    /// <summary>
+    /// A enlever une fois le debug terminer.
+    /// </summary>
+    private void DebugTouches()
+    {
+        if (Keyboard.current.oKey.isPressed)
+        {
+            GlobalEvents.ExecuteEvent("Damage", gameObject, 25.0f);
+        }
+        if (Keyboard.current.pKey.isPressed)
+        {
+            GlobalEvents.ExecuteEvent("RestoreHealth", gameObject, 25.0f);
+        }
+        if (Keyboard.current.lKey.isPressed)
+        {
+            GlobalEvents.ExecuteEvent("ManaDamage", gameObject, 25.0f);
+        }
+        if (Keyboard.current.semicolonKey.isPressed)
+        {
+            GlobalEvents.ExecuteEvent("RestoreMana", gameObject, 25.0f);
+        }
     }
     /// <summary>
     /// Pour lancer les bruits de suivant avec les Animations Events.
@@ -179,7 +222,7 @@ public class William_Script : MonoBehaviour
     }
     public void OnRegard(InputAction.CallbackContext context)
     {
-        ThirdPersonSystem.InputManager.ScrollView = context.ReadValue<Vector2>();
+        //ThirdPersonSystem.InputManager.ScrollView = context.ReadValue<Vector2>();
     }
     public void OnSaut(InputAction.CallbackContext context)
     {
@@ -194,11 +237,25 @@ public class William_Script : MonoBehaviour
     }
     public void OnAttaquer(InputAction.CallbackContext context)
     {
-
+        if (context.performed)
+        {
+            BoutonAttaquer = true;
+        }
+        else
+        {
+            BoutonAttaquer = false;
+        }
     }
     public void OnGarde(InputAction.CallbackContext context)
     {
-
+        if (context.ReadValue<float>() > 0)
+        {
+            BoutonGarde = true;
+        }
+        else
+        {
+            BoutonGarde = false;
+        }
     }
     public void OnMenu(InputAction.CallbackContext context)
     {
@@ -231,19 +288,61 @@ public class William_Script : MonoBehaviour
     }
     public void OnPouvoir1(InputAction.CallbackContext context)
     {
-
+        if (ListePouvoirs[0] != null)
+        {
+            if (context.performed)
+            {
+                ListePouvoirs[0].SetInputPouvoir(true);
+            }
+            else
+            {
+                ListePouvoirs[0].SetInputPouvoir(false);
+            }
+        }
+        
     }
     public void OnPouvoir2(InputAction.CallbackContext context)
     {
-
+        if (ListePouvoirs[1] != null)
+        {
+            if (context.performed)
+            {
+                ListePouvoirs[1].SetInputPouvoir(true);
+            }
+            else
+            {
+                ListePouvoirs[1].SetInputPouvoir(false);
+            }
+        }
+        
     }
     public void OnPouvoir3(InputAction.CallbackContext context)
     {
-
+        if (ListePouvoirs[2] != null)
+        {
+            if (context.performed)
+            {
+                ListePouvoirs[2].SetInputPouvoir(true);
+            }
+            else
+            {
+                ListePouvoirs[2].SetInputPouvoir(false);
+            }
+        }
     }
     public void OnPouvoir4(InputAction.CallbackContext context)
     {
-
+        if (ListePouvoirs[3] != null)
+        {
+            if (context.performed)
+            {
+                ListePouvoirs[3].SetInputPouvoir(true);
+            }
+            else
+            {
+                ListePouvoirs[3].SetInputPouvoir(false);
+            }
+        }
     }
     public void OnCourir(InputAction.CallbackContext context)
     {
@@ -265,6 +364,17 @@ public class William_Script : MonoBehaviour
         else
         {
             BoutonAccroupir = false;
+        }
+    }
+    public void OnRoulade(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            BoutonRoulade = true;
+        }
+        else
+        {
+            BoutonRoulade = false;
         }
     }
     #endregion
