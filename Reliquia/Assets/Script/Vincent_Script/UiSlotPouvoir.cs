@@ -26,6 +26,7 @@ public class UiSlotPouvoir : MonoBehaviour
     }
     private IEnumerator RefreshSlot()
     {
+        pouvoirDisponibleImage.fillAmount = 0;
         while (pouvoirDisponibleImage.fillAmount <= 1)
         {
             pouvoirDisponibleImage.fillAmount = Pouvoir.GetTempsRechargeActuel() / Pouvoir.GetPouvoirDonnees().TempsRecharge;

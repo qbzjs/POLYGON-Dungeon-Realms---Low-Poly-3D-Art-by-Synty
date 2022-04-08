@@ -3,10 +3,7 @@ using UnityEngine.UI;
 using DiasGames.ThirdPersonSystem;
 
 
-/// <summary>
-/// Attache des callback pour mettre à jour l'affichage de ressources
-/// aux signaux des script Health et Mana. 
-/// </summary>
+
 public class RessourceManager : MonoBehaviour
 {
     [Space]

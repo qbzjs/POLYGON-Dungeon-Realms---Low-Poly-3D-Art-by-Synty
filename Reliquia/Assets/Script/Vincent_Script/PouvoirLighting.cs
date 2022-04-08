@@ -38,6 +38,7 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
     {
         base.Initialize(mainSystem, animatorManager, inputManager);
         _lightingOrbe.SetActive(false);
+        _viseur.SetActive(false);
     }
     /// <summary>
     /// Condition pour lancer le pouvoir.
@@ -100,7 +101,7 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
             // Sert a forcer la direction du personnage dans le même sens que la caméra.
             m_System.RotateByCamera();
 
-            //_viseur.SetActive(true);
+            _viseur.SetActive(true);
 
             // Sert a changer l'animation en cours et donc changer la caméra et la mettre en mode "Zoom".
             SetState(_animationLightingOffensif);
@@ -128,7 +129,7 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
         else
         {
             ModeOffensif = false;
-            //_viseur.SetActive(false);
+            _viseur.SetActive(false);
 
             // Sert a remettre l'animation d'origine et donc le déplacement a 360°.
             SetState(m_EnterState);
@@ -201,6 +202,6 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
 
     public UnityEvent GetOnEnterAbilityEvent()
     {
-        return OnExitAbilityEvent;
+        return OnEnterAbilityEvent;
     }
 }
