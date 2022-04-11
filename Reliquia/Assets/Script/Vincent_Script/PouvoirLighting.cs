@@ -37,6 +37,7 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
     public override void Initialize(ThirdPersonSystem mainSystem, AnimatorManager animatorManager, UnityInputManager inputManager)
     {
         base.Initialize(mainSystem, animatorManager, inputManager);
+        _viseur = GameObject.FindGameObjectWithTag("Viseur");
         _lightingOrbe.SetActive(false);
         _viseur.SetActive(false);
     }
@@ -83,6 +84,10 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
     {
         base.OnExitAbility();
         _lightingOrbe.SetActive(false);
+        if (_viseur.activeSelf)
+        {
+            _viseur.SetActive(false);
+        }
         StopCoroutine(_coroutineDrainMana);
     }
     /// <summary>
