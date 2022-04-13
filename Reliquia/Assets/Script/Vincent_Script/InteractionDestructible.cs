@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 //using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class InteractionDestructible : MonoBehaviour
+public class InteractionDestructible : MonoBehaviour, IInteractable
 {
     #region Variables globales
-    private GameManager _gameManager;
-
+    private Outline _outline;
     [SerializeField, Header("Objets")]
     private GameObject[] _gameObjects;
 
     [SerializeField, Header("Particules Prefabs")]
     private ParticleSystem[] _particles;
 
-    private Interactable _interactableScript;
-    private Lighting_Vincent_Test _lightingScript;
     private GameObject _objetActif;
 
     private bool _estDetruit = false;
@@ -26,40 +24,27 @@ public class InteractionDestructible : MonoBehaviour
     private float _dureeTransition = 2;
     #endregion
 
-
-
-    //Ajout des actions aux boutons actions.
-    //private void OnEnable()
-    //{
-    //    William_Script.INTERACT_ACTIONS += DetruireObjetLighting;
-    //    William_Script.INTERACT_ACTIONS2 += DetruireObjetPulsate;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    William_Script.INTERACT_ACTIONS -= DetruireObjetLighting;
-    //    William_Script.INTERACT_ACTIONS2 -= DetruireObjetPulsate;
-    //}
     private void Awake()
     {
         InitialiserVariables();
     }
+
     // Initialisation des variables nécessaire.
     private void InitialiserVariables()
     {
-        _gameManager = FindObjectOfType<GameManager>();
-        _lightingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Lighting_Vincent_Test>();
-        _interactableScript = GetComponent<Interactable>();
+        _outline = GetComponent<Outline>();
+        _outline.enabled = false;
     }
+
     // Action avec le pouvoir Lighting.
-    private void DetruireObjetLighting()
+    public void DetruireObjetLighting()
     {
-        if (_lightingScript.isCreated && !_enTransition && !_estDetruit)
+        if (!_enTransition && !_estDetruit)
         {
             StartCoroutine(DetruireObjet(1));
         }
-
     }
+
     // Action avec le pouvoir Pulsate.
     private void DetruireObjetPulsate()
     {
@@ -67,8 +52,8 @@ public class InteractionDestructible : MonoBehaviour
         {
             StartCoroutine(DetruireObjet(2));
         }
-
     }
+
     /// <summary>
     /// Couroutine pour la destruction des objets.
     /// </summary>
@@ -82,20 +67,23 @@ public class InteractionDestructible : MonoBehaviour
         StartCoroutine(CacherObjetAcfif(index));
         yield return new WaitForSeconds(_dureeTransition);
         _enTransition = false;
-        AfficherOutline();
+        AjouterOutline();
     }
+
     //Instancier les particules et jouer l'animation.
     private void InstancierParticules()
     {
         GameObject joueur = GameObject.FindGameObjectWithTag("Player");
+        Vector3 directionJoueur = joueur.transform.position - transform.position;
         foreach (ParticleSystem particle in _particles)
         {
-                // Instancier les particules un peu devant et en haut du joueur.
-                var particleInst = Instantiate(particle, joueur.transform.position + joueur.transform.forward + joueur.transform.up, joueur.transform.rotation);
-                Destroy(particleInst, _dureeTransition);
-                particleInst.Play();
+            // Instancier les particules un peu devant et en haut du joueur.
+            var particleInst = Instantiate(particle,transform.position + directionJoueur.normalized + Vector3.up, Quaternion.identity);
+            Destroy(particleInst, _dureeTransition);
+            particleInst.Play();
         }
     }
+
     //Destruction de l'objet précédent ou cacher le 1er.
     private IEnumerator CacherObjetAcfif(int index)
     {
@@ -107,19 +95,20 @@ public class InteractionDestructible : MonoBehaviour
         }
         else
         {
-            Destroy(_objetActif);
+            _objetActif.SetActive(false);
         }
         _indexEtat += index;
         InstancierObjet();
     }
+
     // Instanciation de l'objet.
     private void InstancierObjet()
     {
         if (_indexEtat > _gameObjects.Length - 1)
         {
             // Dernier objet instancier et retirer l'interaction.
-                _objetActif = _gameObjects[_gameObjects.Length - 1];
-                _objetActif.SetActive(true);
+            _objetActif = _gameObjects[_gameObjects.Length - 1];
+            _objetActif.SetActive(true);
 
             foreach (Collider collider in gameObject.GetComponents<Collider>())
             {
@@ -130,22 +119,61 @@ public class InteractionDestructible : MonoBehaviour
         }
         else
         {
-                _objetActif = _gameObjects[_indexEtat - 1];
-                _objetActif.SetActive(true);
+            _objetActif = _gameObjects[_indexEtat - 1];
+            _objetActif.SetActive(true);
         }
     }
+
     // Afficher l'outline tant que l'objet n'est pas completement été detruit.
-    private void AfficherOutline()
+    private void AjouterOutline()
     {
         if (!_estDetruit)
         {
-            _objetActif.AddComponent<Outline>();
-            _interactableScript.goContour = _objetActif;
-            _interactableScript.ApplyOutline(true);
+            _objetActif.AddComponent<Outline>().enabled = false;
         }
     }
+
     private void LancerSon()
     {
         SoundManager.instance.Play("explosion_barrel");
+    }
+
+    public void Interaction()
+    {
+        if (William_Script.instance.ThirdPersonSystem.ActiveAbility is PouvoirPulsate)
+        {
+            DetruireObjetPulsate();
+        }
+    }
+
+    public void MontrerOutline(bool affichage)
+    {
+        if (!_enTransition)
+        {
+            if (_indexEtat == 0)
+            {
+                _outline.enabled = affichage;
+            }
+            else
+            {
+                _objetActif.GetComponent<Outline>().enabled = affichage;
+            }
+
+            AfficherMessageInteraction(affichage);
+        }
+    }
+
+    //Afficher le message d'interaction.
+    private void AfficherMessageInteraction(bool affichage)
+    {
+        if (affichage)
+        {
+            GameManager.instance.AfficherMessageInteraction("Utiliser Lighting ou Pulsate pour détruire.");
+        }
+        else
+        {
+            GameManager.instance.FermerMessageInteraction();
+        }
+            
     }
 }

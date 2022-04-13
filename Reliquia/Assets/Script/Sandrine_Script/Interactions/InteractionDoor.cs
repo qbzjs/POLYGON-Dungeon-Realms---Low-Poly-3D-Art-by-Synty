@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 public class InteractionDoor : MonoBehaviour, IInteractable
 {
@@ -34,7 +35,6 @@ public class InteractionDoor : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-
         if (axisObject != null)
         {
             InitialiserVariables();
@@ -44,7 +44,6 @@ public class InteractionDoor : MonoBehaviour, IInteractable
             _outline = GetComponent<Outline>();
         }
         _outline.enabled = false;
-
     }
 
     // Pour récupérer l'angle cible et orginal.
@@ -93,6 +92,7 @@ public class InteractionDoor : MonoBehaviour, IInteractable
             FermerPorte();
         }
     }
+
     public void OuvrirPorte()
     {
         LancerSon();
@@ -138,6 +138,22 @@ public class InteractionDoor : MonoBehaviour, IInteractable
 
     public void MontrerOutline(bool affichage)
     {
-            _outline.enabled = affichage; 
+        _outline.enabled = affichage;
+        if (_outline.enabled)
+        {
+            AfficherMessageInteraction();
+        }
+    }
+
+    private void AfficherMessageInteraction()
+    {
+        if (_estOuvert)
+        {
+            GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour fermer.");
+        }
+        else
+        {
+            GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour ouvrir.");
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using AlexandreDialogues;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Image))]
 public class PhysicaltemInventaire : MonoBehaviour,IInteractable
@@ -152,6 +153,13 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
     public void MontrerOutline(bool affichage)
     {
         _outline.enabled = affichage;
+        if (_outline.enabled)
+        {
+            AfficherMessageInteraction();
+        }
     }
-
+    private void AfficherMessageInteraction()
+    {
+        GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour ramasser.");
+    }
 }

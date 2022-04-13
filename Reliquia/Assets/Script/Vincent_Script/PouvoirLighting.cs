@@ -152,7 +152,6 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
         while (_tempsRechargeActuel <= _donneesLighting.TempsRecharge)
         {
             _tempsRechargeActuel += Time.deltaTime;
-            //Debug.Log(coolDownActuel);
             yield return null;
         }
         _estDisponible = true;

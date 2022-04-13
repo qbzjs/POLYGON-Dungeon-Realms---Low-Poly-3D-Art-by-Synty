@@ -13,6 +13,7 @@ public class SalleGargouillesScript : MonoBehaviour
     private Companion DavidCompanionScript;
     public GameObject WaypointDavid;
     public GameObject DirectionRegard;
+    public GameObject parentTorche;
     void Awake()
     {
         RoxaneStateMachine = RoxaneGameObject.GetComponent<StateMachine>();
@@ -23,12 +24,20 @@ public class SalleGargouillesScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AllumerTorchesSalle(false);
         RoxaneStateMachine.enabled = false;
         DavidStateMachine.enabled = false;
         RoxaneCompanionScript.Move(WaypointRoxane.transform.position, 2.5f, "");
         DavidCompanionScript.Move(WaypointDavid.transform.position, 2.5f, "");
         StartCoroutine(CheckDestinationAtteinte());
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AllumerTorchesSalle(true);
+        }
+        
     }
     private IEnumerator CheckDestinationAtteinte()
     {
@@ -49,5 +58,17 @@ public class SalleGargouillesScript : MonoBehaviour
     {
         RoxaneStateMachine.enabled = true;
         DavidStateMachine.enabled = true;
+    }
+    public void AllumerTorchesSalle(bool active)
+    {
+        for (int i = 0; i < parentTorche.transform.childCount; i++)
+        {
+            Transform transformTorche = parentTorche.transform.GetChild(i);
+            for (int y = 0; y < transformTorche.childCount; y++)
+            {
+                Transform particulesTorche = transformTorche.GetChild(y);
+                particulesTorche.gameObject.SetActive(active);
+            }
+        }
     }
 }
