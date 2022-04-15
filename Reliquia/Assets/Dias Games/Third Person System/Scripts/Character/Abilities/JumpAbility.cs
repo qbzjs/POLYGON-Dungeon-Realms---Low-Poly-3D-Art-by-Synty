@@ -98,6 +98,7 @@ namespace DiasGames.ThirdPersonSystem
                 _pouvoirAlmaDisponible = false;
                 William_Script.instance.BoutonSaut = false;
                 _particulesPouvoir.SetActive(true);
+                GlobalEvents.ExecuteEvent("ManaDamage", GameObject.FindGameObjectWithTag("Player"), 3.0f);
                 if (GetEnterState() == m_StationaryJumpState)
                 {
                     m_UseRootMotion = false;

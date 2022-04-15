@@ -182,7 +182,7 @@ public class William_Script : MonoBehaviour
                 }
             }
             Transform target = rangeChecks[indexProche].transform;
-            Vector3 directionToTarget = (target.position - transform.position + Vector3.up).normalized;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
             // Vérifier si l'objet est dans l'angle de vision.
             if (Vector3.Dot(transform.forward, directionToTarget) > angle)
             {

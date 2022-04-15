@@ -28,12 +28,20 @@ public class InteractionDestructible : MonoBehaviour, IInteractable
     {
         InitialiserVariables();
     }
+    private void Start()
+    {
+        if (TryGetComponent(out MarqeurQuete_Script marqueur))
+        {
+            Compas_Script.instance.AddMarqueurQuete(marqueur);
+        }
+    }
 
     // Initialisation des variables nécessaire.
     private void InitialiserVariables()
     {
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
+        
     }
 
     // Action avec le pouvoir Lighting.
@@ -115,6 +123,10 @@ public class InteractionDestructible : MonoBehaviour, IInteractable
                 collider.enabled = false;
             }
             GameManager.instance.FermerMessageInteraction();
+            if (TryGetComponent(out MarqeurQuete_Script marqueur))
+            {
+                Compas_Script.instance.RemoveMarqueurQuete(marqueur);
+            }
             _estDetruit = true;
         }
         else
