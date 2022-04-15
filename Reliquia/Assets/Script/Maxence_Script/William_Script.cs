@@ -18,7 +18,7 @@ public class William_Script : MonoBehaviour
     public List<IPouvoir> ListePouvoirs = new List<IPouvoir>();
     [Header("Champ Vision Interactable")]
     public float radius;
-    [Range(0, 360)]
+    [Range(0, 1)]
     public float angle;
     public LayerMask targetMask;
     public LayerMask obstructionMask;
@@ -37,7 +37,7 @@ public class William_Script : MonoBehaviour
     private float _derniereFoisBruitPas;
     private float _delaiBruitPas = 0.1f;
 
-    
+
     private void Awake()
     {
         InitialiserVariables();
@@ -59,6 +59,7 @@ public class William_Script : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     /// <summary>
     /// Récupérer les binding du joueur stocké des PlayerPrefs en format string/Json.
     /// </summary>
@@ -68,6 +69,7 @@ public class William_Script : MonoBehaviour
         string rebinds = PlayerPrefs.GetString("rebinds", binds);
         PlayerInput.actions.LoadFromJson(rebinds);
     }
+
     /// <summary>
     /// Récupérer les pouvoirs avec un ordre précis.
     /// </summary>
@@ -79,10 +81,12 @@ public class William_Script : MonoBehaviour
         ListePouvoirs.Add(GetComponent<PouvoirPraesidium>());
 
     }
+
     void OnEnable()
     {
         PlayerInput.actions.Enable();
     }
+
     void OnDisable()
     {
         PlayerInput.actions.Disable();
@@ -102,7 +106,6 @@ public class William_Script : MonoBehaviour
         }
     }
 
-
     private void OnTriggerExit(Collider other)
     {
         //Pour gérer les objets poussables.
@@ -121,9 +124,8 @@ public class William_Script : MonoBehaviour
     {
         ChampVisionInteractableCheck();
         DebugTouches();
-
-
     }
+
     /// <summary>
     /// A enlever une fois le debug terminer.
     /// </summary>
@@ -146,6 +148,7 @@ public class William_Script : MonoBehaviour
             GlobalEvents.ExecuteEvent("RestoreMana", gameObject, 25.0f);
         }
     }
+
     /// <summary>
     /// Pour lancer les bruits de suivant avec les Animations Events.
     /// </summary>
@@ -157,6 +160,7 @@ public class William_Script : MonoBehaviour
             SoundManager.instance.JouerSfxPas();
         }
     }
+
     /// <summary>
     /// Détecter les objets IIinteractable dans le champs de vision.
     /// </summary>
@@ -180,24 +184,23 @@ public class William_Script : MonoBehaviour
             Transform target = rangeChecks[indexProche].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
             // Vérifier si l'objet est dans l'angle de vision.
-            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+            if (Vector3.Dot(transform.forward, directionToTarget) > angle)
             {
                 NettoyerInteractableObjet();
                 InteractableObject = rangeChecks[indexProche].gameObject;
                 InteractableObject.GetComponent<IInteractable>().MontrerOutline(true);
-                GameManager.instance.AfficherMessageInteraction("");
             }
             else
             {
                 NettoyerInteractableObjet();
             }
-
         }
         else
         {
             NettoyerInteractableObjet();
         }
     }
+
     /// <summary>
     /// Nettoyer la variable et désactiver l'Outline de l'objet précédent.
     /// </summary>
@@ -206,14 +209,14 @@ public class William_Script : MonoBehaviour
         if (InteractableObject != null)
         {
             InteractableObject.GetComponent<IInteractable>().MontrerOutline(false);
-
         }
+
         InteractableObject = null;
+
         if (ObjetPoussable == null)
         {
             GameManager.instance.FermerMessageInteraction();
         }
-
     }
     #region UnityEvent_InputSystem
     public void OnMouvement(InputAction.CallbackContext context)
@@ -299,7 +302,7 @@ public class William_Script : MonoBehaviour
                 ListePouvoirs[0].SetInputPouvoir(false);
             }
         }
-        
+
     }
     public void OnPouvoir2(InputAction.CallbackContext context)
     {
@@ -314,7 +317,7 @@ public class William_Script : MonoBehaviour
                 ListePouvoirs[1].SetInputPouvoir(false);
             }
         }
-        
+
     }
     public void OnPouvoir3(InputAction.CallbackContext context)
     {

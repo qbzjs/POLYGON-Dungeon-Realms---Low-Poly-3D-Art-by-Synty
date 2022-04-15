@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 29207968}
   m_Layer: 5
   m_Name: ParentSlotsPouvoirs
-  m_TagString: Untagged
+  m_TagString: SlotsPouvoirs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +25,7 @@ RectTransform:
   m_GameObject: {fileID: 29207967}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 1456490349}
   - {fileID: 833479830}
@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -225, y: 225}
-  m_SizeDelta: {x: 345.08972, y: 339.23697}
+  m_AnchoredPosition: {x: -221, y: 196.16}
+  m_SizeDelta: {x: 346.08472, y: 340.23227}
   m_Pivot: {x: 0.49999982, y: 0.50000006}
 --- !u!1 &60072588
 GameObject:
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 783974775}
   m_Layer: 5
   m_Name: Viseur
-  m_TagString: Untagged
+  m_TagString: Viseur
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,8 +294,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -103.52, y: 0}
-  m_SizeDelta: {x: 207.0488, y: 148.04099}
+  m_AnchoredPosition: {x: -58.74, y: 3.48}
+  m_SizeDelta: {x: 117.48688, y: 134.1091}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &833479832
 CanvasRenderer:
@@ -457,8 +457,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.00014877, y: 74.5}
-  m_SizeDelta: {x: 206.69928, y: 148.04099}
+  m_AnchoredPosition: {x: 0.00016021729, y: 68.05}
+  m_SizeDelta: {x: 120.51337, y: 136.09956}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1456490351
 CanvasRenderer:
@@ -547,8 +547,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.00012983, y: -74.02}
-  m_SizeDelta: {x: 198.17252, y: 148.04099}
+  m_AnchoredPosition: {x: -0.000022888184, y: -67.055}
+  m_SizeDelta: {x: 114.581635, y: 134.1091}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1477484513
 CanvasRenderer:
@@ -710,8 +710,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 99.086, y: -0.0000038147}
-  m_SizeDelta: {x: 198.17252, y: 148.04099}
+  m_AnchoredPosition: {x: 57.291, y: -0.0000052452}
+  m_SizeDelta: {x: 114.58133, y: 135.10434}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1972741455
 CanvasRenderer:
@@ -9616,7 +9616,7 @@ GameObject:
   - component: {fileID: 5560843112852272048}
   m_Layer: 5
   m_Name: ParentBarresVieMana
-  m_TagString: Untagged
+  m_TagString: BarresVieMana
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9641,7 +9641,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 634.2203, y: 329.88013}
+  m_SizeDelta: {x: 591.7309, y: 366.2754}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &5560843112852272048
 MonoBehaviour:
@@ -11738,7 +11738,7 @@ MonoBehaviour:
     type: 3}
   marqueurQuete: []
   compasImage: {fileID: 4352473596086164588}
-  marqueurImage: {fileID: 0}
+  marqueurImage: {fileID: 21300000, guid: c587ea01e52a86a459a4194605981b04, type: 3}
   maxDistance: 200
 --- !u!1 &4352473596514264194
 GameObject:

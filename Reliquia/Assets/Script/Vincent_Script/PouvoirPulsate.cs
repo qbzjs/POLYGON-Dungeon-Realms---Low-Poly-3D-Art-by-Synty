@@ -77,6 +77,10 @@ public class PouvoirPulsate : ThirdPersonAbility,IPouvoir
     public void PulsateAnimEvent()
     {
         _particulesPouvoir.SetActive(true);
+        if (William_Script.instance.InteractableObject.TryGetComponent(out InteractionDestructible interactionDestructible))
+        {
+            interactionDestructible.Interaction();
+        }
     }
     /// <summary>
     /// Lancer le temps de recharge de Pulsate.
@@ -89,7 +93,6 @@ public class PouvoirPulsate : ThirdPersonAbility,IPouvoir
         while (_tempsRechargeActuel <= _donneesPulsate.TempsRecharge)
         {
             _tempsRechargeActuel += Time.deltaTime;
-            //Debug.Log(coolDownActuel);
             yield return null;
         }
         _estDisponible = true;
