@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_2019_4_OR_NEWER && ENABLE_INPUT_SYSTEM
+#if UNITY_2019_3_OR_NEWER && ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using DualShockGamepadPS4 = UnityEngine.InputSystem.DualShock.DualShock4GamepadHID;
 #endif

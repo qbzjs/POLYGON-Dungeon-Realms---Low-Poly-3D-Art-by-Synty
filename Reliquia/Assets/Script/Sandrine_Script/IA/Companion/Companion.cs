@@ -33,7 +33,7 @@ public class Companion : MonoBehaviour
 
 
     // A supprimer
-    public GameObject alphaSurface;  // Provisoire à sup
+    //public GameObject alphaSurface;  // Provisoire à sup
     [HideInInspector]
     public Renderer alphaRenderer;  // Provisoire à sup
 
@@ -49,7 +49,7 @@ public class Companion : MonoBehaviour
         animPlayer = player.GetComponent<Animator>();
 
         // A supprimer
-        alphaRenderer = alphaSurface.GetComponent<Renderer>(); // Provisoire Attack Effect
+        //alphaRenderer = alphaSurface.GetComponent<Renderer>(); // Provisoire Attack Effect
         SetAttackReadyTimer();
         AttackNumber = 20; // 30;
     }

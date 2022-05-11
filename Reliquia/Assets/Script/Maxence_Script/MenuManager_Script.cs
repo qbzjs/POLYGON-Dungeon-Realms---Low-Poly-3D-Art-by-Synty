@@ -103,15 +103,19 @@ public class MenuManager_Script : MonoBehaviour
         MenuManager_Script.instance.pagesMenuPrincipal[3].SetActive(true);
         pageMenuActive = 3;
 
-        // Activer le TreasuresPanel au démarrage
-        _treasurePanel.SetActive(true);
+        _treasurePanel.SetActive(false);
 
         // Masquer les autres panneaux au démarrage
         // A FAIRE...
     }
-
+    public void AfficherPanelTresor()
+    {
+        _treasurePanel.SetActive(true);
+        pagesMenuPrincipal[3].GetComponentInChildren<Image>().sprite = ImagesBackground[1];
+    }
     public void BonusRetour()
 	{
+        pagesMenuPrincipal[3].GetComponentInChildren<Image>().sprite = ImagesBackground[0];
         MenuManager_Script.instance.pagesMenuPrincipal[pageMenuActive].SetActive(false);
         MenuManager_Script.instance.pagesMenuPrincipal[0].SetActive(true);
         pageMenuActive = 0;

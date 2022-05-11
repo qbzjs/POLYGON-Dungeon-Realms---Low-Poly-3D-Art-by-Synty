@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEditor;
 using UnityEngine.SceneManagement;
@@ -144,7 +145,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            TexteMessageInteraction.text = "Appuyer sur " + raccourciClavier.toucheClavier["Action"].ToString() + " pour intéragir";
+            TexteMessageInteraction.text = $"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour intéragir";
         }
         
     }

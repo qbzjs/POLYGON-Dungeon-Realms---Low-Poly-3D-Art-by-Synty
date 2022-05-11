@@ -34,10 +34,10 @@ public class InventaireSauvegarde : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W)) //Temporaire
-        {
-            SaveInventory(); 
-        }
+        //if (Input.GetKeyDown(KeyCode.W)) //Temporaire
+        //{
+        //    SaveInventory(); 
+        //}
     }
 
     public void SaveInventory()

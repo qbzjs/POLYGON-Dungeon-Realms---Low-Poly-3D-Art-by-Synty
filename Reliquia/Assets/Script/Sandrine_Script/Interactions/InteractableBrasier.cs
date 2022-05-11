@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class InteractableBrasier : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        William_Script.INTERACT_ACTIONS += LightBrasier;
-    }
+    //private void OnEnable()
+    //{
+    //    William_Script.INTERACT_ACTIONS += LightBrasier;
+    //}
 
-    private void OnDisable()
-    {
-        William_Script.INTERACT_ACTIONS -= LightBrasier;
-    }
+    //private void OnDisable()
+    //{
+    //    William_Script.INTERACT_ACTIONS -= LightBrasier;
+    //}
 
     private void LightBrasier()
     {

@@ -11,15 +11,15 @@ public class InteractionBrasier : MonoBehaviour
     private GameManager gameManager;
     private float delay;
 
-    private void OnEnable()
-    {
-        William_Script.INTERACT_ACTIONS += LightBrasier;
-    }
+    //private void OnEnable()
+    //{
+    //    William_Script.INTERACT_ACTIONS += LightBrasier;
+    //}
 
-    private void OnDisable()
-    {
-        William_Script.INTERACT_ACTIONS -= LightBrasier;
-    }
+    //private void OnDisable()
+    //{
+    //    William_Script.INTERACT_ACTIONS -= LightBrasier;
+    //}
 
     private void Awake()
     {

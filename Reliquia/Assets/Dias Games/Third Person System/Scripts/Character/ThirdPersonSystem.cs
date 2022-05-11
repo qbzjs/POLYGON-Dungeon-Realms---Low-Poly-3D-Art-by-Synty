@@ -271,7 +271,7 @@ namespace DiasGames.ThirdPersonSystem
             else
                 m_ForwardAmount = 0;
 
-            if (InputManager.walkButton.IsPressed)
+            if (!William_Script.instance.BoutonCourir)
                 m_ForwardAmount = Mathf.Clamp(m_ForwardAmount, 0, 0.5f);
             
         }

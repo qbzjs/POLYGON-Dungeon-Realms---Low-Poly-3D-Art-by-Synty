@@ -17,9 +17,15 @@ namespace DiasGames.ThirdPersonSystem
         [SerializeField] private float m_MaxHorSpeed = 7;
 
         [Tooltip("State of stationary jump")] [SerializeField] private string m_StationaryJumpState = "Air.JumpInPlace";
-
+        
         private float VerticalSpeed { get { return Mathf.Sqrt(-2 * Physics.gravity.y * m_MaxJumpHeight); } }
         private bool m_MirrorJump = false;
+        [SerializeField]
+        private PouvoirDonnees _donneesAlma;
+        [SerializeField]
+        private GameObject _particulesPouvoir;
+        private bool _pouvoirAlmaDisponible = true;
+        public float PuissanceAlma = 10.0f;
 
         public override string GetEnterState()
         {
@@ -30,10 +36,19 @@ namespace DiasGames.ThirdPersonSystem
             m_System.m_Animator.SetBool("Mirror", m_MirrorJump);
             return base.GetEnterState();
         }
-
+        public override void Initialize(ThirdPersonSystem mainSystem, AnimatorManager animatorManager, UnityInputManager inputManager)
+        {
+            base.Initialize(mainSystem, animatorManager, inputManager);
+            _particulesPouvoir.SetActive(false);
+        }
         public override bool TryEnterAbility()
         {
-            return m_System.IsGrounded;
+            if (m_System.IsGrounded && William_Script.instance.BoutonSaut)
+            {
+                William_Script.instance.BoutonSaut = false;
+                return true;
+            }
+            return false;
         }
 
         public override void OnEnterAbility()
@@ -63,12 +78,39 @@ namespace DiasGames.ThirdPersonSystem
 
             m_UseRootMotion = false;
             m_UseVerticalRootMotion = false;
+            _pouvoirAlmaDisponible = true;
+            if (_particulesPouvoir.activeSelf)
+            {
+                _particulesPouvoir.SetActive(false);
+            }
         }
 
         public override void FixedUpdateAbility()
         {
             base.FixedUpdateAbility();
-            AddVelocityToJump();
+            //AddVelocityToJump();
+
+            //Pour le Pouvoir Alma.
+            if (!m_System.IsGrounded && William_Script.instance.BoutonSaut && _pouvoirAlmaDisponible && IsFreeAbove() 
+                && William_Script.instance.Mana.ManaValue >= _donneesAlma.CoutMana)
+            {
+                m_FinishOnAnimationEnd = false;
+                _pouvoirAlmaDisponible = false;
+                William_Script.instance.BoutonSaut = false;
+                _particulesPouvoir.SetActive(true);
+                GlobalEvents.ExecuteEvent("ManaDamage", GameObject.FindGameObjectWithTag("Player"), 3.0f);
+                if (GetEnterState() == m_StationaryJumpState)
+                {
+                    m_UseRootMotion = false;
+                    m_UseVerticalRootMotion = false;
+                    SetState("Air.Alma");
+                    m_System.m_Rigidbody.velocity = new Vector3(0, PuissanceAlma, 0);
+                }
+                else
+                {
+                    DoJump(VerticalSpeed);
+                }
+            }
         }
 
         /// <summary>
@@ -102,7 +144,16 @@ namespace DiasGames.ThirdPersonSystem
             // Get Rotation target
             transform.rotation = GetRotationFromDirection(direction);
         }
+        private bool IsFreeAbove()
+        {
+            Vector3 start = transform.position + Vector3.up * m_System.CapsuleOriginalHeight;
+            if (Physics.Raycast(start, Vector3.up, 1.0f))
+            {
+                return false;
+            }
 
+            return true;
+        }
         private void Reset()
         {
             m_EnterState = "Air.Jump";

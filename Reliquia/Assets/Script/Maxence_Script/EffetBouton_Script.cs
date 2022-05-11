@@ -14,7 +14,10 @@ public class EffetBouton_Script : MonoBehaviour, IPointerExitHandler, IPointerEn
     {
         scene = SceneManager.GetActiveScene();
     }
-
+    private void OnEnable()
+    {
+        gameObject.GetComponentInChildren<Text>().color = Color.white;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (changementCouleurText)
