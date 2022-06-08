@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public bool menuInventaireOuvert;
     public bool menuOptionOuvert;
     public bool menuSlots;
-
+    
     public GameObject MessageInteraction;
     public Text TexteMessageInteraction;
 
@@ -123,11 +123,14 @@ public class GameManager : MonoBehaviour
 
     public void menuInventaire()
     {
+
         voirMenu = !voirMenu;
         GrimoireInventaire.alpha = Convert.ToInt32(voirMenu);
         DeplacerUIMenu();
         menuInventaireOuvert = !menuInventaireOuvert;
         MenuInventaire.localPosition = new Vector3((voirMenu == true ? 0 : -2000f), 0, 0);
+
+
     }
 
     public void DeplacerUIMenu()

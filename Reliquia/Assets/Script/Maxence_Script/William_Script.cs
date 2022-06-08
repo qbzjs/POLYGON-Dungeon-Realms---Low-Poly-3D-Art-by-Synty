@@ -124,6 +124,8 @@ public class William_Script : MonoBehaviour
     {
         ChampVisionInteractableCheck();
         DebugTouches();
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     /// <summary>

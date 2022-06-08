@@ -51,7 +51,7 @@ namespace clavier
             toucheClavier.Add("Garde", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Garde", "Mouse1")));
             toucheClavier.Add("MenuPause", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MenuPause", "Escape")));
             toucheClavier.Add("MenuInventaire", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MenuInventaire", "I")));
-            
+
             avancer.text = toucheClavier["Avancer"].ToString();
             gauche.text = toucheClavier["Gauche"].ToString();
             reculer.text = toucheClavier["Reculer"].ToString();

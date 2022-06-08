@@ -155,6 +155,12 @@ public class HUD_Script : MonoBehaviour
         GrimoireInventaire.alpha = Convert.ToInt32(GameManager.instance.voirMenu);
         GameManager.instance.ParentBoutonMenu.DOMoveX(-780f, 0.01f);
         GameManager.instance.FermerMessageInteraction();
+
+        if(GameManager.instance.menuInventaireOuvert = false)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void ContinuerJeu()
