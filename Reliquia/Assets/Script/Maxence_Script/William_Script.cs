@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 public class William_Script : MonoBehaviour
 {
     public static William_Script instance;
+    [SerializeField]
+    public GameObject Fader = null;
     [HideInInspector]
     public PlayerInput PlayerInput;
     [HideInInspector]
@@ -103,6 +105,11 @@ public class William_Script : MonoBehaviour
                 ObjetPoussable.GetComponent<Outline>().enabled = true;
                 GameManager.instance.AfficherMessageInteraction($"Maintenir {PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour pousser.");
             }
+        }
+
+        if (other.CompareTag("Fader"))
+        {
+            Fader.SetActive(true);
         }
     }
 
