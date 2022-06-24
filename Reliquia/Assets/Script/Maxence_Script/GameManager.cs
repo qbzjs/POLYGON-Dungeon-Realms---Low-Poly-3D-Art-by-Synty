@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
         ParentSlotLoad.localPosition = new Vector3(2000f, 0, 0);
         ParentSlotSave.localPosition = new Vector3(2000f, 0, 0);
         ParentBoutonMenu.DOMoveX((voirMenu == true ? 0f : -780f), 0.25f).SetUpdate(true);
+        SoundManager.instance.Play("menu_ouvert");
 
         //MenuPause.SetActive(voirMenu);
     }

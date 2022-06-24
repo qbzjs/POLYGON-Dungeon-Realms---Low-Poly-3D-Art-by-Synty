@@ -55,6 +55,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
             if (playerInventory.consommablesInventory.Contains(thisItem) && thisManager.maxItemConsommable < 12) AddItemToConsommable(item);
             else if (playerInventory.sacochesInventory.Contains(thisItem) && thisManager.maxItemSacoche < 12) AddItemToSacoche(item);
             else AddItemToConsommable(item);
+            SoundManager.instance.Play("objet_pickup");
         }
         else if (typeItemValue == TypeItem.Puzzle && thisManager.maxItemPuzzles < 6) AddItemToPuzzles(item);
 

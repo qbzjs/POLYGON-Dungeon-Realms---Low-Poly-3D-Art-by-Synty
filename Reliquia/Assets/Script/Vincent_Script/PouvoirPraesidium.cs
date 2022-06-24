@@ -59,6 +59,7 @@ public class PouvoirPraesidium : ThirdPersonAbility,IPouvoir
         GlobalEvents.ExecuteEvent("ManaDamage", gameObject, _donneesPraesidium.CoutMana);
         StartCoroutine(TempsRechargeDemarrer());
         StartCoroutine(VerifierBouclierActif());
+        SoundManager.instance.Play("SfxPouvoir2");
     }
     /// <summary>
     /// A la sortie du pouvoir.

@@ -61,6 +61,7 @@ public class PouvoirPulsate : ThirdPersonAbility,IPouvoir
         GlobalEvents.ExecuteEvent("ManaDamage", gameObject,_donneesPulsate.CoutMana);
         _particulesBras.SetActive(true);
         StartCoroutine(TempsRechargeDemarrer());
+        SoundManager.instance.Play("SfxPouvoir1");
     }
     /// <summary>
     /// A la sortie du pouvoir.
