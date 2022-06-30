@@ -38,7 +38,7 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
     public GameObject dialogueOuvertGameObject;
     private InGameDialogue _inGameDialogueVerrouille;
     private InGameDialogue _inGameDialogueOuvert;
-    public ItemInventaire item;
+    public ItemInventory item;
     private bool _estVerouille = true;
 
     private void Awake()
@@ -87,9 +87,9 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
     {
         if (_estVerouille)
         {
-            if (InventaireManager.instance.playerInventory.sacochesInventory.Contains(item))
+            if (William_Script.instance.Inventory.sacoche.Contains(item))
             {
-                InventaireManager.instance.playerInventory.sacochesInventory.Remove(item);
+                William_Script.instance.Inventory.sacoche.Remove(item);
                 InGameDialogueManager.Instance.StartDialogue(_inGameDialogueOuvert);
                 _estVerouille = false;
                 _estOuvert = true;

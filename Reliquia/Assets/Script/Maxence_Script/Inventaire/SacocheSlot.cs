@@ -8,7 +8,12 @@ public class SacocheSlot : InventaireSlot, IDropHandler
     // Canvas qui contiendra l'item déposé dans la sacoche
     [SerializeField] private GameObject canvasSlot;
     // Inventaire du joueur
-    [SerializeField] private PlayerInventory playerInventory;
+    private Inventory playerInventory;
+
+    private void Start()
+    {
+        playerInventory = William_Script.instance.Inventory;
+    }
 
     /*** 
      *** Fonction appelée lorsque l'utilisateur dépose un item dans la sacoche 
@@ -18,31 +23,30 @@ public class SacocheSlot : InventaireSlot, IDropHandler
         InventaireSlot slot = eventData.pointerDrag.GetComponent<InventaireSlot>();
 
         // Si on déplace un objet qui était présent dans la sacoche sur un nouvel emplacement
-        if (slot.TypeItem == "Sacoche")
+        if (slot.TypeItem.Equals(ItemAsset.Type.Sacoche))
         {
-            slot.thisItem.isDropped = true;
+            slot.Item.isDropped = true;
             eventData.pointerDrag.transform.SetParent(canvasSlot.transform);
         }
         // Si il s'agit d'un objet venant du grimoire
         else
         {
-            if (playerInventory.sacochesInventory.Contains(slot.thisItem))
+            if (playerInventory.sacoche.Contains(slot.Item))
             {
-                slot.thisItem.numberHeld++;
+                slot.Item.amount++;
                 Destroy(eventData.pointerDrag.gameObject);
-                thisManager.ClearInventorySlots();
-                thisManager.MakeSacocheSlots();
+                Manager.ClearInventorySlots();
+                Manager.MakeSlots(ItemAsset.Type.Sacoche);
             }
             else
             {
-                slot.thisItem.isDropped = true;
+                slot.Item.isDropped = true;
                 eventData.pointerDrag.transform.SetParent(canvasSlot.transform);
-                if (slot.TypeItem == "Consommable") playerInventory.consommablesInventory.Remove(slot.thisItem);
-                else if (slot.TypeItem == "ObjetQuete") playerInventory.objetsQuetesInventory.Remove(slot.thisItem);
+                if (slot.TypeItem.Equals(ItemAsset.Type.Consommable)) playerInventory.consommables.Remove(slot.Item);
+                else if (slot.TypeItem.Equals(ItemAsset.Type.Quete)) playerInventory.objetsQuetes.Remove(slot.Item);
 
-                slot.TypeItem = "Sacoche";
-                slot.thisItem.typeItem = "Sacoche";
-                playerInventory.sacochesInventory.Add(slot.thisItem);
+                slot.Item.typeItem = slot.TypeItem = ItemAsset.Type.Sacoche;
+                playerInventory.AddItem(slot.Item);
             }
         }
     }
@@ -52,19 +56,19 @@ public class SacocheSlot : InventaireSlot, IDropHandler
      ***/
     public void ClickedOn()
     {
-        if (thisItem)
+        if (Item != null)
         {
-            if (thisItem.usable && TypeItem == "Sacoche")
+            if (Item.asset.usable && TypeItem.Equals(ItemAsset.Type.Sacoche))
             {
-                thisManager.SetupDescriptionAndButton(thisItem.itemDescription, thisItem.usable, thisItem);
-                thisItem.Use();
-                thisManager.ClearInventorySlots();
-                thisManager.MakeSacocheSlots();
-                thisManager.SetupDescriptionAndButton("", thisItem.usable, thisItem);
+                Manager.SetupDescriptionAndButton(Item.asset.itemDescription, Item.asset.usable, Item);
+                Item.asset.Use();
+                Manager.ClearInventorySlots();
+                Manager.MakeSlots(ItemAsset.Type.Sacoche);
+                Manager.SetupDescriptionAndButton("", Item.asset.usable, Item);
 
-                if (thisItem.numberHeld <= 0)
+                if (Item.amount <= 0)
                 {
-                    thisManager.playerInventory.sacochesInventory.Remove(thisItem);
+                    playerInventory.RemoveItem(Item);
                 }
             }
         }

@@ -14,7 +14,7 @@ public class MarqeurQuete_Script : MonoBehaviour
         //image = gameObject.GetComponent<PhysicaltemInventaire>().itemImage;
         if (TryGetComponent(out PhysicaltemInventaire physicaltemInventaire))
         {
-            icone = physicaltemInventaire.thisItem.itemImage;
+            icone = physicaltemInventaire.itemAsset.itemImage;
             image = physicaltemInventaire.itemImage;
         }
        

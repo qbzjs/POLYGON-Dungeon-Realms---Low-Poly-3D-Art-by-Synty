@@ -38,8 +38,14 @@ public class William_Script : MonoBehaviour
     private float _delaiBruitPas = 0.1f;
 
 
+    public Inventory Inventory;
+
     private void Awake()
     {
+        Inventory = GetComponent<Inventory>();
+        if (Inventory == null)
+            Debug.LogError("Missing Inventory Component on " + name);
+
         InitialiserVariables();
         ChargerBindingJoueur();
     }
