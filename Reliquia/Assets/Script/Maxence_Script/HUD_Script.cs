@@ -65,8 +65,8 @@ public class HUD_Script : MonoBehaviour
 
     public static HUD_Script instance;
 
-    [Header("SFX")]
     [NonSerialized] public AudioSource audioSource;
+    [Header("SFX")]
     public AudioClip SFX_OpenInventory;
     public AudioClip SFX_CloseInventory;
 
