@@ -11,6 +11,7 @@ public class William_Script : MonoBehaviour
     public static William_Script instance;
     [SerializeField]
     public GameObject Fader = null;
+    public GameObject Script = null;
     [HideInInspector]
     public PlayerInput PlayerInput;
     [HideInInspector]
@@ -110,6 +111,7 @@ public class William_Script : MonoBehaviour
         if (other.CompareTag("Fader"))
         {
             Fader.SetActive(true);
+            Script.SetActive(true);
         }
     }
 
