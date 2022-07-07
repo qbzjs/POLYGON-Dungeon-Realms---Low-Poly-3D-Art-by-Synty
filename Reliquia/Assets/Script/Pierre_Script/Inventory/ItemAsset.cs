@@ -17,14 +17,14 @@ public class ItemAsset : ScriptableObject
 
     public Type typeItemBase;
 
-    public UnityEvent thisEvent;
+    public UnityEvent Effect;
 
     public enum Type { Sacoche, Quete, Puzzle, Consommable }
 
     public void Use()
     {
         Debug.Log("test item : " + itemNom);
-        thisEvent.Invoke();
+        Effect.Invoke();
     }
 
 }

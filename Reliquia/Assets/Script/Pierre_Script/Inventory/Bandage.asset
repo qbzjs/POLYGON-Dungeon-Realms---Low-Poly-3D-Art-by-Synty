@@ -21,6 +21,18 @@ MonoBehaviour:
   usable: 1
   unique: 0
   typeItemBase: 3
-  thisEvent:
+  Effect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6030935605691380770, guid: 5619ac32f1719c04b8aac842d6aca46c,
+          type: 3}
+        m_MethodName: Heal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

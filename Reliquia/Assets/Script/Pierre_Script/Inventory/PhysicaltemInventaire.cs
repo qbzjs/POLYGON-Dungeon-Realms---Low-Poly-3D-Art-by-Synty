@@ -13,6 +13,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
     private Outline _outline = null;
 
     public ItemAsset itemAsset;
+    
     public int amount = 1;
     private ItemInventory Item;
 

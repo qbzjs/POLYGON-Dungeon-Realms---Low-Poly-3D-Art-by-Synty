@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemInventory item)
     {
+        InventaireManager.instance.ClearSlots(item.typeItem);
         List<ItemInventory> stackableItems = new List<ItemInventory>();
 
         switch (item.typeItem)
@@ -78,7 +79,11 @@ public class Inventory : MonoBehaviour
                     int loop = item.amount / maxStack;
                     // Création de stacks plein
                     if (loop > 0)
-                        for (int i = 0; i < loop; i++) consommables.Add(new ItemInventory(item.asset, maxStack));
+                        for (int i = 0; i < loop; i++)
+                        {
+                            consommables.Add(new ItemInventory(item.asset, maxStack));
+                            item.amount -= maxStack;
+                        }
 
                     // Création d'un dernier stack, prenant le reste
                     int reste = item.amount % maxStack;

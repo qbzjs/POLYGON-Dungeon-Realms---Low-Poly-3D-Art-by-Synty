@@ -35,7 +35,7 @@ public class SacocheSlot : InventaireSlot, IDropHandler
             {
                 slot.Item.amount++;
                 Destroy(eventData.pointerDrag.gameObject);
-                Manager.ClearInventorySlots();
+                Manager.ClearSlots(ItemAsset.Type.Sacoche);
                 Manager.MakeSlots(ItemAsset.Type.Sacoche);
             }
             else
@@ -62,7 +62,7 @@ public class SacocheSlot : InventaireSlot, IDropHandler
             {
                 Manager.SetupDescriptionAndButton(Item.asset.itemDescription, Item.asset.usable, Item);
                 Item.asset.Use();
-                Manager.ClearInventorySlots();
+                Manager.ClearSlots(ItemAsset.Type.Sacoche);
                 Manager.MakeSlots(ItemAsset.Type.Sacoche);
                 Manager.SetupDescriptionAndButton("", Item.asset.usable, Item);
 

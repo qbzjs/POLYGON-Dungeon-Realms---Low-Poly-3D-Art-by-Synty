@@ -34,7 +34,7 @@ public class DropSlots : MonoBehaviour, IDropHandler
                 {
                     item.amount++;
                     Destroy(eventData.pointerDrag.gameObject);
-                    thisManager.ClearConsommableSlots();
+                    thisManager.ClearSlots(ItemAsset.Type.Consommable);
                     thisManager.MakeSlots(ItemAsset.Type.Consommable);
                 }
                 // Si l'objet n'est pas encore présent dans le grimoire
@@ -61,7 +61,7 @@ public class DropSlots : MonoBehaviour, IDropHandler
                 {
                     //item.numberHeld++;
                     Destroy(eventData.pointerDrag.gameObject);
-                    thisManager.ClearObjetQuetesSlots();
+                    thisManager.ClearSlots(ItemAsset.Type.Quete);
                     thisManager.MakeSlots(ItemAsset.Type.Quete);
                 }
                 else

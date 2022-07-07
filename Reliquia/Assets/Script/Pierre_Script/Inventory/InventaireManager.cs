@@ -99,6 +99,36 @@ public class InventaireManager : MonoBehaviour
             if (newSlot) newSlot.Setup(Item, this);
         }
     }
+
+    public void ClearSlots(ItemAsset.Type TypeItem)
+    {
+        switch(TypeItem)
+        {
+            case ItemAsset.Type.Sacoche:
+                for (int i = 0; i < playerInventory.sacoche.Count; i++)
+                    Destroy(sacochePanel.transform.GetChild(i).gameObject);
+                break;
+
+            case ItemAsset.Type.Quete:
+                for (int i = 0; i < playerInventory.objetsQuetes.Count; i++)
+                    Destroy(objetQuetePanel.transform.GetChild(i).gameObject);
+                break;
+
+            case ItemAsset.Type.Consommable:
+                for (int i = 0; i < playerInventory.consommables.Count; i++)
+                    Destroy(consommablePanel.transform.GetChild(i).gameObject);
+                break;
+
+            case ItemAsset.Type.Puzzle:
+                for (int i = 0; i < playerInventory.puzzles.Count; i++)
+                    Destroy(PuzzlePanel.transform.GetChild(i).gameObject);
+                break;
+
+            default:
+                Debug.Log(TypeItem + " not implemented");
+                break;
+        }
+    }
     #endregion
 
     #region Setup
@@ -106,37 +136,6 @@ public class InventaireManager : MonoBehaviour
     {
         currentItem = newItem;
         descriptionText.text = newDescription;
-    }
-    #endregion
-
-    #region ClearInventaires
-    public void ClearInventorySlots()
-    {
-        for (int i = 0; i < playerInventory.sacoche.Count; i++)
-        {
-            Destroy(sacochePanel.transform.GetChild(i).gameObject);
-        }
-    }
-    public void ClearConsommableSlots()
-    {
-        for (int i = 0; i < playerInventory.consommables.Count; i++)
-        {
-            Destroy(consommablePanel.transform.GetChild(i).gameObject);
-        }
-    }
-    public void ClearObjetQuetesSlots()
-    {
-        for (int i = 0; i < playerInventory.objetsQuetes.Count; i++)
-        {
-            Destroy(objetQuetePanel.transform.GetChild(i).gameObject);
-        }
-    }
-    public void ClearPuzzlesSlots()
-    {
-        for (int i = 0; i < playerInventory.puzzles.Count; i++)
-        {
-            Destroy(PuzzlePanel.transform.GetChild(i).gameObject);
-        }
     }
     #endregion
 
