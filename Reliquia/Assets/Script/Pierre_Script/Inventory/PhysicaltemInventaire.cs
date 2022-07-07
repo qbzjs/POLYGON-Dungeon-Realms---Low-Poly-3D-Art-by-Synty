@@ -54,8 +54,13 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
             InGameDialogue inGameDialogue = inGameDialogueGameObject.GetComponent<DialogueAttached>().inGameDialogue;
             InGameDialogueManager.Instance.StartDialogue(inGameDialogue);
         }
-        playerInventory.AddItem(Item);
-        Destroy(gameObject);
+        if(playerInventory.AddItem(Item)) Destroy(gameObject);
+        else
+        {
+            amount = Item.amount;
+            Debug.Log(Item.typeItem + " inventaire plein!");
+            // Réponse inventaire plein
+        }
     }
 
     public void MontrerOutline(bool affichage)

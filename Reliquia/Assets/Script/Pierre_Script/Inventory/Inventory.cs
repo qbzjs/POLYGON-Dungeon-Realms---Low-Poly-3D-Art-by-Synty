@@ -1,17 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
-private class ItemAsset
-{
-
-}*/
 
 public class Inventory : MonoBehaviour
 {
 
     public int maxStack;
 
+    public int MaxConsommableSlot = 12;
+    public int MaxQueteSlot = 6;
 
     //[System.NonSerialized] 
     public List<ItemInventory> sacoche = new List<ItemInventory>();
@@ -22,10 +19,11 @@ public class Inventory : MonoBehaviour
     //[System.NonSerialized]
     public List<ItemInventory> puzzles = new List<ItemInventory>();
 
-    public void AddItem(ItemInventory item)
+    public bool AddItem(ItemInventory item)
     {
         InventaireManager.instance.ClearSlots(item.typeItem);
         List<ItemInventory> stackableItems = new List<ItemInventory>();
+        bool full = false;
 
         switch (item.typeItem)
         {
@@ -52,12 +50,20 @@ public class Inventory : MonoBehaviour
                     tmp.amount = maxStack;
                     int loop = item.amount / maxStack;
                     // Création de stacks plein
-                    if(loop > 0)
-                        for (int i = 0; i < loop; i++) objetsQuetes.Add(tmp);
+                    if (loop > 0)
+                        for (int i = 0; i < loop; i++)
+                            if (objetsQuetes.Count < MaxQueteSlot)
+                            {
+                                objetsQuetes.Add(tmp);
+                                item.amount -= maxStack;
+                            }
+                            else full = true;
 
                     // Création d'un dernier stack, prenant le reste
                     item.amount %= maxStack;    
-                    if (item.amount > 0) objetsQuetes.Add(item);
+                    if (item.amount > 0)
+                        if (objetsQuetes.Count < MaxQueteSlot) objetsQuetes.Add(item);
+                        else full = true;
                 }
                 break;
 
@@ -80,16 +86,18 @@ public class Inventory : MonoBehaviour
                     // Création de stacks plein
                     if (loop > 0)
                         for (int i = 0; i < loop; i++)
-                        {
-                            consommables.Add(new ItemInventory(item.asset, maxStack));
-                            item.amount -= maxStack;
-                        }
+                            if (consommables.Count < MaxConsommableSlot)
+                            {
+                                consommables.Add(new ItemInventory(item.asset, maxStack));
+                                item.amount -= maxStack;
+                            }
+                            else full = true;
 
-                    // Création d'un dernier stack, prenant le reste
+                    // Création d'un dernier stack si des emplacements sont disponibles, prenant le reste
                     int reste = item.amount % maxStack;
-                    if (reste > 0) consommables.Add(new ItemInventory(item.asset, reste));
-
-
+                    if (reste > 0)
+                        if (consommables.Count < MaxConsommableSlot) consommables.Add(new ItemInventory(item.asset, reste));
+                        else full = true;
                 }
                 break;
 
@@ -104,6 +112,7 @@ public class Inventory : MonoBehaviour
         }
 
         InventaireManager.instance.MakeSlots(item.typeItem);
+        return !full;
     }
 
     public void RemoveItem(ItemInventory item)
