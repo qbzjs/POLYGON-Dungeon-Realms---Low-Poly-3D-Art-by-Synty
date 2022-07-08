@@ -16,6 +16,19 @@ public class SacocheSlot : InventaireSlot, IDropHandler
     private void Start()
     {
         playerInventory = William_Script.instance.Inventory;
+        Manager = InventaireManager.instance;
+    }
+
+    private void SetInventaireSlot(InventaireSlot slot)
+    {
+        this.slot = slot;
+        Item = slot.Item;
+    }
+
+    public void ResetSlot()
+    {
+        slot = null;
+        Item = null;
     }
 
     /*** 
@@ -23,40 +36,57 @@ public class SacocheSlot : InventaireSlot, IDropHandler
      ***/
     public void OnDrop(PointerEventData eventData)
     {
-        slot = eventData.pointerDrag.GetComponent<InventaireSlot>();
-        Item = slot.Item;
-        Manager = slot.Manager;
+        InventaireSlot DroppedSlot = eventData.pointerDrag.GetComponent<InventaireSlot>();
 
         // Si on déplace un objet qui était présent dans la sacoche sur un nouvel emplacement
-        if (slot.TypeItem.Equals(ItemAsset.Type.Sacoche))
+        if (DroppedSlot.TypeItem.Equals(ItemAsset.Type.Sacoche))
         {
+            if (slot != null && slot != DroppedSlot) SwapSlots(DroppedSlot, slot);
+            else Manager.GetSacocheSlot(DroppedSlot.Item).ResetSlot();
+
+            SetInventaireSlot(DroppedSlot);
+
             slot.Item.isDropped = true;
             eventData.pointerDrag.transform.SetParent(canvasSlot.transform);
         }
         // Si il s'agit d'un objet venant du grimoire
         else
         {
-            if (playerInventory.sacoche.Contains(slot.Item))
-            {
-                slot.Item.amount++;
-                Destroy(eventData.pointerDrag.gameObject);
-            }
-            else
-            {
-                // UI Setup
-                slot.Item.isDropped = true;
-                eventData.pointerDrag.transform.SetParent(canvasSlot.transform);
-                Button btn = eventData.pointerDrag.GetComponent<Button>();
-                btn.enabled = true;
-                btn.onClick.AddListener(ClickedOn);
+            if (slot != null) SwapSlots(DroppedSlot, slot);
+
+            SetInventaireSlot(DroppedSlot);
+            // UI Setup
+            slot.Item.isDropped = true;
+            eventData.pointerDrag.transform.SetParent(canvasSlot.transform);
+            Button btn = eventData.pointerDrag.GetComponent<Button>();
+            btn.enabled = true;
+            btn.onClick.AddListener(ClickedOn);
 
 
-                if (slot.TypeItem.Equals(ItemAsset.Type.Consommable)) playerInventory.consommables.Remove(slot.Item);
-                else if (slot.TypeItem.Equals(ItemAsset.Type.Quete)) playerInventory.objetsQuetes.Remove(slot.Item);
+            if (slot.TypeItem.Equals(ItemAsset.Type.Consommable)) playerInventory.consommables.Remove(slot.Item);
+            else if (slot.TypeItem.Equals(ItemAsset.Type.Quete)) playerInventory.objetsQuetes.Remove(slot.Item);
 
-                slot.Item.typeItem = slot.TypeItem = ItemAsset.Type.Sacoche;
-                playerInventory.AddItem(slot.Item);
-            }
+            slot.Item.typeItem = slot.TypeItem = ItemAsset.Type.Sacoche;
+            playerInventory.AddItem(slot.Item);
+        }
+    }
+
+    private void SwapSlots(InventaireSlot Dropped, InventaireSlot Swapped)
+    {
+        Debug.Log("swap");
+        // Si l'objet déposé provient de la sacoche
+        if(Dropped.TypeItem.Equals(ItemAsset.Type.Sacoche))
+        {
+            Debug.Log("in sacoche");
+            SacocheSlot SwapSlot = Manager.GetSacocheSlot(Dropped.Item);
+            SwapSlot.SetInventaireSlot(Swapped);
+            Swapped.transform.SetParent(SwapSlot.canvasSlot.transform);
+        }
+        // Si l'objet déposé provient du grimoire
+        else
+        {
+            Debug.Log("in grimoire");
+
         }
     }
 

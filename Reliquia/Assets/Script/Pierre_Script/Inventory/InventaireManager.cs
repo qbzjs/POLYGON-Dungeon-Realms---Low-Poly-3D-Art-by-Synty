@@ -149,4 +149,9 @@ public class InventaireManager : MonoBehaviour
             }
         }
     }
+
+    public SacocheSlot GetSacocheSlot(ItemInventory item)
+    {
+        return sacocheSlots.Find(s => s.Item != null && s.Item.Equals(item));
+    }
 }

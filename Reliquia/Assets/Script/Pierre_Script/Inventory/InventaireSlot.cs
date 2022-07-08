@@ -18,6 +18,11 @@ public class InventaireSlot : MonoBehaviour
     public ItemAsset.Type TypeItemBase;
     public ItemAsset.Type TypeItem;
 
+    private void Start()
+    {
+        Manager = InventaireManager.instance;
+    }
+
     public void Setup(ItemInventory Item, InventaireManager Manager)
     {
         this.Item = Item;
