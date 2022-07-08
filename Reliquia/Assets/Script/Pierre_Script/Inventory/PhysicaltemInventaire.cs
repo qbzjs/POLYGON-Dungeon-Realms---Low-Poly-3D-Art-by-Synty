@@ -58,7 +58,8 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
         if (playerInventory.AddItem(Item))
         {
             if (Item.asset.typeItemBase.Equals(ItemAsset.Type.Quete) && GetComponent<MarqeurQuete_Script>() != null)
-                Compas_Script.instance.RemoveMarqueurQuete(GetComponent<MarqeurQuete_Script>());
+                Compas_Script.instance.RemoveMarqueurQuete(GetComponent<MarqeurQuete_Script>()); 
+            SoundManager.instance.Play("objet_pickup");
             Destroy(gameObject);
         }
         else
