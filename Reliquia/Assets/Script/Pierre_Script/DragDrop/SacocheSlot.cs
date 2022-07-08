@@ -11,7 +11,7 @@ public class SacocheSlot : InventaireSlot, IDropHandler
     // Inventaire du joueur
     private Inventory playerInventory;
 
-    private InventaireSlot slot;
+    [System.NonSerialized] public InventaireSlot slot;
 
     private void Start()
     {
@@ -40,8 +40,6 @@ public class SacocheSlot : InventaireSlot, IDropHandler
             {
                 slot.Item.amount++;
                 Destroy(eventData.pointerDrag.gameObject);
-                //Manager.ClearSlots(ItemAsset.Type.Sacoche);
-                Manager.MakeSlots(ItemAsset.Type.Sacoche);
             }
             else
             {

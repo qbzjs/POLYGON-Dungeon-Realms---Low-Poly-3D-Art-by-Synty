@@ -22,7 +22,6 @@ public class ItemInventory
     // et on renvoie le nombre restant, car il restera d'autres stack à créer ou empiler
     public int StackItem(int delta, int maxStack)
     {
-        Debug.Log(asset.itemNom + " old amount : " + amount);
         amount += delta;
         if (amount > maxStack)
         {
@@ -32,7 +31,6 @@ public class ItemInventory
         }
         else delta = 0;
 
-        Debug.Log(asset.itemNom + " new amount : " + amount);
 
         return delta;
 

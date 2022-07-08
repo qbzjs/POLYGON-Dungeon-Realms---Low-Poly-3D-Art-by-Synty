@@ -12,7 +12,7 @@ public class InventaireManager : MonoBehaviour
     private Inventory playerInventory;
     [SerializeField] private GameObject blankInventtaireSlot;
 
-    public GameObject sacochePanel;
+    public List<SacocheSlot> sacocheSlots;
     public GameObject consommablePanel;
     public GameObject objetQuetePanel;
     public GameObject PuzzlePanel;
@@ -47,7 +47,6 @@ public class InventaireManager : MonoBehaviour
 
         InventaireSauvegarde.instance.LoadInventory();
 
-        MakeSlots(ItemAsset.Type.Sacoche);
         MakeSlots(ItemAsset.Type.Consommable);
         MakeSlots(ItemAsset.Type.Quete);
         MakeSlots(ItemAsset.Type.Puzzle);
@@ -57,6 +56,8 @@ public class InventaireManager : MonoBehaviour
 
     public void MakeSlots(ItemAsset.Type TypeItem)
     {
+        if (TypeItem.Equals(ItemAsset.Type.Sacoche)) return;
+
         List<ItemInventory> Items = new List<ItemInventory>();
         GameObject temp, Panel = null;
         InventaireSlot newSlot;
@@ -64,10 +65,6 @@ public class InventaireManager : MonoBehaviour
 
         switch (TypeItem)
         {
-            case ItemAsset.Type.Sacoche:
-                Items = playerInventory.sacoche;
-                Panel = sacochePanel;
-                break;
             case ItemAsset.Type.Quete:
                 Items = playerInventory.objetsQuetes;
                 Panel = objetQuetePanel;
@@ -137,19 +134,18 @@ public class InventaireManager : MonoBehaviour
     }
     #endregion
 
-    public void RemoveItemFromSacoche(ItemInventory item)
+    public void RemoveSacocheSlot(ItemInventory item)
     {
-        if (item != null)
+        // On récupère la liste des slots ayant un objet
+        List<SacocheSlot> slots = sacocheSlots.FindAll(s => s.slot != null);
+
+        // On trouve l'objet à supprimer
+        foreach (SacocheSlot sacocheSlot in slots)
         {
-            int count = sacochePanel.transform.childCount;
-            for (int i = 0; i < count; i++)
+            if(sacocheSlot.slot.Item.asset.Equals(item.asset))
             {
-                GameObject tempItem = sacochePanel.transform.GetChild(i).gameObject;
-                if (tempItem.GetComponent<InventaireSlot>().Item == item )
-                {
-                    item.typeItem = item.asset.typeItemBase;
-                    Destroy(tempItem);
-                }
+                Destroy(sacocheSlot.slot.gameObject);
+                return;
             }
         }
     }

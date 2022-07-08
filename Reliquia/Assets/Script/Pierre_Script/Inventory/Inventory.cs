@@ -46,15 +46,13 @@ public class Inventory : MonoBehaviour
                 // Si tous les stacks ont été rempli, mais qu'il nous reste des items à stack, on va créer de nouveaux emplacements d'inventaire
                 if(item.amount != 0)
                 {
-                    ItemInventory tmp = item;
-                    tmp.amount = maxStack;
                     int loop = item.amount / maxStack;
                     // Création de stacks plein
                     if (loop > 0)
                         for (int i = 0; i < loop; i++)
                             if (objetsQuetes.Count < MaxQueteSlot)
                             {
-                                objetsQuetes.Add(tmp);
+                                objetsQuetes.Add(new ItemInventory(item.asset, maxStack));
                                 item.amount -= maxStack;
                             }
                             else full = true;
@@ -115,26 +113,54 @@ public class Inventory : MonoBehaviour
         return !full;
     }
 
-    public void RemoveItem(ItemInventory item)
+    public void RemoveItem(ItemInventory item, int amount=-1)
     {
         switch (item.typeItem)
         {
             case ItemAsset.Type.Sacoche:
+                if (amount == -1) sacoche.Remove(item);
                 break;
 
             case ItemAsset.Type.Quete:
+                if (amount == -1) objetsQuetes.Remove(item);
+
                 break;
 
             case ItemAsset.Type.Consommable:
+                if (amount == -1) consommables.Remove(item);
                 break;
 
             case ItemAsset.Type.Puzzle:
+                if (amount == -1) puzzles.Remove(item);
                 break;
 
             default:
                 Debug.LogError("Inventory::Remove not implemented yet : " + item.asset.itemNom);
                 break;
+        }
+    }
 
+    public void RemoveItemInSacoche(ItemAsset item, int amount = -1)
+    {
+        List<ItemInventory> Items = sacoche.FindAll(i => i.asset.Equals(item));
+
+        if (amount == -1)
+        {
+            sacoche.Remove(Items[0]);
+            InventaireManager.instance.RemoveSacocheSlot(Items[0]);
+        }
+        else
+        {
+            foreach (ItemInventory i in Items)
+            {
+                if (amount >= 0)
+                {
+                    int tmp = amount;
+                    amount -= (maxStack - i.amount);
+                    i.amount -= tmp;
+                    if (i.amount == 0) sacoche.Remove(i);
+                }
+            }
         }
     }
 }

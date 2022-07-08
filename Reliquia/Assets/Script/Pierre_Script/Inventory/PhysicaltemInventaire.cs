@@ -54,7 +54,13 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
             InGameDialogue inGameDialogue = inGameDialogueGameObject.GetComponent<DialogueAttached>().inGameDialogue;
             InGameDialogueManager.Instance.StartDialogue(inGameDialogue);
         }
-        if(playerInventory.AddItem(Item)) Destroy(gameObject);
+
+        if (playerInventory.AddItem(Item))
+        {
+            if (Item.asset.typeItemBase.Equals(ItemAsset.Type.Quete) && GetComponent<MarqeurQuete_Script>() != null)
+                Compas_Script.instance.RemoveMarqueurQuete(GetComponent<MarqeurQuete_Script>());
+            Destroy(gameObject);
+        }
         else
         {
             amount = Item.amount;
