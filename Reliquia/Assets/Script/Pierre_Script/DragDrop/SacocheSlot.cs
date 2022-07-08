@@ -41,7 +41,9 @@ public class SacocheSlot : InventaireSlot, IDropHandler
         // Si on déplace un objet qui était présent dans la sacoche sur un nouvel emplacement
         if (DroppedSlot.TypeItem.Equals(ItemAsset.Type.Sacoche))
         {
+            // Si le sacoche slot possède déjà un item, on change de place le précédent slot
             if (slot != null && slot != DroppedSlot) SwapSlots(DroppedSlot, slot);
+            // Sinon on réinitialise le précédent slot
             else Manager.GetSacocheSlot(DroppedSlot.Item).ResetSlot();
 
             SetInventaireSlot(DroppedSlot);
@@ -62,7 +64,7 @@ public class SacocheSlot : InventaireSlot, IDropHandler
             btn.enabled = true;
             btn.onClick.AddListener(ClickedOn);
 
-
+            // On retire l'objet de l'inventaire
             if (slot.TypeItem.Equals(ItemAsset.Type.Consommable)) playerInventory.consommables.Remove(slot.Item);
             else if (slot.TypeItem.Equals(ItemAsset.Type.Quete)) playerInventory.objetsQuetes.Remove(slot.Item);
 

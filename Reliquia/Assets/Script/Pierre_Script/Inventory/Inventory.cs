@@ -140,6 +140,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // Permet de retirer un item de la sacoche en renseignant son asset, utile pour les objets de quête.
     public void RemoveItemInSacoche(ItemAsset item, int amount = -1)
     {
         List<ItemInventory> Items = sacoche.FindAll(i => i.asset.Equals(item));

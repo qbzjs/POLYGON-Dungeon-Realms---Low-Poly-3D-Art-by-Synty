@@ -25,8 +25,4 @@ public class ItemEffect : MonoBehaviour
         }
     }
 
-    public void IncreaseMana()
-    {
-        Debug.Log("IncreaseMana");
-    }
 }
