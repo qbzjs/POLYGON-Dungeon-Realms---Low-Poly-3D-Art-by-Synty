@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SacocheSlot : InventaireSlot, IDropHandler
 {
@@ -21,6 +22,8 @@ public class SacocheSlot : InventaireSlot, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         InventaireSlot slot = eventData.pointerDrag.GetComponent<InventaireSlot>();
+        Item = slot.Item;
+        Manager = slot.Manager;
 
         // Si on déplace un objet qui était présent dans la sacoche sur un nouvel emplacement
         if (slot.TypeItem.Equals(ItemAsset.Type.Sacoche))
@@ -35,13 +38,19 @@ public class SacocheSlot : InventaireSlot, IDropHandler
             {
                 slot.Item.amount++;
                 Destroy(eventData.pointerDrag.gameObject);
-                Manager.ClearSlots(ItemAsset.Type.Sacoche);
+                //Manager.ClearSlots(ItemAsset.Type.Sacoche);
                 Manager.MakeSlots(ItemAsset.Type.Sacoche);
             }
             else
             {
+                // UI Setup
                 slot.Item.isDropped = true;
                 eventData.pointerDrag.transform.SetParent(canvasSlot.transform);
+                Button btn = eventData.pointerDrag.GetComponent<Button>();
+                btn.enabled = true;
+                btn.onClick.AddListener(ClickedOn);
+
+
                 if (slot.TypeItem.Equals(ItemAsset.Type.Consommable)) playerInventory.consommables.Remove(slot.Item);
                 else if (slot.TypeItem.Equals(ItemAsset.Type.Quete)) playerInventory.objetsQuetes.Remove(slot.Item);
 
@@ -58,18 +67,10 @@ public class SacocheSlot : InventaireSlot, IDropHandler
     {
         if (Item != null)
         {
+            Debug.Log(Item.asset.itemNom);
             if (Item.asset.usable && TypeItem.Equals(ItemAsset.Type.Sacoche))
             {
-                Manager.SetupDescriptionAndButton(Item.asset.itemDescription, Item.asset.usable, Item);
                 Item.asset.Use();
-                Manager.ClearSlots(ItemAsset.Type.Sacoche);
-                Manager.MakeSlots(ItemAsset.Type.Sacoche);
-                Manager.SetupDescriptionAndButton("", Item.asset.usable, Item);
-
-                if (Item.amount <= 0)
-                {
-                    playerInventory.RemoveItem(Item);
-                }
             }
         }
     }

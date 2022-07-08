@@ -105,8 +105,6 @@ public class InventaireManager : MonoBehaviour
         switch(TypeItem)
         {
             case ItemAsset.Type.Sacoche:
-                for (int i = 0; i < playerInventory.sacoche.Count; i++)
-                    Destroy(sacochePanel.transform.GetChild(i).gameObject);
                 break;
 
             case ItemAsset.Type.Quete:

@@ -236,7 +236,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7837417797265379353}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -297,10 +297,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 7463029869174249935}
   itemImage: {fileID: 2698470334155865451}
-  thisItem: {fileID: 11400000, guid: 2012066dae2ed6745b64bce8fefc6cb8, type: 2}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
 --- !u!114 &5340677200527671768
 MonoBehaviour:
   m_ObjectHideFlags: 0

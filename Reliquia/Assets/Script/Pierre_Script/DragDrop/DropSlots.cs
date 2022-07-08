@@ -29,24 +29,11 @@ public class DropSlots : MonoBehaviour, IDropHandler
         {
             if (!item.typeItem.Equals(ItemAsset.Type.Consommable) && item.asset.typeItemBase.Equals(ItemAsset.Type.Consommable))
             {
-                // Si l'objet est déjà présent dans le grimoire 
-                if (playerInventory.consommables.Exists(i => i.asset.itemNom == item.asset.itemNom && i.isDropped))
-                {
-                    item.amount++;
-                    Destroy(eventData.pointerDrag.gameObject);
-                    thisManager.ClearSlots(ItemAsset.Type.Consommable);
-                    thisManager.MakeSlots(ItemAsset.Type.Consommable);
-                }
-                // Si l'objet n'est pas encore présent dans le grimoire
-                else
-                {
-                    eventData.pointerDrag.transform.SetParent(consommablePanel.transform);
-                    if (item.typeItem.Equals(ItemAsset.Type.Sacoche)) playerInventory.sacoche.Remove(item);
+                playerInventory.sacoche.Remove(item);
+                item.typeItem = ItemAsset.Type.Consommable;
+                playerInventory.AddItem(item);
+                Destroy(eventData.pointerDrag.gameObject);
 
-                    //typeItem.TypeItem = "Consommable";
-                    item.typeItem = ItemAsset.Type.Consommable;
-                    playerInventory.consommables.Add(item);
-                }
                 item.isDropped = true;
             }
         }
