@@ -65,8 +65,8 @@ public class Compas_Script : MonoBehaviour
 
     public void RemoveMarqueurQuete (MarqeurQuete_Script marqueur)
     {
-        Destroy(marqueur.iconeCompas);
         marqueurQuete.Remove(marqueur);
+        Destroy(marqueur.iconeCompas);
     }
 
     Vector2 GetPosOnCompas (MarqeurQuete_Script marqueur)

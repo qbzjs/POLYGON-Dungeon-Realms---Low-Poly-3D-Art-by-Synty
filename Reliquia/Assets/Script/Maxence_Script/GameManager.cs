@@ -128,7 +128,11 @@ public class GameManager : MonoBehaviour
         voirMenu = !voirMenu;
         GrimoireInventaire.alpha = Convert.ToInt32(voirMenu);
         DeplacerUIMenu();
-        menuInventaireOuvert = !menuInventaireOuvert;
+        menuInventaireOuvert = !menuInventaireOuvert;        
+
+        AudioClip SFX = menuInventaireOuvert ? HUD_Script.instance.SFX_OpenInventory : HUD_Script.instance.SFX_CloseInventory;
+        HUD_Script.instance.audioSource.PlayOneShot(SFX);
+
         MenuInventaire.localPosition = new Vector3((voirMenu == true ? 0 : -2000f), 0, 0);
 
 

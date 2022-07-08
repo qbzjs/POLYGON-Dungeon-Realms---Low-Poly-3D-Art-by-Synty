@@ -65,11 +65,18 @@ public class HUD_Script : MonoBehaviour
 
     public static HUD_Script instance;
 
+    [NonSerialized] public AudioSource audioSource;
+    [Header("SFX")]
+    public AudioClip SFX_OpenInventory;
+    public AudioClip SFX_CloseInventory;
+
+
     // Start is called before the first frame update
     void Awake()
     {
         if (instance == null)
         {
+            audioSource = GetComponent<AudioSource>();
             instance = this;
         }
         else
@@ -206,8 +213,11 @@ public class HUD_Script : MonoBehaviour
 
     public void itemMenu(int menuIndex)
     {
+        if (activeMenu == menuIndex) return;
+
         if (activeMenu == 2)
         {
+            audioSource.PlayOneShot(SFX_OpenInventory);
             boutonItem.SetSiblingIndex(2);
             boutonItem.GetComponent<Text>().fontSize = 70;
             boutonMap.GetComponent<Text>().fontSize = 45;
@@ -220,7 +230,6 @@ public class HUD_Script : MonoBehaviour
             });
             activeMenu = menuIndex;
         }
-        else if (activeMenu == menuIndex) return;
         else 
         {
             activeMenu = menuIndex;

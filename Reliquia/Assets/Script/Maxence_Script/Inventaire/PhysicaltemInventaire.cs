@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Image))]
-public class PhysicaltemInventaire : MonoBehaviour,IInteractable
+public class PhysicalItemInventaire : MonoBehaviour, IInteractable
 {
     [SerializeField] private PlayerInventory playerInventory; // private ? 
     public GameObject inGameDialogueGameObject;
@@ -66,7 +66,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
     {
         if (playerInventory && item)
         {
-            thisManager.ClearInventorySlots();
+            //thisManager.ClearInventorySlots();
 
             if (playerInventory.sacochesInventory.Contains(item))
             {
@@ -79,7 +79,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
                 playerInventory.sacochesInventory.Add(item);
             }
 
-            thisManager.MakeSacocheSlots();
+            //thisManager.MakeSacocheSlots();
         }
     }
 
@@ -87,7 +87,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
     {
         if (playerInventory && item)
         {
-            thisManager.ClearConsommableSlots();
+            //thisManager.ClearConsommableSlots();
 
             if (playerInventory.consommablesInventory.Contains(item))
             {
@@ -100,7 +100,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
                 playerInventory.consommablesInventory.Add(item);
             }
 
-            thisManager.MakeConsommableSlot();
+            //thisManager.MakeConsommableSlot();
         }
     }
 
@@ -110,7 +110,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
         {
             thisManager.maxItemQuete++;
 
-            thisManager.ClearObjetQuetesSlots();
+            //thisManager.ClearObjetQuetesSlots();
             if (!playerInventory.objetsQuetesInventory.Contains(item))
             {
                 //item.numberHeld++;
@@ -120,7 +120,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
             //playerInventory.objetsQuetesInventory.Add(item);
             playerInventory.AddItem("ObjetQuete", item);
 
-            thisManager.MakeObjetQueteSlot();
+            //thisManager.MakeObjetQueteSlot();
         }
     }
 
@@ -130,7 +130,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
         {
             thisManager.maxItemPuzzles++;
 
-            thisManager.ClearPuzzlesSlots();
+            //thisManager.ClearPuzzlesSlots();
             if (!playerInventory.puzzlesInventory.Contains(item))
             {
                 item.numberHeld++;
@@ -138,7 +138,7 @@ public class PhysicaltemInventaire : MonoBehaviour,IInteractable
 
             playerInventory.puzzlesInventory.Add(item);
 
-            thisManager.MakePuzzlesSlot();
+            //thisManager.MakePuzzlesSlot();
         }
     }
     public void Interaction()
