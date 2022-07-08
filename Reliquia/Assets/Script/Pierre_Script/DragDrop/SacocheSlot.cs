@@ -73,11 +73,9 @@ public class SacocheSlot : InventaireSlot, IDropHandler
 
     private void SwapSlots(InventaireSlot Dropped, InventaireSlot Swapped)
     {
-        Debug.Log("swap");
         // Si l'objet déposé provient de la sacoche
         if(Dropped.TypeItem.Equals(ItemAsset.Type.Sacoche))
         {
-            Debug.Log("in sacoche");
             SacocheSlot SwapSlot = Manager.GetSacocheSlot(Dropped.Item);
             SwapSlot.SetInventaireSlot(Swapped);
             Swapped.transform.SetParent(SwapSlot.canvasSlot.transform);
@@ -85,7 +83,10 @@ public class SacocheSlot : InventaireSlot, IDropHandler
         // Si l'objet déposé provient du grimoire
         else
         {
-            Debug.Log("in grimoire");
+            playerInventory.RemoveItem(Swapped.Item);
+            Swapped.Item.typeItem = Swapped.Item.asset.typeItemBase;
+            playerInventory.AddItem(Swapped.Item);
+            Destroy(Swapped.gameObject);
 
         }
     }
