@@ -11,6 +11,8 @@ public class SacocheSlot : InventaireSlot, IDropHandler
     // Inventaire du joueur
     private Inventory playerInventory;
 
+    private InventaireSlot slot;
+
     private void Start()
     {
         playerInventory = William_Script.instance.Inventory;
@@ -21,7 +23,7 @@ public class SacocheSlot : InventaireSlot, IDropHandler
      ***/
     public void OnDrop(PointerEventData eventData)
     {
-        InventaireSlot slot = eventData.pointerDrag.GetComponent<InventaireSlot>();
+        slot = eventData.pointerDrag.GetComponent<InventaireSlot>();
         Item = slot.Item;
         Manager = slot.Manager;
 
@@ -65,13 +67,16 @@ public class SacocheSlot : InventaireSlot, IDropHandler
      ***/
     public void ClickedOn()
     {
-        if (Item != null)
-        {
-            Debug.Log(Item.asset.itemNom);
-            if (Item.asset.usable && TypeItem.Equals(ItemAsset.Type.Sacoche))
+        if (Item != null && Item.asset.usable && TypeItem.Equals(ItemAsset.Type.Sacoche))
+            if (Item.asset.Use())
             {
-                Item.asset.Use();
+                Item.amount--;
+                slot.Setup(Item, Manager);
+                if (Item.amount <= 0)
+                {
+                    playerInventory.sacoche.Remove(Item);
+                    Destroy(slot.gameObject);
+                }
             }
-        }
     }
 }

@@ -21,10 +21,13 @@ public class ItemAsset : ScriptableObject
 
     public enum Type { Sacoche, Quete, Puzzle, Consommable }
 
-    public void Use()
+    public bool Use()
     {
-        Debug.Log("test item : " + itemNom);
         Effect.Invoke();
+        bool isUsed = ItemEffect.used;
+
+        ItemEffect.used = false;
+        return isUsed;
     }
 
 }
