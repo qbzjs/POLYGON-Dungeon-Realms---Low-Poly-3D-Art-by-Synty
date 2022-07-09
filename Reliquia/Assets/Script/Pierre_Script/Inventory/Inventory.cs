@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
 
-    public int maxStack;
+    public int maxStack = 5;
 
     public int MaxConsommableSlot = 12;
     public int MaxQueteSlot = 6;

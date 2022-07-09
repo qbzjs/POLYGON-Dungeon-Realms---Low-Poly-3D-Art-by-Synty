@@ -66,9 +66,6 @@ public class HUD_Script : MonoBehaviour
     public static HUD_Script instance;
 
     [NonSerialized] public AudioSource audioSource;
-    [Header("SFX")]
-    public AudioClip SFX_OpenInventory;
-    public AudioClip SFX_CloseInventory;
 
 
     // Start is called before the first frame update
@@ -217,7 +214,6 @@ public class HUD_Script : MonoBehaviour
 
         if (activeMenu == 2)
         {
-            audioSource.PlayOneShot(SFX_OpenInventory);
             boutonItem.SetSiblingIndex(2);
             boutonItem.GetComponent<Text>().fontSize = 70;
             boutonMap.GetComponent<Text>().fontSize = 45;

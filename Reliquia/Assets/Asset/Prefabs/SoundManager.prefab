@@ -51,12 +51,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: coffre_ouvert
     clip: {fileID: 8300000, guid: ccb835d1047ab0a43881ac16676263c2, type: 3}
-    volume: 0.64
+    volume: 0.8
     loop: 0
     source: {fileID: 0}
   - name: coffre_fermer
     clip: {fileID: 8300000, guid: 2123eba3c0473aa4aa17ebd61457248d, type: 3}
-    volume: 0.64
+    volume: 0.8
     loop: 0
     source: {fileID: 0}
   - name: trappe
@@ -76,7 +76,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: bip_dialogue
     clip: {fileID: 8300000, guid: e658a29a716f93748b8684c5b334bccd, type: 3}
-    volume: 0.36
+    volume: 0.7
     loop: 0
     source: {fileID: 0}
   - name: door_metal_heavy
@@ -97,6 +97,26 @@ MonoBehaviour:
   - name: explosion_stone
     clip: {fileID: 8300000, guid: 977b4a9f8f0bd6644b5b0eaa0c0c92d3, type: 3}
     volume: 0.36
+    loop: 0
+    source: {fileID: 0}
+  - name: objet_pickup
+    clip: {fileID: 8300000, guid: d9348b5a8fb5e564b901af53e5a71c88, type: 3}
+    volume: 0.72
+    loop: 0
+    source: {fileID: 0}
+  - name: menu_ouvert
+    clip: {fileID: 8300000, guid: 3bb2d14ee513b514eb6f0cf7d9b77f41, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: open_inventory
+    clip: {fileID: 8300000, guid: d8df26266b680a84cab962a8428ace4e, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: close_inventory
+    clip: {fileID: 8300000, guid: 76cd8656faa1a614f93828370ab5ddd4, type: 3}
+    volume: 1
     loop: 0
     source: {fileID: 0}
   sfxPasArray:

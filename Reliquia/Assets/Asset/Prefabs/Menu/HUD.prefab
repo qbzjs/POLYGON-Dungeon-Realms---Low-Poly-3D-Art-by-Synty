@@ -6725,6 +6725,8 @@ MonoBehaviour:
   pefabPartiGrimoir: {fileID: 6180031320156639358, guid: 58e00fb1445246e41ad313c6f90d6b57,
     type: 3}
   parentMap: {fileID: 4352473595948310114}
+  SFX_OpenInventory: {fileID: 8300000, guid: d8df26266b680a84cab962a8428ace4e, type: 3}
+  SFX_CloseInventory: {fileID: 8300000, guid: 76cd8656faa1a614f93828370ab5ddd4, type: 3}
 --- !u!1 &4352473595170216675
 GameObject:
   m_ObjectHideFlags: 0
@@ -6799,7 +6801,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473595176267475
 GameObject:
   m_ObjectHideFlags: 0
@@ -6853,7 +6854,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473595217953406
 GameObject:
   m_ObjectHideFlags: 0
@@ -7248,7 +7248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473595265145080
 GameObject:
   m_ObjectHideFlags: 0
@@ -7594,7 +7593,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473595369702367
 GameObject:
   m_ObjectHideFlags: 0
@@ -8096,10 +8094,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d87bab196d00748a337048956d7d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
   blankInventtaireSlot: {fileID: 7837417797265379353, guid: aa42c595d7babbc4e82b250b7f5f3466,
     type: 3}
-  sacochePanel: {fileID: 0}
+  sacocheSlots:
+  - {fileID: 8012246963745881974}
+  - {fileID: 9137847504125436760}
+  - {fileID: 6380603103442352969}
+  - {fileID: 8966330257853397813}
+  - {fileID: 6706677780858192119}
+  - {fileID: 1714996902805375061}
   consommablePanel: {fileID: 4352473595257869335}
   objetQuetePanel: {fileID: 4352473595170216675}
   PuzzlePanel: {fileID: 4352473594630856787}
@@ -8109,7 +8112,11 @@ MonoBehaviour:
   maxItemConsommable: 0
   maxItemPuzzles: 0
   maxItemSacoche: 0
-  currentItem: {fileID: 0}
+  currentItem:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
 --- !u!1 &4352473595549451155
 GameObject:
   m_ObjectHideFlags: 0
@@ -8409,7 +8416,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473595642495993
 GameObject:
   m_ObjectHideFlags: 0
@@ -9805,7 +9811,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473595944635511
 GameObject:
   m_ObjectHideFlags: 0
@@ -10178,7 +10183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473596060043574
 GameObject:
   m_ObjectHideFlags: 0
@@ -11683,7 +11687,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisManager: {fileID: 4352473595497485196}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4352473596506349297
 GameObject:
   m_ObjectHideFlags: 0
@@ -12844,12 +12847,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 0}
   itemImage: {fileID: 0}
-  thisItem: {fileID: 0}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
   canvasSlot: {fileID: 6363296049209901228}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4766640935368345063
 GameObject:
   m_ObjectHideFlags: 0
@@ -12994,12 +13000,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 0}
   itemImage: {fileID: 0}
-  thisItem: {fileID: 0}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
   canvasSlot: {fileID: 4710455235857467270}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4766640936502924659
 GameObject:
   m_ObjectHideFlags: 0
@@ -13144,12 +13153,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 0}
   itemImage: {fileID: 0}
-  thisItem: {fileID: 0}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
   canvasSlot: {fileID: 234570490804556808}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4766640936564213011
 GameObject:
   m_ObjectHideFlags: 0
@@ -13294,12 +13306,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 0}
   itemImage: {fileID: 0}
-  thisItem: {fileID: 0}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
   canvasSlot: {fileID: 874729617961363317}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4766640936626042847
 GameObject:
   m_ObjectHideFlags: 0
@@ -13444,12 +13459,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 0}
   itemImage: {fileID: 0}
-  thisItem: {fileID: 0}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
   canvasSlot: {fileID: 3374807245225721740}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &4766640937241863461
 GameObject:
   m_ObjectHideFlags: 0
@@ -13594,12 +13612,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNumberText: {fileID: 0}
   itemImage: {fileID: 0}
-  thisItem: {fileID: 0}
-  thisManager: {fileID: 0}
-  TypeItemBase: 
-  TypeItem: 
+  Item:
+    asset: {fileID: 0}
+    amount: 0
+    typeItem: 0
+    isDropped: 0
+  Manager: {fileID: 0}
+  TypeItemBase: 0
+  TypeItem: 0
   canvasSlot: {fileID: 2801359519658544141}
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
 --- !u!1 &5350374312982686052
 GameObject:
   m_ObjectHideFlags: 0
