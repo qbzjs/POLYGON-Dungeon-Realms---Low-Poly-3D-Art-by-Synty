@@ -13,28 +13,29 @@ public class RessourceManager : MonoBehaviour
     [Header("Gestionaire de Mana/Vie")] 
     [SerializeField] public Image barreVie;
     [SerializeField] public Text texteVie;
-    [SerializeField] public Image barreMana;
-    [SerializeField] public Text texteMana;
+    /* [SerializeField] public Image barreMana;
+    [SerializeField] public Text texteMana; */
     private Health mJoueurScriptVie;
-    private Mana mJoueurScriptMana; 
+    // private Mana mJoueurScriptMana; 
 
     void Start() {
-        UpdateBarreMana();
+        // UpdateBarreMana();
         UpdateBarreVie();
     }
 
     void OnEnable() {
         // Debug.Log("RessourceManager: Enable");
         mJoueurScriptVie = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-        mJoueurScriptMana = GameObject.FindGameObjectWithTag("Player").GetComponent<Mana>();
-        mJoueurScriptMana.OnManaChanged += UpdateBarreMana;
         mJoueurScriptVie.OnHealthChanged += UpdateBarreVie;
+
+        // mJoueurScriptMana = GameObject.FindGameObjectWithTag("Player").GetComponent<Mana>();
+        // mJoueurScriptMana.OnManaChanged += UpdateBarreMana;
     }
 
     void OnDisable() {
         // Debug.Log("RessourceManager: Disable");
-        mJoueurScriptMana.OnManaChanged -= UpdateBarreMana;
         mJoueurScriptVie.OnHealthChanged -= UpdateBarreVie;
+        // mJoueurScriptMana.OnManaChanged -= UpdateBarreMana;
     }
 
     void UpdateBarreVie() { 
@@ -44,10 +45,10 @@ public class RessourceManager : MonoBehaviour
         texteVie.text = (value * 100.0f) + "%"; 
     }
 
-    void UpdateBarreMana() { 
+    /* void UpdateBarreMana() { 
         // Debug.Log("RessourceManager: mana value: " + mJoueurScriptMana.ManaValue + ", max :" + mJoueurScriptMana.MaximumMana);
         float value = mJoueurScriptMana.ManaValue / mJoueurScriptMana.MaximumMana;
         barreMana.fillAmount = value; 
         texteMana.text = (value * 100.0f) + "%"; 
-    }
+    } */
 }
