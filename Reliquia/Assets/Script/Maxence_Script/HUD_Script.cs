@@ -1,5 +1,4 @@
-﻿using clavier;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,7 +77,11 @@ public class HUD_Script : MonoBehaviour
         }
 
         //for(int i = 0; i < LevelLoader.instance.Canvas.Length; i++) LevelLoader.instance.Canvas[i].SetActive(false);
+    }
 
+    void Start()
+    {
+        Debug.Log("start");
         colors[0] = new Color(1, 1, 1, 0);
 
         prefab = Instantiate(prefabMenuOptions, GameObject.FindGameObjectWithTag("Options").transform);
@@ -98,11 +101,7 @@ public class HUD_Script : MonoBehaviour
         cerclePosPlayer = cerclePosPlayerImage.texture as Texture2D;
 
         colors = cerclePosPlayer.GetPixels();
-    }
 
-    void Start()
-    {
-        Debug.Log("start");
         SaveManager.instance.saveSlots.Clear();
 
         foreach (GameObject slots in SloatsLoadSave)
