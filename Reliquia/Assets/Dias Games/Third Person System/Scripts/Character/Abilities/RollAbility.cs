@@ -16,7 +16,12 @@ namespace DiasGames.ThirdPersonSystem
         
         public override bool TryEnterAbility()
         {
-            return m_System.IsGrounded && m_InputManager.RelativeInput.magnitude > 0;
+            if (m_System.IsGrounded && William_Script.instance.BoutonRoulade)
+            {
+                William_Script.instance.BoutonRoulade = false;
+                return true;
+            }
+            return false;
         }
 
         public override void OnEnterAbility()

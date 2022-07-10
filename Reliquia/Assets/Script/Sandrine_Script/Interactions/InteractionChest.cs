@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class InteractionChest : MonoBehaviour,IInteractable
 {
@@ -23,7 +24,6 @@ public class InteractionChest : MonoBehaviour,IInteractable
     private float _vitesseRotation = 0.5f;
     [Header("InGame Dialogue GO")]
     public GameObject inGameDialogueObject = null;
-    
     private bool _estOuvert = false;
     
 
@@ -58,8 +58,9 @@ public class InteractionChest : MonoBehaviour,IInteractable
         }
 
     }
+
     // Action d'ouverture du coffre.
-    private void OpenChest()
+    private void OuvrirCoffre()
     {
         if (inGameDialogue != null)
         {
@@ -91,12 +92,12 @@ public class InteractionChest : MonoBehaviour,IInteractable
         {
             axisObject.transform.DORotateQuaternion(_angleOriginal, _vitesseRotation);
         }
-
         if (!_estOuvert && axisObject.transform.rotation != _angleCible)
         {
             axisObject.transform.DORotateQuaternion(_angleCible, _vitesseRotation);
         }
     }
+
     // Boucle qui continue tant que le coffre a des objets Interactable.
     private IEnumerator VerifierContenuCoffre()
     {
@@ -107,18 +108,17 @@ public class InteractionChest : MonoBehaviour,IInteractable
             for (int i = 0; i < _interactables.Count; i++)
             {
                 _interactables[i].GetComponent<BoxCollider>().enabled = true;
-
             }
         }
 
         while (_interactables.Count > 0 && _estOuvert)
         {
-            Debug.Log(_boxCollider);
             RecupererObjetsInteractables();
             yield return new WaitForSeconds(0.1f);
         }
         _boxCollider.enabled = true;
     }
+
     // Récupération des objets Interactable contenu dans le coffre.
     private void RecupererObjetsInteractables()
     {
@@ -135,11 +135,27 @@ public class InteractionChest : MonoBehaviour,IInteractable
 
     public void Interaction()
     {
-        OpenChest();
+        OuvrirCoffre();
     }
 
     public void MontrerOutline(bool affichage)
     {
         _outline.enabled = affichage;
+        if (_outline.enabled)
+        {
+            AfficherMessageInteraction();
+        }
+    }
+
+    private void AfficherMessageInteraction()
+    {
+        if (_estOuvert)
+        {
+            GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour fermer.");
+        }
+        else
+        {
+            GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour ouvrir.");
+        }
     }
 }

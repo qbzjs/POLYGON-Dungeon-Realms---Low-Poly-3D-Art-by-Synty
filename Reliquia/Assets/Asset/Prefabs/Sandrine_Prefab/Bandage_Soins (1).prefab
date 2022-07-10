@@ -115,8 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335cb27e819d8574f82435e9e3aeddc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 11400000, guid: 217a4abc48ea73541b13fda52c2ed34c, type: 2}
-  thisItem: {fileID: 11400000, guid: 06cf2d8c776e1a74892450038585790d, type: 2}
+  inGameDialogueGameObject: {fileID: 0}
+  itemAsset: {fileID: 11400000, guid: 7a3a064837bb2654f8fbaed0337f9f3f, type: 2}
+  amount: 1
   itemImage: {fileID: 7700621909056650072}
   thisManager: {fileID: 0}
   typeItemValue: 2
@@ -151,10 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goContour: {fileID: 5741214808032181657}
-  needKey: 0
-  axisObject: {fileID: 0}
-  axis: 0
-  direction: 0
+  type: 0
+  InteractOutline: {fileID: 0}
+  itemActive: 0
 --- !u!222 &2745213631677422166
 CanvasRenderer:
   m_ObjectHideFlags: 0

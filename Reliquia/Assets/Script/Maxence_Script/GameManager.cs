@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public bool menuInventaireOuvert;
     public bool menuOptionOuvert;
     public bool menuSlots;
-
+    
     public GameObject MessageInteraction;
     public Text TexteMessageInteraction;
 
@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
         ParentSlotLoad.localPosition = new Vector3(2000f, 0, 0);
         ParentSlotSave.localPosition = new Vector3(2000f, 0, 0);
         ParentBoutonMenu.DOMoveX((voirMenu == true ? 0f : -780f), 0.25f).SetUpdate(true);
+        SoundManager.instance.Play("menu_ouvert");
 
         //MenuPause.SetActive(voirMenu);
     }
@@ -123,11 +124,18 @@ public class GameManager : MonoBehaviour
 
     public void menuInventaire()
     {
+
         voirMenu = !voirMenu;
         GrimoireInventaire.alpha = Convert.ToInt32(voirMenu);
         DeplacerUIMenu();
-        menuInventaireOuvert = !menuInventaireOuvert;
+        menuInventaireOuvert = !menuInventaireOuvert;        
+
+        string SFX = menuInventaireOuvert ? "open_inventory" : "close_inventory";
+        SoundManager.instance.Play(SFX);
+
         MenuInventaire.localPosition = new Vector3((voirMenu == true ? 0 : -2000f), 0, 0);
+
+
     }
 
     public void DeplacerUIMenu()

@@ -11,12 +11,10 @@ GameObject:
   - component: {fileID: 9072867999164564633}
   - component: {fileID: 50185967523970735}
   - component: {fileID: 6020963831569859158}
-  - component: {fileID: 6179174066484017077}
-  - component: {fileID: 6179174066484017079}
+  - component: {fileID: 5580885225895808154}
   - component: {fileID: 6179174066484017075}
-  - component: {fileID: 6179174066484017076}
   - component: {fileID: 6179174066484017078}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Tonneau_Destructible_01
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -87,21 +85,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6179174066484017077
+--- !u!65 &5580885225895808154
 BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5454444883091682954}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9242443, y: 2.2735283, z: 1.281748}
-  m_Center: {x: 0.016565323, y: -0.28506416, z: 0.640874}
---- !u!64 &6179174066484017079
-MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -110,10 +95,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3221873704440671314, guid: 87510dad03470d34fb4e99faf105de49, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.1539928, y: 1.5646414, z: 1.281748}
+  m_Center: {x: 0, y: 0.019755727, z: 0.640874}
 --- !u!114 &6179174066484017075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,22 +118,6 @@ MonoBehaviour:
   - {fileID: 5919395811931267130, guid: 375c30855bc949b44bebddb7ce55f7b1, type: 3}
   - {fileID: 5919395811931267130, guid: 375c30855bc949b44bebddb7ce55f7b1, type: 3}
   _dureeTransition: 2
---- !u!114 &6179174066484017076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5454444883091682954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82421719386eb34488b5eaec491b84b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goContour: {fileID: 5454444883091682954}
-  type: 2
-  InteractOutline: {fileID: 0}
-  itemActive: 0
 --- !u!114 &6179174066484017078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +125,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5454444883091682954}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 

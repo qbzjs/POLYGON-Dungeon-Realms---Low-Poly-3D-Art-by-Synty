@@ -10,9 +10,13 @@ public class MarqeurQuete_Script : MonoBehaviour
 
     private void Awake()
     {
-        icone = gameObject.GetComponent<PhysicaltemInventaire>().thisItem.itemImage;
-        image = gameObject.GetComponent<PhysicaltemInventaire>().itemImage;
-
+        //icone = gameObject.GetComponent<PhysicaltemInventaire>().thisItem.itemImage;
+        //image = gameObject.GetComponent<PhysicaltemInventaire>().itemImage;
+        if (TryGetComponent(out PhysicaltemInventaire physicaltemInventaire))
+        {
+            icone = physicaltemInventaire.itemAsset.itemImage;
+            image = physicaltemInventaire.itemImage;
+        }
        
     }
 

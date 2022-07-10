@@ -3,6 +3,7 @@ using DiasGames.ThirdPersonSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class RockFallZoneScript : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class RockFallZoneScript : MonoBehaviour
     private bool runAnim;
     private float timerAnim;
     private float deltaTime = 2f;
+
+    public GameObject Camera;
 
     // Dialogue Interaction
     private InGameDialogueManager inGameDialogueManager;
@@ -92,6 +95,8 @@ public class RockFallZoneScript : MonoBehaviour
             //runAnim = true;
             //StartCoroutine(ReLoad());
             player.GetComponent<Health>().Die();
+            Camera.GetComponent<PPGrayscale>().enabled = true;
+            Camera.GetComponent<PlayableDirector>().enabled = true;
         //}
     }
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class InteractionLockDoor : MonoBehaviour,IInteractable
 {
@@ -28,7 +29,7 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
     private float _angleRotation = 90.0f;
     [SerializeField]
     private float _vitesseRotation = 1.0f;
-    private bool _estOuvert;
+    private bool _estOuvert = false;
 
     [Header("AudioSource")]
     public AudioSource audioSource;
@@ -37,7 +38,10 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
     public GameObject dialogueOuvertGameObject;
     private InGameDialogue _inGameDialogueVerrouille;
     private InGameDialogue _inGameDialogueOuvert;
-    public ItemInventaire item;
+
+    public ItemAsset Item;
+    public int amount;
+
     private bool _estVerouille = true;
 
     private void Awake()
@@ -52,6 +56,7 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
         }
         _outline.enabled = false;
     }
+
     private void InitialiserVariables()
     {
         _angleOriginal = axisObject.transform.rotation;
@@ -64,10 +69,10 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
         {
             _angleCible = Quaternion.AngleAxis(-_angleRotation, Vector3.up) * axisObject.transform.rotation;
         }
+
         InitialiserDialogue();
-
-
     }
+
     private void InitialiserDialogue()
     {
         if (dialogueVerrouilleGameObject != null)
@@ -79,22 +84,24 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
             _inGameDialogueOuvert = dialogueOuvertGameObject.GetComponent<DialogueAttached>().inGameDialogue;
         }
     }
+
     // Action d'ouverture.
     private void InteractionPorte()
     {
         if (_estVerouille)
         {
-            if (InventaireManager.instance.playerInventory.sacochesInventory.Contains(item))
+            if (William_Script.instance.Inventory.sacoche.Exists(i => i.asset == Item && i.amount >= amount))
             {
-                InventaireManager.instance.playerInventory.sacochesInventory.Remove(item);
+                 William_Script.instance.Inventory.RemoveItemInSacoche(Item);
                 InGameDialogueManager.Instance.StartDialogue(_inGameDialogueOuvert);
                 _estVerouille = false;
+                _estOuvert = true;
+                AnimerRotation();
             }
             else
             {
                 InGameDialogueManager.Instance.StartDialogue(_inGameDialogueVerrouille);
             }
-            
         }
         else
         {
@@ -112,8 +119,7 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
                     AnimerRotation();
                 }
             }
-        }
-        
+        }  
     }
 
     // Animation d'ouverture.
@@ -128,16 +134,19 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
             FermerPorte();
         }
     }
+
     public void OuvrirPorte()
     {
         LancerSon();
         transform.DORotateQuaternion(_angleCible, _vitesseRotation);
     }
+
     public void FermerPorte()
     {
         LancerSon();
         transform.DORotateQuaternion(_angleOriginal, _vitesseRotation);
     }
+
     private void LancerSon()
     {
         if (audioSource != null)
@@ -162,8 +171,6 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
                     break;
             }
         }
-
-
     }
 
     public void Interaction()
@@ -174,6 +181,21 @@ public class InteractionLockDoor : MonoBehaviour,IInteractable
     public void MontrerOutline(bool affichage)
     {
         _outline.enabled = affichage;
+        if (_outline.enabled)
+        {
+            AfficherMessageInteraction();
+        }
     }
 
+    private void AfficherMessageInteraction()
+    {
+        if (_estOuvert)
+        {
+            GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour fermer.");
+        }
+        else
+        {
+            GameManager.instance.AfficherMessageInteraction($"Appuyer sur {William_Script.instance.PlayerInput.actions["Interaction"].GetBindingDisplayString()} pour ouvrir.");
+        }
+    }
 }

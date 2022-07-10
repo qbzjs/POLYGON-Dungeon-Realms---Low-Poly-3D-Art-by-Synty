@@ -12,6 +12,7 @@ namespace DiasGames.ThirdPersonSystem
         [SerializeField] private float m_MaxHealth = 100f;
         [SerializeField] private bool m_RestartSceneAfterDie = true;
         [SerializeField] private float m_WaitToRestart = 3f;
+        [SerializeField] private GameObject Player;
 
         [Header("Audio Clips")]
         [SerializeField] private AudioClip m_HurtClip = null;
@@ -33,6 +34,7 @@ namespace DiasGames.ThirdPersonSystem
         
         private CharacterAudioManager m_AudioManager;
         private float m_LastDamagedTime = 0;
+        private bool isRegenHealth;
 
         private void Awake()
         {
@@ -50,7 +52,25 @@ namespace DiasGames.ThirdPersonSystem
             DisableRagdoll();
         }
 
+        void Update()
+        {
+            if (m_CurrentHealth != MaximumHealth && !isRegenHealth)
+            {
+                StartCoroutine(RegainHealthOverTime());
+            }
+        }
 
+        private IEnumerator RegainHealthOverTime()
+        {
+            isRegenHealth = true;
+            while (m_CurrentHealth < 15f)
+            {
+                m_CurrentHealth = m_CurrentHealth + 1f;
+                yield return new WaitForSeconds(1);
+                OnHealthChanged?.Invoke();
+            }
+            isRegenHealth = false;
+        }
 
         private void RestoreHealth(GameObject obj, object value)
         {
@@ -58,6 +78,13 @@ namespace DiasGames.ThirdPersonSystem
             m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0, m_MaxHealth); 
             OnHealthChanged?.Invoke();
         }
+
+        void Regenerate()
+        {
+            if (m_CurrentHealth < 50f)
+                m_CurrentHealth += 1.0f;
+        }
+
 
         public void Die()
         {
@@ -90,6 +117,7 @@ namespace DiasGames.ThirdPersonSystem
         private void RespawnCharacter(GameObject obj, object value)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+           //  Player.transform.position = checkpoint.position;
         }
 
         private void Damage(GameObject obj, object amount)
