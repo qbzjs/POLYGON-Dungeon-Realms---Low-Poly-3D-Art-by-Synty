@@ -15,11 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float enemyWanderSpeed = 1f;
     [SerializeField] private float enemyChaseSpeed = 2f;
     [SerializeField] private float enemyAttackSpeed = 2f;
-
-    // Zone colorée autour de l'IA à supprimer
-    public GameObject alphaSurface;  // Provisoire à sup
-    [HideInInspector]
-    public Renderer alphaRenderer;  // Provisoire à sup
+    public List<Transform> Path;
 
     public Transform Target; // { get; private set; }
     public Transform Chaser;// { get; private set; } //private set
@@ -41,16 +37,13 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
         initPosition = transform.position;
-
-        // A supprimer
-        alphaRenderer = alphaSurface.GetComponent<Renderer>(); // Provisoire Attack Effect
     }
 
     private void InitializeStateMachine()
     {
         var states = new Dictionary<Type, BaseState>()
         {
-            {typeof(WanderState), new WanderState(enemy: this) },
+            {typeof(WanderState), new WanderState(enemy: this, path: Path) },
             {typeof(ReturnState), new ReturnState(enemy: this) },
             {typeof(ChaseState), new ChaseState(enemy: this) },
             {typeof(ChasePlayerState), new ChasePlayerState(enemy: this) },
@@ -94,9 +87,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     internal void LaunchAttack()
     {
-        // Set anim Attack
-        alphaRenderer.material.SetColor("_ColorTint", Color.black); // Provisoire
-
         navAgent.isStopped = true;
         anim.SetBool("Avancer", false);
         anim.SetBool("Attaque", true);
@@ -110,10 +100,6 @@ public class Enemy : MonoBehaviour
     public void SetTarget(Transform target)
     {
         Target = target;
-        if (target == null)
-        {
-            alphaRenderer.material.SetColor("_ColorTint", Color.white); // Provisoire 
-        }
     }
 
     public void SetChaser(Transform adverser)

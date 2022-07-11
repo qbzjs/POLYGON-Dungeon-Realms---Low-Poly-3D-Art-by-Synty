@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WanderState : BaseState
 {
     // Enemy propriétés
     public Enemy _enemy;
+    public List<Transform> _path;
+
+    private int _currentPathPoint = 0;
     private Vector3 _enemyPosition;
     private Vector3 _enemyLastPosition;
 
@@ -20,9 +24,10 @@ public class WanderState : BaseState
     private Vector3 playerPosition;
     private Transform chaseTarget;
 
-    public WanderState(Enemy enemy) : base(enemy.gameObject)
+    public WanderState(Enemy enemy, List<Transform> path) : base(enemy.gameObject)
     {
         _enemy = enemy;
+        _path = path;
         playerTarget = GameObject.FindGameObjectWithTag("Player").transform;       
     }
 
@@ -85,7 +90,7 @@ public class WanderState : BaseState
                 return typeof(AttackState); //AttackState
             }
         }
-
+        /*
         // Ano sur l'Enemy bloqué à modifier
         _enemyPosition = _enemy.transform.position;
         if (_enemyLastPosition == _enemyPosition)
@@ -95,7 +100,7 @@ public class WanderState : BaseState
             _enemy.LookAtDirection(_direction, 0.5f);
 
             _enemy.Move(_destination, _enemy.EnemyWanderSpeed);
-        }
+        }*/
         return null;
     }
 
@@ -200,14 +205,23 @@ public class WanderState : BaseState
     *****/
     private void FindRandomDestination()
     {
-        Vector3 testPosition = (_enemyPosition + (transform.forward * 4f))
-                + new Vector3(x: UnityEngine.Random.Range(-4.5f, 4.5f), y: 0f, z: UnityEngine.Random.Range(-4.5f, 4.5f));
+        // Gestion de la patrouille
+        if (_path.Count > 0)
+        {
+            _destination = _path[_currentPathPoint].position;
+            _currentPathPoint = (_currentPathPoint >= _path.Count - 1) ? 0 : _currentPathPoint + 1;
+        }
+        // Gestion du déplacement aléatoire si aucune patrouille renseignée
+        else
+        {
+            Vector3 testPosition = (_enemyPosition + (transform.forward * 4f))
+                    + new Vector3(x: UnityEngine.Random.Range(-4.5f, 4.5f), y: 0f, z: UnityEngine.Random.Range(-4.5f, 4.5f));
 
-        _destination = new Vector3(testPosition.x, y: 1f, testPosition.z);
+            _destination = new Vector3(testPosition.x, y: 1f, testPosition.z);
+        }
 
         _direction = Vector3.Normalize(_destination - _enemyPosition);
         _direction = new Vector3(_direction.x, y: 0f, _direction.z);
-
     }
 
 }

@@ -16721,6 +16721,7 @@ GameObject:
   - component: {fileID: 2095771738}
   - component: {fileID: 2095771739}
   - component: {fileID: 5423519499254490487}
+  - component: {fileID: 67890547503338049}
   m_Layer: 15
   m_Name: William_Player
   m_TagString: Player
@@ -17757,6 +17758,7 @@ MonoBehaviour:
   PlayerInput: {fileID: 0}
   ThirdPersonSystem: {fileID: 0}
   Mana: {fileID: 0}
+  UsingPower: 0
   radius: 2
   angle: 0.304
   targetMask:
@@ -18326,6 +18328,37 @@ MonoBehaviour:
   consommables: []
   objetsQuetes: []
   puzzles: []
+--- !u!114 &67890547503338049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181353110817305307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e21971b1f8d41a4495d86729911bf78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnterState: Punching
+  m_TransitionDuration: 0.1
+  m_RootMotionMultiplier: {x: 1, y: 1, z: 1}
+  m_FinishOnAnimationEnd: 1
+  IgnoreAbilities:
+  - {fileID: 2506424486084426688}
+  m_UseRootMotion: 1
+  m_UseRotationRootMotion: 0
+  m_UseVerticalRootMotion: 0
+  m_AllowCameraZoom: 0
+  m_AbilityPhysicMaterial: {fileID: 0}
+  OnEnterAbilityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitAbilityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_UseInputStateToEnter: 3
+  InputButton: 11
 --- !u!1 &6476534841710280914
 GameObject:
   m_ObjectHideFlags: 0
@@ -29096,15 +29129,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb73fd380f06f38439074728101ed6dc, type: 3}
---- !u!1 &136232771 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: bb73fd380f06f38439074728101ed6dc,
-    type: 3}
-  m_PrefabInstance: {fileID: 136264161}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &135865187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: bb73fd380f06f38439074728101ed6dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 136264161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &136232771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: bb73fd380f06f38439074728101ed6dc,
     type: 3}
   m_PrefabInstance: {fileID: 136264161}
   m_PrefabAsset: {fileID: 0}
