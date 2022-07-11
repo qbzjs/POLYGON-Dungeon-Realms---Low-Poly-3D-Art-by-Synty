@@ -19,6 +19,7 @@ public class William_Script : MonoBehaviour
     [HideInInspector]
     public Mana Mana;
     public List<IPouvoir> ListePouvoirs = new List<IPouvoir>();
+    public bool UsingPower = false;
     [Header("Champ Vision Interactable")]
     public float radius;
     [Range(0, 1)]
@@ -312,12 +313,13 @@ public class William_Script : MonoBehaviour
         {
             if (context.performed)
             {
-                ListePouvoirs[0].SetInputPouvoir(true);
+                UsingPower = true;
             }
             else
             {
-                ListePouvoirs[0].SetInputPouvoir(false);
+                UsingPower = false;
             }
+            ListePouvoirs[0].SetInputPouvoir(UsingPower);
         }
 
     }
@@ -327,12 +329,13 @@ public class William_Script : MonoBehaviour
         {
             if (context.performed)
             {
-                ListePouvoirs[1].SetInputPouvoir(true);
+                UsingPower = true;
             }
             else
             {
-                ListePouvoirs[1].SetInputPouvoir(false);
+                UsingPower = false;
             }
+            ListePouvoirs[1].SetInputPouvoir(UsingPower);
         }
 
     }
@@ -342,12 +345,13 @@ public class William_Script : MonoBehaviour
         {
             if (context.performed)
             {
-                ListePouvoirs[2].SetInputPouvoir(true);
+                UsingPower = true;
             }
             else
             {
-                ListePouvoirs[2].SetInputPouvoir(false);
+                UsingPower = false;
             }
+            ListePouvoirs[2].SetInputPouvoir(UsingPower);
         }
     }
     public void OnPouvoir4(InputAction.CallbackContext context)
@@ -356,12 +360,13 @@ public class William_Script : MonoBehaviour
         {
             if (context.performed)
             {
-                ListePouvoirs[3].SetInputPouvoir(true);
+                UsingPower = true;
             }
             else
             {
-                ListePouvoirs[3].SetInputPouvoir(false);
+                UsingPower = false;
             }
+            ListePouvoirs[3].SetInputPouvoir(UsingPower);
         }
     }
     public void OnCourir(InputAction.CallbackContext context)
