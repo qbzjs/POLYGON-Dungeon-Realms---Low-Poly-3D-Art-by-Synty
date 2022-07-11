@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>Supervise le comportement du curseur, c'est ici que se fait
+/// les changements visuel du cuseur (visable ou icone du curseur)</summary>
+/// TODO Intégrer aux autres scènes
 public class CurseurControlleur : MonoBehaviour
 {
-    public Texture2D curseurClassique, curseurCroix, curseurMain;
+    public Texture2D curseurClassique, curseurMain;
 
-    private CurseurControlleur sInstance;
-
-    public CurseurControlleur Instance { get; private set; }
+    public static CurseurControlleur Instance { get; private set; }
 
     void Awake() {
         if (Instance != null) {
@@ -20,5 +21,10 @@ public class CurseurControlleur : MonoBehaviour
 
         Cursor.SetCursor(curseurClassique, Vector2.up + Vector2.left, CursorMode.Auto);
         DontDestroyOnLoad(this);
+    }
+
+    public void LockCurseur(bool lockValue) {
+        Cursor.lockState = lockValue ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !lockValue;
     }
 }

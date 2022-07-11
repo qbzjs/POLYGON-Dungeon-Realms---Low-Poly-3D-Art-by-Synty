@@ -159,11 +159,7 @@ public class HUD_Script : MonoBehaviour
         GameManager.instance.ParentBoutonMenu.DOMoveX(-780f, 0.01f);
         GameManager.instance.FermerMessageInteraction();
 
-        if(GameManager.instance.menuInventaireOuvert = false)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        if (CurseurControlleur.Instance != null) CurseurControlleur.Instance.LockCurseur(GameManager.instance.AnyMenuOuvert);
     }
 
     public void ContinuerJeu()
