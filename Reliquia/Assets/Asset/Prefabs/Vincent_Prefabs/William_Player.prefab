@@ -16720,6 +16720,7 @@ GameObject:
   - component: {fileID: 1286182121}
   - component: {fileID: 2095771738}
   - component: {fileID: 2095771739}
+  - component: {fileID: 5423519499254490487}
   m_Layer: 15
   m_Name: William_Player
   m_TagString: Player
@@ -17706,6 +17707,7 @@ MonoBehaviour:
   m_MaxHealth: 100
   m_RestartSceneAfterDie: 1
   m_WaitToRestart: 3
+  Player: {fileID: 0}
   m_HurtClip: {fileID: 8300000, guid: 8f6a3fcf53f0718418d4341566f98e8d, type: 3}
   m_DeathClip: {fileID: 8300000, guid: 3a3bf34e7b214f241b0087979f62e696, type: 3}
   OnReceiveDamage:
@@ -17751,6 +17753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Fader: {fileID: 0}
+  Script: {fileID: 0}
   PlayerInput: {fileID: 0}
   ThirdPersonSystem: {fileID: 0}
   Mana: {fileID: 0}
@@ -17771,6 +17774,7 @@ MonoBehaviour:
   BoutonCourir: 0
   BoutonAttaquer: 0
   BoutonGarde: 0
+  Inventory: {fileID: 0}
 --- !u!114 &6250489322192563183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18303,6 +18307,25 @@ MonoBehaviour:
   pulsateInstance: {fileID: 0}
   isCreated: 0
   isCooldown: 0
+--- !u!114 &5423519499254490487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181353110817305307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79b93c4b9204fe41beaf2f59faad6b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStack: 5
+  MaxConsommableSlot: 12
+  MaxQueteSlot: 6
+  sacoche: []
+  consommables: []
+  objetsQuetes: []
+  puzzles: []
 --- !u!1 &6476534841710280914
 GameObject:
   m_ObjectHideFlags: 0
