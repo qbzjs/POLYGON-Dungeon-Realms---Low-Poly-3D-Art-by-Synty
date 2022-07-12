@@ -26,6 +26,9 @@ public class Enemy : MonoBehaviour, IFighter
     public Transform Chaser;// { get; private set; } //private set
     //public bool playerTarget { get; private set; } //private set
 
+    private AIPouvoirPraesidium Praesidium;
+    private int HitCount = 0;
+
     // Les getters des propriétés de l'IA
     public StateMachine StateMachine => GetComponent<StateMachine>();
     public Vector3 InitPosition => initPosition;
@@ -42,6 +45,8 @@ public class Enemy : MonoBehaviour, IFighter
         anim = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
         initPosition = transform.position;
+
+        Praesidium = GetComponent<AIPouvoirPraesidium>();
     }
 
     private void InitializeStateMachine()
@@ -169,14 +174,23 @@ public class Enemy : MonoBehaviour, IFighter
 
     public void Hurt(int damage)
     {
-        if(alive)
+        if(alive && !Praesidium.Actif)
         {
             enemyHealth -= damage;
 
             if (enemyHealth > 0)
             {
+                // Active l'une des deux animations de blessure
                 Anim.SetTrigger("Blesser");
                 if (UnityEngine.Random.value >= 0.5) Anim.SetTrigger("Gauche");
+
+                // vérification si utilisation de Praesidium
+                HitCount++;
+                if(HitCount > 2)
+                {
+                    Praesidium.Use();
+                    HitCount = 0;
+                }
             }
             else Die();
         }
@@ -203,6 +217,13 @@ public class Enemy : MonoBehaviour, IFighter
         material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         material.renderQueue = 3000;
     }
+
+    /// <summary>
+    /// Fait disparaitre le mesh en un temps donné
+    /// </summary>
+    /// <param name="meshes">Tous les SkinnedMeshRenderer du mesh</param>
+    /// <param name="duration">Temps (en secondes)</param>
+    /// <returns></returns>
 
     private IEnumerator FadeBody(SkinnedMeshRenderer[] meshes, float duration)
     {
