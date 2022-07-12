@@ -350,7 +350,7 @@ AnimatorStateMachine:
     m_Position: {x: 450, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5278933799591777415}
-    m_Position: {x: 250, y: -130, z: 0}
+    m_Position: {x: 70, y: -220, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 6258740282162494096}
@@ -391,7 +391,7 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Mort
-    m_Type: 4
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -589,7 +589,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: e11ce2bc2da6cf44ebbe000a763860d2,
+  m_Motion: {fileID: -203655887218126122, guid: dc26691899c5bc14f8988ef8dfe79604,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -725,9 +725,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Blesser
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: Mort
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 6258740282162494096}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -799,3 +796,17 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1109 &8933086617810131939
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions: []
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 5278933799591777415}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
