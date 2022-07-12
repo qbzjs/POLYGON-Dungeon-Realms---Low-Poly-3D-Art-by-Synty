@@ -172,7 +172,7 @@ public class WanderState : BaseState
         RaycastHit hit;
         Quaternion angle = transform.rotation * startingAngle;
         Vector3 direction = angle * Vector3.forward;
-        Vector3 rayOrigine = _enemyPosition + Vector3.up;
+        Vector3 rayOrigine = _enemy.Eyes.position;
 
         for (var i = 0; i < 35; i++)
         {

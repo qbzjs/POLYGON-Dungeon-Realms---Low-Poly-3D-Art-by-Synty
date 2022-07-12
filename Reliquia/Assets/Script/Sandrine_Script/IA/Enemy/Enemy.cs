@@ -6,12 +6,17 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IFighter
 {
     // Propriétés privées de l'IA
     private Animator anim;
     private NavMeshAgent navAgent;
     private Vector3 initPosition;
+    private bool alive = true;
+
+    public Transform Eyes;
+    [SerializeField] private int enemyHealth = 100;
+    [SerializeField] private int enemyStrength = 10;
     [SerializeField] private float enemyWanderSpeed = 1f;
     [SerializeField] private float enemyChaseSpeed = 2f;
     [SerializeField] private float enemyAttackSpeed = 2f;
@@ -87,10 +92,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     internal void LaunchAttack()
     {
-        navAgent.isStopped = true;
-        anim.SetBool("Avancer", false);
-        anim.SetBool("Attaque", true);
-
+        if(alive)
+        {
+            navAgent.isStopped = true;
+            anim.SetBool("Avancer", false);
+            anim.SetBool("Attaque", true);
+        }
     }
 
     /// <summary>
@@ -115,30 +122,34 @@ public class Enemy : MonoBehaviour
 
     internal void LookAtDirection(Vector3 lookAtPosition, float speed)
     {
-        Vector3 relativePos = lookAtPosition; // targetPosition - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * speed);
+        if(alive)
+        {
+            Vector3 relativePos = lookAtPosition; // targetPosition - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * speed);
+        }
     }
 
     internal void Move(Vector3 destination, float speed, string animation = "")
     {
-
-        NavAgent.isStopped = false;
-        NavAgent.speed = speed;
-        Anim.SetBool("Avancer", true);
-        Anim.SetBool("Attaque", false);
-        Anim.SetBool("Course", false);
-
-        if (animation != "")
+        if(alive)
         {
-            Anim.SetBool(animation, true);
+            NavAgent.isStopped = false;
+            NavAgent.speed = speed;
+            Anim.SetBool("Avancer", true);
+            Anim.SetBool("Attaque", false);
+            Anim.SetBool("Course", false);
+
+            if (animation != "")
+            {
+                Anim.SetBool(animation, true);
+            }
+            NavAgent.SetDestination(destination);
         }
-        NavAgent.SetDestination(destination);
     }
 
     internal void StopMoving()
     {
-
         NavAgent.isStopped = true;
         Anim.SetBool("Course", false);
         Anim.SetBool("Avancer", false);
@@ -149,8 +160,74 @@ public class Enemy : MonoBehaviour
     {
         anim.SetBool("Attaque", false);
         NavAgent.isStopped = false;
-
-
     }
 
+    public int GetStrength()
+    {
+        return enemyStrength;
+    }
+
+    public void Hurt(int damage)
+    {
+        if(alive)
+        {
+            enemyHealth -= damage;
+
+            if (enemyHealth > 0)
+            {
+                Anim.SetTrigger("Blesser");
+                if (UnityEngine.Random.value >= 0.5) Anim.SetTrigger("Gauche");
+            }
+            else Die();
+        }
+    }
+
+    public void Die()
+    {
+        alive = false;
+        StopAttack();
+        StopMoving();
+
+        Anim.SetTrigger("Mort");
+        StartCoroutine(FadeBody(gameObject.GetComponentsInChildren<SkinnedMeshRenderer>(), 4f));
+    }
+
+    private void ChangeRenderMode(Material material)
+    {
+        material.SetFloat("_Mode", 2);
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.EnableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 3000;
+    }
+
+    private IEnumerator FadeBody(SkinnedMeshRenderer[] meshes, float duration)
+    {
+        float time = 0f;
+
+        // Attends que l'animation se termine
+        yield return new WaitForSeconds(Anim.GetCurrentAnimatorStateInfo(0).length + Anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+        // Change le mode des materials du mesh en Fade
+        foreach (SkinnedMeshRenderer mesh in meshes)
+            ChangeRenderMode(mesh.material);
+
+        // Fade le mesh
+        while (time < duration)
+        {
+            float alpha = Mathf.Lerp(1, 0, time / duration);
+            foreach (SkinnedMeshRenderer mesh in meshes)
+            {
+                Color meshColor = mesh.material.color;
+                mesh.material.color = new Color(meshColor.r, meshColor.g, meshColor.b, alpha);
+            }
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(gameObject);
+    }
 }
