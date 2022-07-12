@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour, IFighter
 
     private AIPouvoirPraesidium Praesidium;
     private int HitCount = 0;
+    private AIPouvoirLighting Lighting;
 
     // Les getters des propriétés de l'IA
     public StateMachine StateMachine => GetComponent<StateMachine>();
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour, IFighter
         initPosition = transform.position;
 
         Praesidium = GetComponent<AIPouvoirPraesidium>();
+        Lighting = GetComponent<AIPouvoirLighting>();
     }
 
     private void InitializeStateMachine()
@@ -102,6 +104,37 @@ public class Enemy : MonoBehaviour, IFighter
             navAgent.isStopped = true;
             anim.SetBool("Avancer", false);
             anim.SetBool("Attaque", true);
+        }
+    }
+
+    internal void Punch()
+    {
+        if (alive)
+        {
+            Debug.Log("punch");
+            anim.SetBool("Distance", false);
+            Lighting.Stop();
+        }
+    }
+
+    internal void UsePulsate()
+    {
+        if (alive)
+        {
+            Debug.Log("pulsate");
+            anim.SetBool("Distance", false);
+            Lighting.Stop();
+        }
+    }
+
+    public void UseLighting()
+    {
+        if (alive)
+        {
+            Debug.Log("lighting");
+            anim.SetBool("Distance", true);
+            Lighting.TargetPos = Vector3.Normalize(Target.position - transform.position);
+            Lighting.Use();
         }
     }
 
@@ -165,6 +198,7 @@ public class Enemy : MonoBehaviour, IFighter
     {
         anim.SetBool("Attaque", false);
         NavAgent.isStopped = false;
+        Lighting.Stop();
     }
 
     public int GetStrength()
@@ -201,6 +235,7 @@ public class Enemy : MonoBehaviour, IFighter
         alive = false;
         StopAttack();
         StopMoving();
+        Lighting.Stop();
 
         Anim.SetTrigger("Mort");
         StartCoroutine(FadeBody(gameObject.GetComponentsInChildren<SkinnedMeshRenderer>(), 4f));

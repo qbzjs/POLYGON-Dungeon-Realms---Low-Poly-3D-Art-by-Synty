@@ -87,22 +87,24 @@ public class AttackState : BaseState
 
 
         // Arrivé à destination lancé l'attaque
-        if (flagStartAttack && _enemy.NavAgent.remainingDistance < 1.5f)
+        if (flagStartAttack)
         {
-            //Debug.Log("LaunchAttack");
             _enemy.LaunchAttack();
+            if (distance < 1f) _enemy.Punch();
+            else if (distance < 5f) _enemy.UseLighting();
+
             _distanceRecorded = distance;
 
 
         }
-
+        /*
         // Après 2s arrêter l'attaque
         if (flagStartAttack && _attackReadyTimer <= GameSettings.AttackEnemyTimer - 3f) // || _distanceRecorded - distance > 1f
         {
             _enemy.StopAttack();
             flagStartAttack = false;
         }
-
+        */
         return null;
     }
 

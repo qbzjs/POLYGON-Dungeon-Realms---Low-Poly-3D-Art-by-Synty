@@ -27,13 +27,28 @@ public class LightingProjectileBehaviour : MonoBehaviour
             Destroy(gameObject);
             Instantiate(fxImpact, transform.position, transform.rotation);
         }
-        if (other.gameObject.CompareTag("Enemy"))
+        
+        if(owner is Enemy)
         {
-            Destroy(gameObject);
-            Instantiate(fxImpact, transform.position, transform.rotation);
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Destroy(gameObject);
+                Instantiate(fxImpact, transform.position, transform.rotation);
 
-            Enemy _enemy = other.gameObject.GetComponent<Enemy>();
-            _enemy.Hurt(owner.GetStrength());
+                William_Script.instance.Hurt(owner.GetStrength());
+            }
+        } 
+        else
+        {
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                Destroy(gameObject);
+                Instantiate(fxImpact, transform.position, transform.rotation);
+
+                Enemy _enemy = other.gameObject.GetComponent<Enemy>();
+                _enemy.Hurt(owner.GetStrength());
+            }
         }
+        
     }
 }

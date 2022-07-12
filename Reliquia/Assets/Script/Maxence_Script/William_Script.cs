@@ -410,7 +410,7 @@ public class William_Script : MonoBehaviour, IFighter
 
     public void Hurt(int damage)
     {
-        throw new NotImplementedException();
+        GlobalEvents.ExecuteEvent("Damage", gameObject, (float)damage);
     }
 
     public void Die()
