@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4677315279493638721}
   - component: {fileID: 4677315279493638751}
+  - component: {fileID: 1518946263}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47,9 +48,6 @@ MonoBehaviour:
   MenuPause: {fileID: 0}
   MenuInventaire: {fileID: 0}
   voirMenu: 0
-  menuPauseOuvert: 0
-  menuInventaireOuvert: 0
-  menuOptionOuvert: 0
   menuSlots: 0
   MessageInteraction: {fileID: 4613776203832194334, guid: 6f3d340b6efdd684daeb841001911f10,
     type: 3}
@@ -72,3 +70,17 @@ MonoBehaviour:
   popUpActif: 0
   chapitreEnCours: 0
   nomSauvegarde: 
+--- !u!114 &1518946263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4677315279493638722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba28c7b6c88e5941ad119cfdf1231d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curseurClassique: {fileID: 2800000, guid: 914e70a80a60af945aa0751def1b157b, type: 3}
+  curseurMain: {fileID: 0}
