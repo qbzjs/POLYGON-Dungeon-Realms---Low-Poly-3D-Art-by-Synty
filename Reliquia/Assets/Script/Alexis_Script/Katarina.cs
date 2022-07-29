@@ -20,7 +20,6 @@ public class Katarina : MonoBehaviour{
     void Update(){
 
         float dist = Vector3.Distance(player.position, transform.position);
-        Debug.Log(dist);
 
         if(dist < distanceActiv){
             active = true;
