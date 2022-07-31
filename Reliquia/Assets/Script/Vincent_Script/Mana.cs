@@ -58,10 +58,11 @@ public class Mana : Modifier
             return;
         }
 
-        m_CurrentMana -= (float)amount;
+        //m_CurrentMana -= (float)amount;
         if (m_CurrentMana <= 0)
         {
-            m_CurrentMana = 0;
+            //m_CurrentMana = 0;
+            m_CurrentMana = 100;
             return;
         }
         else

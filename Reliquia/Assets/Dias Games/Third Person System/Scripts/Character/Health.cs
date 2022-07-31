@@ -65,7 +65,7 @@ namespace DiasGames.ThirdPersonSystem
             isRegenHealth = true;
             while (m_CurrentHealth < 15f)
             {
-                m_CurrentHealth = m_CurrentHealth + 1f;
+                m_CurrentHealth = m_CurrentHealth + Mathf.Round(1f);
                 yield return new WaitForSeconds(1);
                 OnHealthChanged?.Invoke();
             }
@@ -74,7 +74,7 @@ namespace DiasGames.ThirdPersonSystem
 
         private void RestoreHealth(GameObject obj, object value)
         {
-            m_CurrentHealth += (float)value;
+            m_CurrentHealth += Mathf.Round((float)value * 10f) * 0.1f;
             m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0, m_MaxHealth); 
             OnHealthChanged?.Invoke();
         }
@@ -131,7 +131,7 @@ namespace DiasGames.ThirdPersonSystem
                     return;
             }
 
-            m_CurrentHealth -= (float)amount;
+            m_CurrentHealth -= Mathf.Round((float)amount * 10.0f) * 0.1f;
             if (m_CurrentHealth <= 0)
             {
                 m_CurrentHealth = 0;

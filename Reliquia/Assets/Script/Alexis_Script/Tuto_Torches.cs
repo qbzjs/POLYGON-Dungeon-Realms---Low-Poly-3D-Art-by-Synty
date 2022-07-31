@@ -22,16 +22,19 @@ public class Tuto_Torches : MonoBehaviour{
 
         if(c.gameObject.name == torches[0]){
             torchesSparks[0].gameObject.SetActive(true);
+            torchesSparks[1].gameObject.SetActive(true);
             activated[0] = true;
         }
 
         if(c.gameObject.name == torches[1]){
-            torchesSparks[1].gameObject.SetActive(true);
+            torchesSparks[2].gameObject.SetActive(true);
+            torchesSparks[3].gameObject.SetActive(true);
             activated[1] = true;
         }
 
         if(c.gameObject.name == torches[2]){
-            torchesSparks[2].gameObject.SetActive(true);
+            torchesSparks[4].gameObject.SetActive(true);
+            torchesSparks[5].gameObject.SetActive(true);
             activated[2] = true;
         }
 
