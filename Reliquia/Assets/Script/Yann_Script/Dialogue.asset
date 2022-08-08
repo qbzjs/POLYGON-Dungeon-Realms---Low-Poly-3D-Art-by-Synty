@@ -1,0 +1,537 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Dialogue
+  m_EditorClassIdentifier: 
+  m_test: 
+  m_casting:
+  - m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 6482f1c42045fcc47b2cdef85cc60ff2, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 7e2f3fc129a806e4f8bae9a0da6fb0ec, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: f50bafd9293daa14b8386f4831677a80, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: f55d5a570edec8a48b1505a1d0462b0a, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: b1264e647f9f58142a71a9c9e74490c0, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 63e9822a67dc1c74d9929c5d7c53ac2d, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: a49bddc29f2364142bde026864bb069c, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: 83768f374703601428debfca28d9d487, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: c44e3b9e74dc93d40a8f512af0327ca2, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: 46783cbd2f47535479355c254dbca588, type: 2}
+    m_characterView: 1
+  - m_character: {fileID: 11400000, guid: c2e469c6ea6c96d4e945174748c6752d, type: 2}
+    m_characterView: 0
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Tiens tiens, mais qui vois-je ? Ne serait-ce pas notre petit Winchester
+      qui va l\xE0. \nJe vois que tu est bien accompagn\xE9."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'Euh... On se connait ? '
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 6482f1c42045fcc47b2cdef85cc60ff2, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Ah, attendez, cela me revient ! \nC'est vous qui avez kidnapp\xE9 mon
+      oncle, apr\xE8s avoir saccag\xE9 sa maison."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Tu joues les durs, mais finalement tu reste au fond de toi le petit
+      Winchester, qui accompagnait aveugl\xE9ment ses parents daus leurs exp\xE9ditions,
+      sans ami, sans personne... renferm\xE9 dans sa bulle herm\xE9tique afin de
+      ne pas \xEAtre bless\xE9."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 7e2f3fc129a806e4f8bae9a0da6fb0ec, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Laissez tombez, vous ne savez rien de moi.
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'En fait, je te connais bien plus que tu ne le pense, mon cher William.
+
+      Tout
+      comme tes parents, Richard et Loreen.'
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f50bafd9293daa14b8386f4831677a80, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "La ferme ! Qui \xEAtes-vous pour dire une chose pareille ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Oh, je crois avoir touch\xE9 une corde sensible..."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Mais vu ton expression, on ne t'a probablement rien dit \xE0 mon sujet."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "... Venant de ta part, c'est \xE9tonnant David, j'aurais pari\xE9 que
+      tui lui aurais tout r\xE9v\xE9l\xE9."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 6482f1c42045fcc47b2cdef85cc60ff2, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Qu'est-ce qu-elle raconte, David ?
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f55d5a570edec8a48b1505a1d0462b0a, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0.1
+    m_spaceSpeed: 0.5
+    m_text: ...
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f55d5a570edec8a48b1505a1d0462b0a, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Je voulais attendre d'en \xEAtre certain avant de t'en parler."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Ce qu'elle dit est vrai, elle a bien connu tes parents, et toi par la
+      m\xEAme occasion."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Tu devais avoir tout juste 5 ans.\nKatarina Myler travaillait \xE0 la
+      Fondation Winchwood avec Richard et Loreen, c'est au m\xEAme endroit o\xF9
+      l'on s'est rencontr\xE9."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 26ff18f65de2ce748bdd523a07a1025a, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "A cette \xE9poque, c'\xE9tait une scientifique tr\xE8s brillante."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "\"C'\xE9tait\" ? Sache que je le suis toujours autant."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: b1264e647f9f58142a71a9c9e74490c0, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Non ! \nPas depuis que tu as commenc\xE9 \xE0 mener des exp\xE9riences
+      plus que douteuses sur ton propre fils !"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 63e9822a67dc1c74d9929c5d7c53ac2d, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Laisse Mat\xE9o en dehors de cela !"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Je ne cherche qu'\xE0 le sauver, et puisque la science ne peux rien
+      contre le mal qui le ronge, alors la magie le fera certainement !"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: b1264e647f9f58142a71a9c9e74490c0, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Ce n'est pas une excuse !\nJ'imagine que c'est pour cette m\xEAme raison
+      que tu as besoin du grimoire de William !\nMais il ne te donnera rien !"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "J'ai bien peur qu'il n'ai pas le choix, enfin, s'il souhaite r\xE9cup\xE9rer
+      son oncle indemne..."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 46783cbd2f47535479355c254dbca588, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'Mon oncle ! '
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 83768f374703601428debfca28d9d487, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'William ! Je vais bien, ne t''en fais pas.
+
+      Il ne faut surtout
+      pas lui donner ce qu''elle souhaite ! '
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'Silence ! '
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Alors, mon petit William ? Qu'en dis-tu ? Le grimoire contre la vie
+      de ton oncle, c'est plut\xF4t un bon arrangement, tu ne trouves pas ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0.1
+    m_spaceSpeed: 0.5
+    m_text: ...
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Alors... ? Saches que cette offre \xE0 une dur\xE9e... limit\xE9e."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0.1
+    m_spaceSpeed: 0.5
+    m_text: ... ...
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: 'Toujours pas ? '
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Dommage, ton temps est \xE9coul\xE9 !"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: c44e3b9e74dc93d40a8f512af0327ca2, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Argh !
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 46783cbd2f47535479355c254dbca588, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Nathan, non !
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: c2e469c6ea6c96d4e945174748c6752d, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Haha ! Je viens d'injecter \xE0 ton oncle une solution qui va lentement
+      s'\xE9couler dans ses veines, petit \xE0 petit, et un \xE0 un ses organes vitaux
+      vont s'arr\xEAter.\n"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Il ne doit lui rester que deux semaines \xE0 vivre, tout au plus."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f50bafd9293daa14b8386f4831677a80, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Comment avez-vous pu !
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Tu ne peux t'en vouloir qu'\xE0 toi-m\xEAme."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Sache que si Nathan est dans cet \xE9tat, c'est parce que tu as mis
+      trop de temps pour prendre ta d\xE9cision, alors que le choix \xE9tait vite
+      fait."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Le seul antidote possible maintenant sera de concocter un s\xE9rum avec
+      la pierre de l'immortalit\xE9, rien de mieux pour te motiver, n'est-ce pas
+      ?"
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 9657c4d6a9d8abc4ab03e19e4a2590c4, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Mais \xE9tant une \xE2me charitable, et en hommage \xE0 tes parents,
+      je m'engage \xE0 lui remettre ce s\xE9rum, \xE0 condition que tu m'aide \xE0
+      trouver la pierre ou que tu me donnes le grimoire des Winchester."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: f50bafd9293daa14b8386f4831677a80, type: 2}
+      m_characterView: 1
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Dans tes r\xEAves ! Pr\xE9pare-toi ! "
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: 14b31a07e5c882f4c9806ff310d01306, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: Toujours aussi idiot... tu vas prendre cher, William.
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
