@@ -5,6 +5,7 @@ using UnityEngine;
 public class DestroyOnCollider : MonoBehaviour
 {
     public GameObject Cylinder;
+    public GameObject CylinderNoTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class DestroyOnCollider : MonoBehaviour
         if (other.gameObject.CompareTag("Phase2"))
         {
             Destroy(Cylinder);
+            Destroy(CylinderNoTrigger);
         }
     }
 }

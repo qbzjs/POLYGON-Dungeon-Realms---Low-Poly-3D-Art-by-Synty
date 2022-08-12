@@ -24,6 +24,7 @@ public class KatarinaFire : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _thirdPersonSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         DestroyObjectDelayed();
         // targetLastPos = player.position;
 
@@ -51,21 +52,35 @@ public class KatarinaFire : MonoBehaviour
     {
         Destroy(this.gameObject);
 
-        if (other.gameObject.CompareTag("Inflammable"))
-        {
-            //Transform inflammablePos = c;
-            Debug.Log("Touching");
-            Instantiate(flamesPrefab, new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z), Quaternion.identity);
-            Destroy(other.gameObject, lifetime);
-        }
-
         if (other.gameObject.name == "William_Player")
         {
 
             Debug.Log("Player hit");
+            // _thirdPersonSystem.Die();
+            // appeler thirdPersonSystem et faire le calcul des dommages
+           SoundManager.instance.Play("Explosion");
 
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Inflammable")
+        {
+            //Transform inflammablePos = c;
+            SoundManager.instance.Play("Explosion");
+            Destroy(this.gameObject);
+        }
+
+        if (other.gameObject.name == "Cylinder")
+        {
+            Debug.Log("Cylinder hit");
+            SoundManager.instance.Play("Explosion");
+            Destroy(this.gameObject);
+
+        }
+    }
+
 
 
     void DestroyObjectDelayed()

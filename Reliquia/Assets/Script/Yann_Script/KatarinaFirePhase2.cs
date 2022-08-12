@@ -27,6 +27,7 @@ public class KatarinaFirePhase2 : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _thirdPersonSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         DestroyObjectDelayed();
         // targetLastPos = player.position;
 
@@ -58,6 +59,8 @@ public class KatarinaFirePhase2 : MonoBehaviour
         {
 
             Debug.Log("Player hit");
+            // _thirdPersonSystem.Die();
+            // appeler thirdPersonSystem et faire le calcul des dommages
             SoundManager.instance.Play("Explosion");
 
         }

@@ -30,6 +30,13 @@ public class BurnOnCollider : MonoBehaviour
             Instantiate(flamesPrefab, new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z), Quaternion.identity);
         }
 
+        if (other.gameObject.CompareTag("Phase2"))
+        {
+            //Transform inflammablePos = c;
+            Debug.Log("Touching");
+            Instantiate(flamesPrefab, new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z), Quaternion.identity);
+        }
+
     }
 
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5624634805303772418}
   - component: {fileID: 7592076440247729377}
   - component: {fileID: 8281545129942523771}
-  - component: {fileID: 632278139784034429}
+  - component: {fileID: 1668584611377595380}
   m_Layer: 0
   m_Name: Katarina_Flame
   m_TagString: Untagged
@@ -28,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6814771814616442431}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 5, z: 25}
   m_Children:
   - {fileID: 628624744334414813}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &480987735311859320
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &632278139784034429
+--- !u!114 &1668584611377595380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,18 +121,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6814771814616442431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af34fad062989344683a71e15ee68af4, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fff9b24d0d30cf4b89176be51544aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  katarinaBossScript: {fileID: 0}
-  rigid: {fileID: 0}
-  flamesPositions:
-  - {x: -10, y: 2.5, z: 0}
-  - {x: 0, y: 2.5, z: 10}
-  - {x: 10, y: 2.5, z: 0}
-  - {x: 0, y: 2.5, z: -10}
+  player: {fileID: 0}
+  flamesPrefab: {fileID: 0}
+  Cutscene: {fileID: 0}
+  targetLastPos: {x: 0, y: 0, z: 0}
+  flamesPositions: []
   randomNumber: 0
-  lifetime: 5
+  stop: 0
+  lifetime: 3
+  speed: 3
+  rigid: {fileID: 0}
   speedX: 3
   speedZ: 3
 --- !u!1 &8870545051959549390
