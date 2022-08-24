@@ -9,13 +9,18 @@ public class AIPouvoirPulsate : AIPouvoir
     [SerializeField]
     private ParticleSystem _particulesPouvoir;
 
+    private Collider collider;
+
     private IFighter owner;
 
     private void Awake()
     {
         _particulesBras.Stop();
         _particulesPouvoir.Stop();
-        owner = GetComponent<IFighter>();
+        owner = GetComponentInParent<IFighter>();
+
+        collider = GetComponent<BoxCollider>();
+        collider.enabled = false;
     }
 
     public override void Use()
@@ -34,7 +39,16 @@ public class AIPouvoirPulsate : AIPouvoir
     {
         _particulesPouvoir.Play();
         SoundManager.instance.Play("SfxPouvoir1");
+        collider.enabled = true;
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.Equals(William_Script.instance.gameObject))
+        {
+            collider.enabled = false;
+            William_Script.instance.Hurt(owner.GetStrength());
+        }
     }
 
     public bool CanUse() { return _estDisponible; }

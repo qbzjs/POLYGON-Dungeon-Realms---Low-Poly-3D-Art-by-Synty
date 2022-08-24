@@ -93,7 +93,7 @@ public class AttackState : BaseState
             if (distance < 1.5f)
             {
                 // Si l'ennemi ne peut pas utiliser Pulsate, il donnera des coups de poing
-                if (!_enemy.UsePulsate()) _enemy.Punch();
+                if (_enemy.hasPulsate && !_enemy.UsePulsate()) _enemy.Punch();
             }
             else if (distance < 5f) _enemy.UseLighting();
 
