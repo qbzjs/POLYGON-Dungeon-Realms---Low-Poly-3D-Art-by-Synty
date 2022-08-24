@@ -22,8 +22,11 @@ public class AIPouvoirLighting : AIPouvoir
     public override void Use()
     {
         _lightingOrbe.SetActive(true);
+        if(_tempsRechargeActuel == 0)
+            StartCoroutine(TempsRechargeDemarrer());
 
-        if(_estDisponible && TargetPos != null)
+        Actif = true;
+        if (_estDisponible && TargetPos != null)
         {
             GameObject projectile = Instantiate(_lightingPrefabProjectile, _lightingOrbe.transform.position, Quaternion.LookRotation(TargetPos, Vector3.up));
             projectile.GetComponent<LightingProjectileBehaviour>().owner = owner;
@@ -34,5 +37,6 @@ public class AIPouvoirLighting : AIPouvoir
     public void Stop()
     {
         _lightingOrbe.SetActive(false);
+        Actif = false;
     }
 }

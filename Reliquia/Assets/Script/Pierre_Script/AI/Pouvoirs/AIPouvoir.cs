@@ -7,7 +7,7 @@ public abstract class AIPouvoir : MonoBehaviour
     [SerializeField]
     protected float TempsRecharge = 5;
     protected bool _estDisponible = true;
-    protected float _tempsRechargeActuel;
+    protected float _tempsRechargeActuel = 0;
     public bool Actif = false;
 
     public abstract void Use();
@@ -18,7 +18,8 @@ public abstract class AIPouvoir : MonoBehaviour
         _tempsRechargeActuel = 0;
         while (_tempsRechargeActuel <= TempsRecharge)
         {
-            _tempsRechargeActuel += Time.deltaTime;
+            if(Actif)
+                _tempsRechargeActuel += Time.deltaTime;
             yield return null;
         }
         _estDisponible = true;

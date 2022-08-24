@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour, IFighter
     private AIPouvoirPraesidium Praesidium;
     private int HitCount = 0;
     private AIPouvoirLighting Lighting;
+    private AIPouvoirPulsate Pulsate;
 
     // Les getters des propriétés de l'IA
     public StateMachine StateMachine => GetComponent<StateMachine>();
@@ -49,6 +50,7 @@ public class Enemy : MonoBehaviour, IFighter
 
         Praesidium = GetComponent<AIPouvoirPraesidium>();
         Lighting = GetComponent<AIPouvoirLighting>();
+        Pulsate = GetComponent<AIPouvoirPulsate>();
     }
 
     private void InitializeStateMachine()
@@ -111,26 +113,37 @@ public class Enemy : MonoBehaviour, IFighter
     {
         if (alive)
         {
+            // Pour permettre la recharge du pulsate
+            Pulsate.Actif = true;
+
             Debug.Log("punch");
             anim.SetBool("Distance", false);
             Lighting.Stop();
         }
     }
 
-    internal void UsePulsate()
+    internal bool UsePulsate()
     {
-        if (alive)
+        if (alive && Pulsate.CanUse())
         {
             Debug.Log("pulsate");
             anim.SetBool("Distance", false);
+            Anim.SetTrigger("Pulsate");
             Lighting.Stop();
+            Pulsate.Use();
+
+            return true;
         }
+        return false;
     }
 
     public void UseLighting()
     {
         if (alive)
         {
+            // Pour empêcher la recharge du pulsate
+            Pulsate.Actif = false;
+
             Debug.Log("lighting");
             anim.SetBool("Distance", true);
             Lighting.TargetPos = Vector3.Normalize(Target.position - transform.position);

@@ -8,7 +8,7 @@ public class AttackState : BaseState
     public Enemy _enemy;
     private Vector3 _enemyPosition;
 
-    private float _attackReadyTimer = 3f;
+    private float _checkTargetTimer = 3f;
 
     private Vector3 targetPosition;
     private bool flagStartAttack;
@@ -61,9 +61,10 @@ public class AttackState : BaseState
             {
                 _enemy.ResetTargets();
             }
-            
+
             return typeof(ChaseState);
         }
+        else flagStartAttack = true;
 
 
         if (companion != null && companion.AttackNumber <= 0)
@@ -72,17 +73,16 @@ public class AttackState : BaseState
             return typeof(ChasePlayerState);
         }
 
-        _attackReadyTimer -= Time.deltaTime;
+        _checkTargetTimer -= Time.deltaTime;
 
         // Position l'enemy pres de sa cible
-        if (_attackReadyTimer <= 0f) 
+        if (_checkTargetTimer <= 0f) 
         {
             CheckIfNeedToChangeTarget();
-            flagStartAttack = true;
             targetPosition = _enemy.Target.position;
             _enemy.LookAtDirection(closePosition, GameSettings.SpeedAttackWalking);
             _enemy.Move(targetPosition, GameSettings.SpeedAttackWalking); //_enemyPosition + spacePosition
-            _attackReadyTimer = GameSettings.AttackEnemyTimer;
+            _checkTargetTimer = GameSettings.AttackEnemyTimer;
         }
 
 
@@ -90,21 +90,18 @@ public class AttackState : BaseState
         if (flagStartAttack)
         {
             _enemy.LaunchAttack();
-            if (distance < 1f) _enemy.Punch();
+            if (distance < 1.5f)
+            {
+                // Si l'ennemi ne peut pas utiliser Pulsate, il donnera des coups de poing
+                if (!_enemy.UsePulsate()) _enemy.Punch();
+            }
             else if (distance < 5f) _enemy.UseLighting();
 
             _distanceRecorded = distance;
 
 
         }
-        /*
-        // Après 2s arrêter l'attaque
-        if (flagStartAttack && _attackReadyTimer <= GameSettings.AttackEnemyTimer - 3f) // || _distanceRecorded - distance > 1f
-        {
-            _enemy.StopAttack();
-            flagStartAttack = false;
-        }
-        */
+
         return null;
     }
 
