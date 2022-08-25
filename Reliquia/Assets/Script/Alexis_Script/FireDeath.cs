@@ -14,7 +14,7 @@ public class FireDeath : MonoBehaviour{
 
     void OnTriggerEnter(Collider c) {
         if (c.gameObject.name == "FeuPiège" && pouvoirPraesidiumScript.PraesidiumActif == false){
-            this.gameObject.transform.position = new Vector3 (0, 0, 0);  
+            this.gameObject.transform.position = new Vector3 (34, -9, 30);  
         }
     }
 
