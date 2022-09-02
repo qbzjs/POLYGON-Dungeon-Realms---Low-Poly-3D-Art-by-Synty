@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ArrowBehaviour : MonoBehaviour{
 
-    //Transform transform;
     Vector3 startPosition;
     Rigidbody rigid;
+
+    public ParticleSystem impactEffect;
 
     public float speed = 1f; 
 
     void Start(){
         startPosition = this.transform.position;
         rigid = this.GetComponent<Rigidbody>();
+        impactEffect.transform.position = startPosition;
+        impactEffect.Play();
     }
 
     void Update(){
@@ -21,5 +24,7 @@ public class ArrowBehaviour : MonoBehaviour{
 
     void OnCollisionEnter(){
         this.transform.position = startPosition;
+        impactEffect.transform.position = startPosition;
+        impactEffect.Play();
     }
 }
