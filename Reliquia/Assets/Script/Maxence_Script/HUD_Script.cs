@@ -1,5 +1,4 @@
-﻿using clavier;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -82,7 +81,11 @@ public class HUD_Script : MonoBehaviour
         }
 
         //for(int i = 0; i < LevelLoader.instance.Canvas.Length; i++) LevelLoader.instance.Canvas[i].SetActive(false);
+    }
 
+    void Start()
+    {
+        Debug.Log("start");
         colors[0] = new Color(1, 1, 1, 0);
 
         prefab = Instantiate(prefabMenuOptions, GameObject.FindGameObjectWithTag("Options").transform);
@@ -102,11 +105,7 @@ public class HUD_Script : MonoBehaviour
         cerclePosPlayer = cerclePosPlayerImage.texture as Texture2D;
 
         colors = cerclePosPlayer.GetPixels();
-    }
 
-    void Start()
-    {
-        Debug.Log("start");
         SaveManager.instance.saveSlots.Clear();
 
         foreach (GameObject slots in SloatsLoadSave)
@@ -160,11 +159,7 @@ public class HUD_Script : MonoBehaviour
         GameManager.instance.ParentBoutonMenu.DOMoveX(-780f, 0.01f);
         GameManager.instance.FermerMessageInteraction();
 
-        if(GameManager.instance.menuInventaireOuvert = false)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        if (CurseurControlleur.Instance != null) CurseurControlleur.Instance.LockCurseur(GameManager.instance.AnyMenuOuvert);
     }
 
     public void ContinuerJeu()

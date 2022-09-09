@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using DG.Tweening;
 using System;
 using UnityEngine.SceneManagement;
@@ -159,6 +160,13 @@ public class Options_Script : MonoBehaviour
         InversionSourisActive = !InversionSourisActive;
         ValeurSouris.text = !InversionSourisActive ? "NON" : "OUI";
         PlayerPrefs.SetInt("InversionSourisEtat", Convert.ToInt32(InversionSourisActive));
+
+        PlayerInput playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+
+        var binding = playerInput.actions["Regard"].bindings[0];
+        Debug.Log("Apply override to input processor : " + "InvertVector2(invertY="+InversionSourisActive.ToString()+")");
+        binding.overrideProcessors = "InvertVector2(invertY="+InversionSourisActive.ToString()+")";
+        playerInput.actions["Regard"].ApplyBindingOverride(0, binding);
     }
 
     public void ChangerResolution()
@@ -188,6 +196,15 @@ public class Options_Script : MonoBehaviour
         ValeurResolution.text = TextesResolution[indexResolution];
         PlayerPrefs.SetInt("EtatResolution", indexResolution);
     }
+
+    /* public void ChangementInversionCurseur(Boolean value) {
+        PlayerInput playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+
+        var binding = playerInput.actions["Regard"].bindings[0];
+        Debug.Log("Apply override to input processor : " + "InvertVector2(invertY="+value.ToString()+")");
+        binding.overrideProcessors = "InvertVector2(invertY="+value.ToString()+")";
+        playerInput.actions["Regard"].ApplyBindingOverride(0, binding);
+    } */
 
     public void ChangerQualiteEffets()
     {

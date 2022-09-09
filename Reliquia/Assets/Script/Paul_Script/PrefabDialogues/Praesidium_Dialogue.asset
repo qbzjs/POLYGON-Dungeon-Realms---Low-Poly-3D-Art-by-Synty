@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Praesidium_Dialogue
+  m_EditorClassIdentifier: 
+  m_test: 
+  m_casting:
+  - m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+    m_characterView: 0
+  - m_character: {fileID: 11400000, guid: a49bddc29f2364142bde026864bb069c, type: 2}
+    m_characterView: 0
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "En utilisant  <color=#5adef4><b>Praesidium</b></color>, celui-ci me
+      permet de me prot\xE9ger pendant quelques secondes des attaques ennemies, mais
+      \xE9galement de tout autre d\xE9g\xE2ts physique."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - m_role:
+      m_character: {fileID: 11400000, guid: a49bddc29f2364142bde026864bb069c, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Pour cela, je n'ai qu'\xE0 utiliser la <color=#5adef4><b>Touche 4</b></color>
+      du clavier."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []

@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DiasGames.ThirdPersonSystem;
 
-public class KatarinaFire : MonoBehaviour{
+public class KatarinaFire : MonoBehaviour
+{
 
     public Transform player;
 
     public GameObject flamesPrefab;
-    
+
     public Vector3 targetLastPos;
 
     public bool stop = false;
@@ -15,38 +17,74 @@ public class KatarinaFire : MonoBehaviour{
     public float speed = 3f;
     public float speedPhase2 = 30f;
 
-    
+    private Health _thirdPersonSystem;
 
-    void Start(){
-        player = GameObject.Find("ybot").GetComponent<Transform>();
+
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _thirdPersonSystem = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         DestroyObjectDelayed();
-        targetLastPos = player.position;
+        // targetLastPos = player.position;
+
+        Vector3 targetLastPos = new Vector3(player.position.x, (player.position.y + 1f), player.position.z);
+        transform.LookAt(targetLastPos);
     }
 
-    void Update(){
-        if(transform.position != targetLastPos && stop == false){
-            transform.position = Vector3.MoveTowards(transform.position, targetLastPos, speed * Time.deltaTime);
+    void Update()
+    {
+
+
+        if (transform.position != targetLastPos && stop == false)
+        {
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
 
-        if(transform.position == targetLastPos && stop == false){
+        if (transform.position == targetLastPos && stop == false)
+        {
             stop = true;
             Rigidbody fireRigidBody = this.gameObject.AddComponent<Rigidbody>();
         }
     }
 
-    void OnCollisionEnter(Collision c){
+    void OnCollisionEnter(Collision other)
+    {
         Destroy(this.gameObject);
 
-        if(c.gameObject.name == "Inflammable"){
-            //Transform inflammablePos = c;
-            Debug.Log("Touching");
-            Instantiate(flamesPrefab, new Vector3(c.transform.position.x, c.transform.position.y, c.transform.position.z), Quaternion.identity);
-            Destroy(c.gameObject, lifetime);
+        if (other.gameObject.name == "William_Player")
+        {
+
+            Debug.Log("Player hit");
+            // _thirdPersonSystem.Die();
+            // appeler thirdPersonSystem et faire le calcul des dommages
+           SoundManager.instance.Play("Explosion");
+
         }
     }
-    
 
-    void DestroyObjectDelayed(){
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Inflammable")
+        {
+            //Transform inflammablePos = c;
+            SoundManager.instance.Play("Explosion");
+            Destroy(this.gameObject);
+        }
+
+        if (other.gameObject.name == "Cylinder")
+        {
+            Debug.Log("Cylinder hit");
+            SoundManager.instance.Play("Explosion");
+            Destroy(this.gameObject);
+
+        }
+    }
+
+
+
+    void DestroyObjectDelayed()
+    {
         Destroy(this.gameObject, lifetime);
     }
 }

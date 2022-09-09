@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5727884342007865380}
   m_Layer: 0
   m_Name: SoundManager
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,12 +111,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: open_inventory
     clip: {fileID: 8300000, guid: d8df26266b680a84cab962a8428ace4e, type: 3}
-    volume: 1
+    volume: 0.8
     loop: 0
     source: {fileID: 0}
   - name: close_inventory
     clip: {fileID: 8300000, guid: 76cd8656faa1a614f93828370ab5ddd4, type: 3}
-    volume: 1
+    volume: 0.8
     loop: 0
     source: {fileID: 0}
   sfxPasArray:

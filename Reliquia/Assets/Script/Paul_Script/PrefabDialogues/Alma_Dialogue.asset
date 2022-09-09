@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c910b793b73bc4a878d5779059ceba, type: 3}
+  m_Name: Alma_Dialogue
+  m_EditorClassIdentifier: 
+  m_test: 
+  m_casting:
+  - m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+    m_characterView: 0
+  m_replies:
+  - m_role:
+      m_character: {fileID: 11400000, guid: 4df6044ad2072f8418f3cec4b4cd38ce, type: 2}
+      m_characterView: 0
+    m_stageDirections: 
+    m_styleColorHash: -1139904493
+    m_charSpeed: 0
+    m_spaceSpeed: 0
+    m_text: "Le Pouvoir <color=#5adef4><b>Alma</b></color>, me permet de r\xE9aliser
+      un double saut. Pour le r\xE9aliser rien de plus simple, il suffit d'<color=#5adef4><b>appuyer
+      deux fois</b></color> sur la barre ESPACE."
+    m_replyEvent:
+      m_PersistentCalls:
+        m_Calls: []

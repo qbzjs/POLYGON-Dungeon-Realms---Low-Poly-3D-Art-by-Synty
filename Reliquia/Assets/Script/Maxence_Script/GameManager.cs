@@ -12,16 +12,28 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-
     public RaccourciClavier_Script raccourciClavier;
 
     public GameObject MenuPause;
     public Transform MenuInventaire;
     public bool voirMenu;
 
-    public bool menuPauseOuvert;
-    public bool menuInventaireOuvert;
-    public bool menuOptionOuvert;
+    private bool _pauseOuvert = false, _inventaireOuvert = false, _optionOuvert = false;
+
+    public bool menuPauseOuvert {get => _pauseOuvert; set {
+        _pauseOuvert = value;
+        ChangementEtat();
+    }}
+    public bool menuInventaireOuvert {get => _inventaireOuvert; set {
+        _inventaireOuvert = value;
+        ChangementEtat();
+    }}
+    public bool menuOptionOuvert {get => _optionOuvert; set {
+        _optionOuvert = value;
+        ChangementEtat();
+    }}
+
+    public bool AnyMenuOuvert { get => menuPauseOuvert || menuInventaireOuvert || menuOptionOuvert; }
     public bool menuSlots;
     
     public GameObject MessageInteraction;
@@ -121,7 +133,6 @@ public class GameManager : MonoBehaviour
         //MenuPause.SetActive(voirMenu);
     }
 
-
     public void menuInventaire()
     {
 
@@ -134,8 +145,6 @@ public class GameManager : MonoBehaviour
         SoundManager.instance.Play(SFX);
 
         MenuInventaire.localPosition = new Vector3((voirMenu == true ? 0 : -2000f), 0, 0);
-
-
     }
 
     public void DeplacerUIMenu()
@@ -175,4 +184,9 @@ public class GameManager : MonoBehaviour
 			popUpActif = false;
 		}
 	}
+
+    private void ChangementEtat() {
+        if (CurseurControlleur.Instance != null)
+            CurseurControlleur.Instance.LockCurseur(!AnyMenuOuvert);
+    }
 }
