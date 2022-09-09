@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class William_Script : MonoBehaviour
+public class William_Script : MonoBehaviour, IFighter
 {
     public static William_Script instance;
     [SerializeField]
@@ -401,6 +401,21 @@ public class William_Script : MonoBehaviour
         {
             BoutonRoulade = false;
         }
+    }
+
+    public int GetStrength()
+    {
+        return 25;
+    }
+
+    public void Hurt(int damage)
+    {
+        GlobalEvents.ExecuteEvent("Damage", gameObject, (float)damage);
+    }
+
+    public void Die()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

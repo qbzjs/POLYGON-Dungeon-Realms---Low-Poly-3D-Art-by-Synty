@@ -16911,7 +16911,7 @@ GameObject:
   - component: {fileID: 1286182120}
   - component: {fileID: 1286182121}
   - component: {fileID: 5423519499254490487}
-  - component: {fileID: 12362314}
+  - component: {fileID: 67890547503338049}
   m_Layer: 15
   m_Name: William_Player
   m_TagString: Player
@@ -18497,6 +18497,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd890d91b4826c4880bd162de57092c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxStack: 5
+  MaxConsommableSlot: 12
+  MaxQueteSlot: 6
+  sacoche: []
+  consommables: []
+  objetsQuetes: []
+  puzzles: []
+--- !u!114 &67890547503338049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181353110817305307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e21971b1f8d41a4495d86729911bf78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnterState: Punching
+  m_TransitionDuration: 0.1
+  m_RootMotionMultiplier: {x: 1, y: 1, z: 1}
+  m_FinishOnAnimationEnd: 1
+  IgnoreAbilities:
+  - {fileID: 2506424486084426688}
+  m_UseRootMotion: 1
+  m_UseRotationRootMotion: 0
+  m_UseVerticalRootMotion: 0
+  m_AllowCameraZoom: 0
+  m_AbilityPhysicMaterial: {fileID: 0}
+  OnEnterAbilityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitAbilityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_UseInputStateToEnter: 3
+  InputButton: 11
   torchesSparks:
   - {fileID: 0}
   - {fileID: 0}

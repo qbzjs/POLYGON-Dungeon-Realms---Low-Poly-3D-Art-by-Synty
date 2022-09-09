@@ -120,15 +120,18 @@ public class PouvoirLighting : ThirdPersonAbility,IPouvoir
                 //Pour que le projectile aille dans la direction visée, si le projectile ne touche pas de cible il va dans la direction du centre de la caméra.
                 Vector2 centreEcran = new Vector2(Screen.width / 2.0f, Screen.height / 2.0f);
                 Ray ray = Camera.main.ScreenPointToRay(centreEcran);
+
+                GameObject projectile;
                 if (Physics.Raycast(ray, out cibleLighting, 999f, layerMask, QueryTriggerInteraction.Ignore))
                 {
                     Vector3 directionVisee = (cibleLighting.point - _lightingOrbe.transform.position).normalized;
-                    Instantiate(_lightingPrefabProjectile, _lightingOrbe.transform.position, Quaternion.LookRotation(directionVisee, Vector3.up));
+                    projectile = Instantiate(_lightingPrefabProjectile, _lightingOrbe.transform.position, Quaternion.LookRotation(directionVisee, Vector3.up));
                 }
                 else
                 {
-                    Instantiate(_lightingPrefabProjectile, _lightingOrbe.transform.position, Quaternion.LookRotation(ray.direction, Vector3.up));
+                    projectile = Instantiate(_lightingPrefabProjectile, _lightingOrbe.transform.position, Quaternion.LookRotation(ray.direction, Vector3.up));
                 }
+                projectile.GetComponent<LightingProjectileBehaviour>().owner = William_Script.instance;
             }
         }
         else
