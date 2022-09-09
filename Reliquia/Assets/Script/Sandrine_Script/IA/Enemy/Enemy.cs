@@ -117,7 +117,7 @@ public class Enemy : MonoBehaviour, IFighter
             // Pour permettre la recharge du pulsate
             if(hasPulsate) Pulsate.Actif = true;
 
-            Debug.Log("punch");
+
             anim.SetBool("Distance", false);
             Lighting.Stop();
         }
@@ -127,7 +127,6 @@ public class Enemy : MonoBehaviour, IFighter
     {
         if (hasPulsate && alive && Pulsate.CanUse())
         {
-            Debug.Log("pulsate");
             anim.SetBool("Distance", false);
             Anim.SetTrigger("Pulsate");
             Lighting.Stop();
@@ -145,7 +144,6 @@ public class Enemy : MonoBehaviour, IFighter
             // Pour empêcher la recharge du pulsate
             if (hasPulsate) Pulsate.Actif = false;
 
-            Debug.Log("lighting");
             anim.SetBool("Distance", true);
             Lighting.TargetPos = Vector3.Normalize(Target.position - transform.position);
             Lighting.Use();
@@ -304,5 +302,13 @@ public class Enemy : MonoBehaviour, IFighter
     public void PulsateAnimEvent()
     {
         Pulsate.PulsateAnimEvent();
+    }
+
+    public void PunchAnimEvent()
+    {
+        if(Target.Equals(William_Script.instance.transform))
+        {
+            William_Script.instance.Hurt(GetStrength() / 3);
+        }
     }
 }
