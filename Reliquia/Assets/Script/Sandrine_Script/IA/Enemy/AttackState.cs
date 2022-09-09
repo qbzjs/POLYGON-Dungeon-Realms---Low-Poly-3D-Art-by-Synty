@@ -8,7 +8,7 @@ public class AttackState : BaseState
     public Enemy _enemy;
     private Vector3 _enemyPosition;
 
-    private float _attackReadyTimer = 3f;
+    private float _checkTargetTimer = 3f;
 
     private Vector3 targetPosition;
     private bool flagStartAttack;
@@ -25,7 +25,6 @@ public class AttackState : BaseState
 
     public override Type Tick()
     {
-        //Debug.Log(this);
         if (_enemy.Target == null)
             return typeof(WanderState);
 
@@ -44,27 +43,15 @@ public class AttackState : BaseState
 
         if (flagStartAttack == false && distance <= GameSettings.AttackRange - 3f) //  Trop pret du joueur
         {
-            //Debug.Log("istance <= GameSettings.AttackRange");
             _enemy.StopMoving();
         }
 
 
-        // Stop enemy quand il arrive au limite du navmesh => Trouver autre chose NOK
-        //if (_enemy.NavAgent.remainingDistance <= 0.5f)
-        //{
-        //    Debug.Log("return returnstate : " + _enemy.gameObject.name);
-        //    _enemy.ResetTargets();
-        //    return typeof(ReturnState);
-        //}
         Companion companion = _enemy.Target.GetComponent<Companion>();
         // Si la target sort de la zone d'attaque
         // Retour Ã  l'Ã©tat Chase
         if (distance > GameSettings.AttackRange)
         {
-            //Debug.Log("Leave ChaseState");
-            //Debug.Log("return ChaseState : " + _enemy.gameObject.name);
-            //Debug.Log("Go to ChaseState 1");
-            //_enemy.SetTarget(null);
 
             _enemy.StopAttack();
             flagStartAttack = false;
@@ -74,65 +61,48 @@ public class AttackState : BaseState
             {
                 _enemy.ResetTargets();
             }
-            
-            //_enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
+
             return typeof(ChaseState);
         }
+        else flagStartAttack = true;
 
 
         if (companion != null && companion.AttackNumber <= 0)
         {
-            //Debug.Log("return wanderchase : " + _enemy.gameObject.name);
             _enemy.StopAttack();
-            //Debug.Log("Change State to Chase Player ------------------------- " + _enemy.gameObject.name);
-            // Nouvel état : ChasePlayer ----------------------------------------------------------------------------*********************
-            //_enemy.Move(_enemyPosition + UnityEngine.Random.insideUnitSphere, GameSettings.SpeedWalking);
             return typeof(ChasePlayerState);
         }
 
-        
-
-        _attackReadyTimer -= Time.deltaTime;
+        _checkTargetTimer -= Time.deltaTime;
 
         // Position l'enemy pres de sa cible
-        if (_attackReadyTimer <= 0f) 
+        if (_checkTargetTimer <= 0f) 
         {
-            //Debug.Log("Timer GO");
             CheckIfNeedToChangeTarget();
-            flagStartAttack = true;
             targetPosition = _enemy.Target.position;
             _enemy.LookAtDirection(closePosition, GameSettings.SpeedAttackWalking);
             _enemy.Move(targetPosition, GameSettings.SpeedAttackWalking); //_enemyPosition + spacePosition
-            _attackReadyTimer = GameSettings.AttackEnemyTimer;
+            _checkTargetTimer = GameSettings.AttackEnemyTimer;
         }
 
 
         // Arrivé à destination lancé l'attaque
-        if (flagStartAttack && _enemy.NavAgent.remainingDistance < 1.5f)
+        if (flagStartAttack)
         {
-            //Debug.Log("LaunchAttack");
             _enemy.LaunchAttack();
+            if (distance < 1.5f)
+            {
+                // Si l'ennemi ne peut pas utiliser Pulsate, il donnera des coups de poing
+                if (_enemy.hasPulsate && !_enemy.UsePulsate()) _enemy.Punch();
+            }
+            else if (distance < 5f) _enemy.UseLighting();
+
             _distanceRecorded = distance;
 
 
         }
 
-        // Après 2s arrêter l'attaque
-        if (flagStartAttack && _attackReadyTimer <= GameSettings.AttackEnemyTimer - 3f) // || _distanceRecorded - distance > 1f
-        {
-            //Debug.Log("stop attack for : Enemy");
-            _enemy.StopAttack();
-            flagStartAttack = false;
-        }
-
-        //Debug.Log("return null : " + _enemy.gameObject.name);
-        //_enemy.StopMoving();
         return null;
-    }
-
-    private void FollowPlayer()
-    {
-        
     }
 
     private void CheckIfNeedToChangeTarget()
