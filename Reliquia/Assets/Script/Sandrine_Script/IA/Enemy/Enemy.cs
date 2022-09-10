@@ -12,8 +12,10 @@ public class Enemy : MonoBehaviour, IFighter
     private Animator anim;
     private NavMeshAgent navAgent;
     private Vector3 initPosition;
+    private Vector3 initRotation;
     private bool alive = true;
 
+    public bool ShouldMove = true;
     public Transform Eyes;
     [SerializeField] private int enemyHealth = 100;
     [SerializeField] private int enemyStrength = 10;
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour, IFighter
         anim = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
         initPosition = transform.position;
+        initRotation = transform.eulerAngles;
 
         Praesidium = GetComponent<AIPouvoirPraesidium>();
         Lighting = GetComponent<AIPouvoirLighting>();

@@ -39,7 +39,6 @@ public class WanderState : BaseState
         _enemyLastPosition = _enemyPosition;
         playerPosition = playerTarget.transform.position;
 
-        _enemy.NavAgent.isStopped = false;
 
         // Deplacer plus bas
         //_enemy.Anim.SetBool("Avancer", true);
@@ -66,15 +65,18 @@ public class WanderState : BaseState
             _enemy.SetTarget((Transform)chaseTarget);
             return typeof(ChaseState); // Change l'état pour "Chase" 
         }
-
-        if (_enemy.NavAgent.remainingDistance <= 0.5f ) // l'agent a atteint sa destination
+        if(_enemy.ShouldMove)
         {
-            FindRandomDestination(); // assigne une nouvelle destination et rotation          
+            _enemy.NavAgent.isStopped = false;
+            if (_enemy.NavAgent.remainingDistance <= 0.5f) // l'agent a atteint sa destination
+            {
+                FindRandomDestination(); // assigne une nouvelle destination et rotation          
 
-            _enemy.LookAtDirection(_direction, 0.5f);
+                _enemy.LookAtDirection(_direction, 0.5f);
 
-            _enemy.Move(_destination, _enemy.EnemyWanderSpeed);
+                _enemy.Move(_destination, _enemy.EnemyWanderSpeed);
 
+            }
         }
 
         float distance = Vector3.Distance(_enemyPosition, playerPosition);
