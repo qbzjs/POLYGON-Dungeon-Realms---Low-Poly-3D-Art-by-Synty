@@ -25,4 +25,16 @@ public class ItemEffect : MonoBehaviour
         }
     }
 
+    public void Trousse()
+    {
+        William = William_Script.instance;
+        Health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+
+        if (Health.HealthValue < Health.MaximumHealth)
+        {
+            GlobalEvents.ExecuteEvent("RestoreHealth", William_Script.instance.gameObject, 20.0f);
+            used = true;
+        }
+    }
+
 }

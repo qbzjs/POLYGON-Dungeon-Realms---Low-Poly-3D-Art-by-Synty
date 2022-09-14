@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61cf67018d796a74f987be6bc0592a9c, type: 3}
+  m_Name: Trousse
+  m_EditorClassIdentifier: 
+  itemNom: Trousse de Soin
+  itemDescription: Trousse soin
+  itemImage: {fileID: 21300000, guid: cfa373c9050fb6f4a8be536429e3a021, type: 3}
+  itemMesh: {fileID: 2567891652974365105, guid: ef017484d6832fc47b907c155ad8b972,
+    type: 3}
+  itemMaterial: {fileID: 2100000, guid: 2a7f242db3a865b4187f07be0b667cf7, type: 2}
+  usable: 1
+  unique: 0
+  typeItemBase: 3
+  Effect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6030935605691380770, guid: 5619ac32f1719c04b8aac842d6aca46c,
+          type: 3}
+        m_MethodName: Trousse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
