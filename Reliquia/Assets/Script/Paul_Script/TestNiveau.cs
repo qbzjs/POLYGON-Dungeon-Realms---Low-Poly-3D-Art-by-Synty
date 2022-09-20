@@ -7,13 +7,17 @@ using DG.Tweening;
 
 public class TestNiveau : MonoBehaviour
 {
-    public string NomDeScene;
+    public string sceneName;
 
     public void AllerAuNiveau(){
-        SceneManager.LoadScene(NomDeScene);
+        SceneManager.LoadScene(sceneName);
     }
 
     private void OnTriggerEnter(Collider other) {
+        if(other.transform.gameObject.tag == "Player"){
         AllerAuNiveau();
+        }
     }
+
 }
+

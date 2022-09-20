@@ -12,9 +12,9 @@ public class DeathZoneController : MonoBehaviour
     {
         if (other.CompareTag("Player") && other.GetComponent<Animator>() != null)
         {
-            //playerAnim = other.GetComponent<Animator>();
+            playerAnim = other.GetComponent<Animator>();
 
-            //PlayerDeath();
+            PlayerDeath();
             _thirdPersonSystem = other.GetComponent<Health>();
             _thirdPersonSystem.Die();
 

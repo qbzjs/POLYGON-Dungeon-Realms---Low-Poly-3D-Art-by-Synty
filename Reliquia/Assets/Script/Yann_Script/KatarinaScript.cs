@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DiasGames.ThirdPersonSystem;
 using UnityEngine;
 
 public class KatarinaScript : MonoBehaviour
@@ -48,7 +49,7 @@ public class KatarinaScript : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.Find("ybot").GetComponent<Transform>();
+        player = GameObject.Find("William_Player").GetComponent<Transform>();
     }
 
     void Update()
