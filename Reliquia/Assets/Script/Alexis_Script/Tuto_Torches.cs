@@ -49,7 +49,8 @@ public class Tuto_Torches : MonoBehaviour{
             torchesSparks[5].gameObject.SetActive(true);
             portalsTriggers[2].gameObject.SetActive(true);
             cubes[0].transform.localScale = new Vector3(this.transform.localScale.x, 1.3f, this.transform.localScale.z);
-            cubes[1].transform.localScale = new Vector3(this.transform.localScale.x, 1.8f, this.transform.localScale.z);
+            cubes[1].transform.localScale = new Vector3(this.transform.localScale.x, 1.55f, this.transform.localScale.z);
+            cubes[2].transform.localScale = new Vector3(this.transform.localScale.x, 1.8f, this.transform.localScale.z);
             activated[2] = true;
         }
 
