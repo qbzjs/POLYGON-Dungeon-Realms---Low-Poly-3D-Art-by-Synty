@@ -16,14 +16,13 @@ public class DeathZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision) {
         if(collision.CompareTag("Player")){
-            collision.transform.position = playerSpawn.position;
             StartCoroutine(ReplacePlayer(collision));
         }
     }
 
     private IEnumerator ReplacePlayer(Collider collision){
         fadeSystem.SetTrigger("Out");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         collision.transform.position = playerSpawn.position;
     }
 }

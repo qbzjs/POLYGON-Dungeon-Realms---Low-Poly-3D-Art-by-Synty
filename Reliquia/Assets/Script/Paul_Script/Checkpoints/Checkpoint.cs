@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DiasGames.ThirdPersonSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System;
@@ -21,9 +20,4 @@ public class Checkpoint : MonoBehaviour
         }
         
     }
-
-    //créer script qui prend en compte la variable Die de ThirdPerson System
-    
-
-    
 }
