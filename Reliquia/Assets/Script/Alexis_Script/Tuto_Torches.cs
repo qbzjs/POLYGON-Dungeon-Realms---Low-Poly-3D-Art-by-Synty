@@ -12,11 +12,12 @@ public class Tuto_Torches : MonoBehaviour{
     public GameObject[] torchesSparks;
     public GameObject portalEnd;
 
-    [Header("Portails")]
+    [Header("Portals")]
 
     public Animator[] portals;
     public GameObject[] portalsTriggers;
     public Camera[] portalsCameras;
+    public AudioSource[] portalsSounds;
 
     public bool[] camerasActivated;
 
@@ -102,6 +103,8 @@ public class Tuto_Torches : MonoBehaviour{
             portalsCameras[0].GetComponent<Camera>().enabled = true;
             portals[0].SetTrigger("Close");
             portals[1].SetTrigger("Close");
+            portalsSounds[0].Play();
+            portalsSounds[1].Play();
         }
 
         if(c.gameObject.name == portalsTriggers[1].name && activated[1] == true && camerasActivated[1] == false){
@@ -110,6 +113,8 @@ public class Tuto_Torches : MonoBehaviour{
             portalsCameras[1].GetComponent<Camera>().enabled = true;
             portals[2].SetTrigger("Close");
             portals[3].SetTrigger("Close");
+            portalsSounds[2].Play();
+            portalsSounds[3].Play();
         }
 
         if(c.gameObject.name == portalsTriggers[2].name && activated[2] == true && camerasActivated[2] == false){
@@ -118,6 +123,8 @@ public class Tuto_Torches : MonoBehaviour{
             portalsCameras[2].GetComponent<Camera>().enabled = true;
             portals[4].SetTrigger("Close");
             portals[5].SetTrigger("Close");
+            portalsSounds[4].Play();
+            portalsSounds[5].Play();
         }
 
         // Debug

@@ -5,7 +5,34 @@ using UnityEngine;
 public class Laby_Levers : MonoBehaviour{
 
     public Animator[] doors;
+    public Camera cameraDoors;
     public bool[] activated;
+    public bool doorOpened;
+    bool doorLock;
+    public float camTime = 3f;
+    float camTimer;
+
+    public void Start(){
+        camTimer = camTime;
+    }
+
+    public void Update(){
+        if(doorOpened == true && doorLock == true && camTimer > 0){
+            doorLock = false;
+            camTimer -= 1 * Time.deltaTime;
+            cameraDoors.GetComponent<Camera>().enabled = true;
+        } else {
+            cameraDoors.GetComponent<Camera>().enabled = false;
+        }
+
+        if(activated[0] == true && activated[1] == true && activated[2] == true && activated[3] == true && doorLock == false && doorOpened == false){
+            doorOpened = true;
+            doorLock = true;
+            foreach (Animator door in doors){
+                door.SetTrigger("Open");
+            }
+        }
+    }
 
     public void OnTriggerEnter(Collider c){
 
@@ -23,14 +50,6 @@ public class Laby_Levers : MonoBehaviour{
 
         if(c.gameObject.name == "Lever4"){
             activated[3] =  true;
-        }
-
-        if(c.gameObject.name == "SM_Bld_Dwarf_Building_02_Door_L" && activated[0] == true && activated[1] == true && activated[2] == true  && activated[3] == true){
-            foreach (Animator door in doors){
-            Debug.Log("In Door");
-            door.SetTrigger("Open");
-        }
-
         }
 
     }
