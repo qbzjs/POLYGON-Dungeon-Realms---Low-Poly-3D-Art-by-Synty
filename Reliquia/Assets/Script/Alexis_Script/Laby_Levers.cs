@@ -6,6 +6,8 @@ public class Laby_Levers : MonoBehaviour{
 
     public Animator[] doors;
     public Camera cameraDoors;
+    public AudioSource[] doorsSounds;
+
     public bool[] activated;
     public bool doorOpened;
     bool doorLock;
@@ -17,19 +19,24 @@ public class Laby_Levers : MonoBehaviour{
     }
 
     public void Update(){
-        if(doorOpened == true && doorLock == true && camTimer > 0){
-            doorLock = false;
+        Debug.Log(camTimer);
+        if(doorOpened == true && doorLock == false && camTimer > 0){
             camTimer -= 1 * Time.deltaTime;
             cameraDoors.GetComponent<Camera>().enabled = true;
-        } else {
+        } 
+
+        if(camTimer <= 0){
+            doorLock = true;
             cameraDoors.GetComponent<Camera>().enabled = false;
         }
 
         if(activated[0] == true && activated[1] == true && activated[2] == true && activated[3] == true && doorLock == false && doorOpened == false){
             doorOpened = true;
-            doorLock = true;
             foreach (Animator door in doors){
                 door.SetTrigger("Open");
+            }
+            foreach (AudioSource sound in doorsSounds){
+                sound.Play();
             }
         }
     }
